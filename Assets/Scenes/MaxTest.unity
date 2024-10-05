@@ -384,6 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &118529000
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -425,6 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 884964014}
+  _pieceYOffset: 1.5
 --- !u!64 &120903588
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -565,6 +567,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8021353996127772730, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _piece
+      value: 
+      objectReference: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
     - target: {fileID: 8448074188304515584, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1074,6 +1082,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8021353996127772730, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _piece
+      value: 
+      objectReference: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
     - target: {fileID: 8448074188304515584, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1278,6 +1292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &736914590
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1319,6 +1334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &807387633
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1354,6 +1370,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8021353996127772730, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _piece
+      value: 
+      objectReference: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
     - target: {fileID: 8448074188304515584, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1440,6 +1462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &970935136
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1586,6 +1609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1202281429
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1627,6 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1207915261
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1668,6 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1254599194
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1814,6 +1840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1371957535
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1855,6 +1882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 1490768659}
+  _pieceYOffset: 1.5
 --- !u!64 &1377711547
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1896,6 +1924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 654179402}
+  _pieceYOffset: 1.5
 --- !u!64 &1471347053
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1936,6 +1965,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8021353996127772730, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _piece
+      value: 
+      objectReference: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
     - target: {fileID: 8448074188304515584, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2022,6 +2057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 1775800362}
+  _pieceYOffset: 1.5
 --- !u!64 &1526833198
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2063,6 +2099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 492145901}
+  _pieceYOffset: 1.5
 --- !u!64 &1700323551
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2104,6 +2141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 1784373993}
+  _pieceYOffset: 1.5
 --- !u!64 &1712631830
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2145,6 +2183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1757138348
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2185,6 +2224,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8021353996127772730, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _piece
+      value: 
+      objectReference: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
     - target: {fileID: 8448074188304515584, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2308,6 +2353,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8021353996127772730, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _piece
+      value: 
+      objectReference: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
     - target: {fileID: 8448074188304515584, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2394,6 +2445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1810763997
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2435,6 +2487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1906276698
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2476,6 +2529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1926648184
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2517,6 +2571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!64 &1996619058
 MeshCollider:
   m_ObjectHideFlags: 0
