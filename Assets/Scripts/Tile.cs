@@ -7,8 +7,9 @@ public class Tile : MonoBehaviour
 {
 
 
-    [CanBeNull] Piece _piece;
-    bool _locked;
+    [CanBeNull] [SerializeField] Piece _piece;
+    private bool _locked;
+    private bool _highlighted;
 
     public void AddPiece(Piece piece)
     {
@@ -31,6 +32,11 @@ public class Tile : MonoBehaviour
         _locked = true;
     }
 
+    public bool GetLocked()
+    {
+        return _locked;
+    }
+
     [CanBeNull]
     public Piece GetPiece()
     {
@@ -49,12 +55,17 @@ public class Tile : MonoBehaviour
 
     public void Highlight()
     {
-        
+        _highlighted = true;
     }
     
     public void Unhighlight()
     {
-        
+        _highlighted = false;
+    }
+
+    public bool IsHighlighted()
+    {
+        return _highlighted;
     }
 
 }

@@ -13,12 +13,10 @@ public class Piece : MonoBehaviour
     };
     
     public PlayerColor _playerColor;
-
-    public bool[][] Movement;
-    
     public PieceType Type;
 
-    bool[][] Attack;
+    public bool[][] Movement;
+    public bool[][] Attack;
 
     int _EnemiesKilled;
 
