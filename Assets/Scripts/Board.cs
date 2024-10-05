@@ -88,10 +88,7 @@ public class Board : MonoBehaviour
     public void HighlightPieceMoves(Tile tile)
     {
         var piece = tile.GetPiece();
-        if (piece == null)
-        {
-            
-        }
+        
     }
 
     public void HighlightPieceAttack(Tile tile)
