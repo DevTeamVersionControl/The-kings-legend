@@ -21,7 +21,7 @@ public class Board : MonoBehaviour
         
     }
 
-    public void OnNextTurn(GameManager.PlayerColor playerColor)
+    public void OnNextTurn(PlayerColor playerColor)
     {
         
     }
@@ -46,7 +46,7 @@ public class Board : MonoBehaviour
 
     }
 
-    public void HasPiece(GameManager.PlayerColor playerColor)
+    public void HasPiece(PlayerColor playerColor)
     {
 
     }

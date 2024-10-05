@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public enum PlayerColor { GREEN, PURPLE, NONE };
+   
 
     private PlayerColor _playerColorTurn;
     private enum _gameState { ADDUPGRADE, ATTACKMOVE };

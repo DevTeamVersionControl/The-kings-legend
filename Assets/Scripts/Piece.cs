@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    public GameManager.PlayerColor _playerColor;
+    public PlayerColor _playerColor;
  
     bool[,] Movement;
 
