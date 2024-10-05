@@ -39,13 +39,6 @@ public class Board : MonoBehaviour
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
-        
-        HighlightPieceMoves(BoardMap[4][0]);
-        foreach (var tile in _initBoardTiles)
-        {
-            if (tile.IsHighlighted())
-                tile.GetComponent<MeshRenderer>().enabled = false;
-        }
     }
 
     private Vector2Int ConvertToMapPosition(int i, int j)
@@ -56,6 +49,22 @@ public class Board : MonoBehaviour
     private Vector2Int ConvertToArrayPosition(int x, int y)
     {
         return new Vector2Int(EmptyBoardMap.Length/2-y, x+EmptyBoardMap[EmptyBoardMap.Length/2-y].Length/2);
+    }
+
+    private bool OutOfWorldCoords(Vector2Int position)
+    {
+        int i = EmptyBoardMap.Length / 2 - position.y;
+        if (i < 0 || i >= EmptyBoardMap.Length)
+        {
+            return true;
+        }
+        int j = position.x + EmptyBoardMap[i].Length / 2;
+        if (j < 0 || j >= EmptyBoardMap[i].Length)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void FillBoardMap()
@@ -69,8 +78,6 @@ public class Board : MonoBehaviour
             {
                 string tileName = $"{j-BoardMap[i].Length/2},{BoardMap.Length/2-i}";
                 BoardMap[i][j] = _initBoardTiles.First(e => e.name == tileName);
-                Debug.Log($"i,j:{i},{j}=x,y:{BoardMap[i][j].name}");
-                Debug.Log($"Converted i,j:{i},{j}=x,y:{ConvertToMapPosition(i,j).x},{ConvertToMapPosition(i,j).y}");
                 _positions[BoardMap[i][j]] = new Vector2Int(i, j);
             }
         }
@@ -125,7 +132,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
             {
-                if (highlightedTiles[i][j])
+                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
                 {
                     BoardMap[i][j].Highlight();
                 }
@@ -136,12 +143,12 @@ public class Board : MonoBehaviour
     public void HighlightPieceAttack(Tile tile)
     {
         var piece = tile.GetPiece();
-        var highlightedTiles = ClipMovesToBoard(piece.Attack, _positions[tile]);
+        var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[tile].x, _positions[tile].y));
         for (int i = 0; i < highlightedTiles.Length; i++)
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
             {
-                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() != null)
+                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
                 {
                     BoardMap[i][j].Highlight();
                 }
@@ -168,24 +175,50 @@ public class Board : MonoBehaviour
 
     private bool[][] ClipMovesToBoard(bool[][] board, Vector2Int position)
     {
-        Debug.Log($"{position}");
         var clippedBoard = new bool[EmptyBoardMap.Length][];
-        for (int i = 0; i < EmptyBoardMap.Length; i++)
+        for (int i = 0; i < board.Length; i++)
         {
             clippedBoard[i] = new bool[board[i].Length];
+        }
+        for (int i = 0; i < EmptyBoardMap.Length; i++)
+        {
             for (int j = 0; j < EmptyBoardMap[i].Length; j++)
             {
-                if (i + position.x >= 0 || i + position.x < board[i].Length
-                    && j + position.y >= 0 || j + position.y < board.Length)
+                var worldPosition = ConvertToMapPosition(i, j);
+                var offsetMapPosition = new Vector2Int(worldPosition.x + position.x, worldPosition.y + position.y);
+                if (!OutOfWorldCoords(offsetMapPosition))
                 {
-                    clippedBoard[i][j] = board[i][j];
-                }
-                else
-                {
-                    clippedBoard[i][j] = false;
+                    var arrayPosition = ConvertToArrayPosition(offsetMapPosition.x, offsetMapPosition.y);
+                    clippedBoard[arrayPosition.x][arrayPosition.y] = board[i][j];
                 }
             }
         }
         return clippedBoard;
+    }
+    
+    private void printArray(Tile[][] tiles)
+    {
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            string row = "[";
+            for (int j = 0; j < tiles[i].Length; j++)
+            {
+                row += $"{tiles[i][j].GetPiece().name}, ";
+            }
+            Debug.Log(row+"]");
+        }
+    }
+    
+    private void printArray(bool[][] tiles)
+    {
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            string row = "[";
+            for (int j = 0; j < tiles[i].Length; j++)
+            {
+                row += $"{tiles[i][j]}, ";
+            }
+            Debug.Log(row+"]");
+        }
     }
 }
