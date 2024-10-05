@@ -7,13 +7,26 @@ public class Tile : MonoBehaviour
 {
 
 
+
     [CanBeNull] [SerializeField] Piece _piece;
     private bool _locked;
     private bool _highlighted;
 
+
+    [SerializeField] float _pieceYOffset = 1.5f;
+
+    public void Start()
+    {
+        if (_piece != null)
+        {
+            AddPiece(_piece);
+        }
+    }
+
     public void AddPiece(Piece piece)
     {
         _piece = piece;
+        _piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
     }
 
     [CanBeNull]
@@ -45,12 +58,12 @@ public class Tile : MonoBehaviour
 
     public void HidePiece()
     {
-        
+        _piece.gameObject.SetActive(false);
     }
 
     public void UnhidePiece()
     {
-
+        _piece.gameObject.SetActive(true);
     }
 
     public void Highlight()
