@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
 
 
-    Piece _piece;
+    [CanBeNull] Piece _piece;
     bool _locked;
 
     public void AddPiece()
@@ -29,9 +30,10 @@ public class Tile : MonoBehaviour
 
     }
 
-    public void GetPiece()
+    [CanBeNull]
+    public Piece GetPiece()
     {
-
+        return _piece;
     }
 
     public void HidePiece()
