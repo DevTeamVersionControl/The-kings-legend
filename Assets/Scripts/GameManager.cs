@@ -7,15 +7,21 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-   
+
 
     private PlayerColor _playerColorTurn;
     private enum _gameState { ADDUPGRADE, ATTACKMOVE };
 
-    public enum GameLevel { MAINMENU, GAME };
+
     private enum _subState { DRAGGING, ATTACKING, NONE };
 
+    public enum GameLevel { MAINMENU, GAME };
+
     private GameLevel _currentLevel;
+
+    private _gameState _currentGameState;
+
+    private _subState _subGameState;
 
     public static GameManager Instance;
 
@@ -34,7 +40,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+
+    public void Start()
+    {
+
+            
+    }
+    // Update is called once per frames
     public void Update()
     {
     
@@ -44,6 +56,7 @@ public class GameManager : MonoBehaviour
     public void ChangeLevel(GameLevel level)
     {
         _currentLevel = level;
+        Debug.Log("changeLevel :" + _currentLevel.ToString());
         switch (level)
         {
             case GameLevel.MAINMENU:
@@ -52,6 +65,8 @@ public class GameManager : MonoBehaviour
                 break;
             case GameLevel.GAME:
                 SceneManager.LoadScene("MainGame");
+                GameInit();
+
                 break;
 
 
@@ -61,6 +76,10 @@ public class GameManager : MonoBehaviour
     }
     public void OnNextTurn(PlayerColor color)
     {
+        Debug.Log("Player turn : " + _playerColorTurn.ToString());
+
+
+
 
     }
 
@@ -70,7 +89,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnEndTurn()
     {
-
+        
     }
 
     public void OnDrag(Tile tile)
@@ -92,5 +111,12 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void GameInit()
+    {
+        Debug.Log("in game Init" + _currentLevel);
+        _playerColorTurn = PlayerColor.PURPLE;
+        OnNextTurn(_playerColorTurn);
+
+    }
 
 }
