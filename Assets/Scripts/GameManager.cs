@@ -5,19 +5,31 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public enum PlayerColor { GREEN, PURPLE };
+    public enum PlayerColor { GREEN, PURPLE, NONE };
 
     private PlayerColor _playerColorTurn;
     private enum _gameState { ADDUPGRADE, ATTACKMOVE };
     private enum _subState { DRAGGING, ATTACKING, NONE };
 
 
+    public static GameManager Instance;
 
-
-    public void Start()
+    public void Awake()
     {
 
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
+
+
 
 
     // Update is called once per frame
