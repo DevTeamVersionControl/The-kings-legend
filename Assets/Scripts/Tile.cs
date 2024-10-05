@@ -10,24 +10,25 @@ public class Tile : MonoBehaviour
     [CanBeNull] Piece _piece;
     bool _locked;
 
-    public void AddPiece()
+    public void AddPiece(Piece piece)
     {
-        
+        _piece = piece;
     }
 
-    public void RemovePiece()
+    [CanBeNull]
+    public Piece RemovePiece()
     {
-
+        return _piece;
     }
 
     public void Unlock()
     {
-
+        _locked = false;
     }
 
     public void Lock()
     {
-
+        _locked = true;
     }
 
     [CanBeNull]
@@ -38,12 +39,22 @@ public class Tile : MonoBehaviour
 
     public void HidePiece()
     {
-
+        
     }
 
     public void UnhidePiece()
     {
 
+    }
+
+    public void Highlight()
+    {
+        
+    }
+    
+    public void Unhighlight()
+    {
+        
     }
 
 }

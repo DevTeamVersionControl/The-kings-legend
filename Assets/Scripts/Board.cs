@@ -15,23 +15,21 @@ public class Board : MonoBehaviour
     
     public Tile[][] BoardMap;
     
-    public static readonly PlayerColor[][] EmptyBoardMap = 
-        {   new []{PlayerColor.NONE}, 
-            new []{PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE, PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE, PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE, PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE, PlayerColor.NONE},
-            new []{PlayerColor.NONE}
+    public static readonly bool[][] EmptyBoardMap = 
+        {   new []{false}, 
+            new []{false, false},
+            new []{false, false, false},
+            new []{false, false},
+            new []{false, false, false},
+            new []{false, false},
+            new []{false, false, false},
+            new []{false, false},
+            new []{false}
         };
    
     public HashSet<Tile> BoardTiles;
     public HashSet<Tile> UpgradeTiles;
     public HashSet<Tile> SoldierTiles;
-    
-    
 
     public void Start()
     {
@@ -99,5 +97,27 @@ public class Board : MonoBehaviour
     public void HasPiece(PlayerColor playerColor)
     {
 
+    }
+
+    private bool[][] ClipMovesToBoard(bool[][] board, Vector2 position)
+    {
+        var clippedBoard = new bool[EmptyBoardMap.Length][];
+        for (int i = 0; i < EmptyBoardMap.Length; i++)
+        {
+            clippedBoard[i] = new bool[board[i].Length];
+            for (int j = 0; j < EmptyBoardMap[i].Length; j++)
+            {
+                if (i + position.x >= 0 || i + position.x < board[i].Length
+                    && j + position.y >= 0 || j + position.y < board.Length)
+                {
+                    clippedBoard[i][j] = board[i][j];
+                }
+                else
+                {
+                    clippedBoard[i][j] = false;
+                }
+            }
+        }
+        return clippedBoard;
     }
 }
