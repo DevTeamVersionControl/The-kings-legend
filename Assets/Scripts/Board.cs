@@ -2,11 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
-{ 
-    public GameObject UpgradeTiles;
-    public GameObject SoldierTiles;
-    public GameObject BoardTiles;
+public class Board : MonoBehaviour
+{
+
+    [SerializeField] Tile[] _initUpgradeTiles;
+    [SerializeField] Tile[] _initSoldierTiles;
+    [SerializeField] Tile[] _initBoardTiles;
+    
+    public Tile[][] BoardMap;
+    public bool[][] SoldierBoardMap;
+    
+    public HashSet<Tile> BoardTiles;
+    public HashSet<Tile> UpgradeTiles;
+    public HashSet<Tile> SoldierTiles;
 
     public void Start()
     {
