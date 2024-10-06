@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
-    private Tile _currentlyDragging;
+    public Tile _currentlyDragging;
 
     private Dictionary<PlayerColor, int> AvailableSoldiers = new();
     
@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
 
     public static GameManager Instance;
+
+    
 
     public void Awake()
     {
@@ -90,13 +92,19 @@ public class GameManager : MonoBehaviour
     {
         Tile tile = FindTile(piece);
         _currentlyDragging = tile;
+       
+        
+
         if (!tile.GetLocked())
         {
             _board.HighlightPieceMoves(tile);
             _board.SetLock(_board.AllTiles, piece.Color, true);
             tile.SetLocked(false);
+            
+                        
+            
         }
-
+        
         Debug.Log("OnDragStart is called on the tile" + tile);
     }
 
@@ -114,6 +122,9 @@ public class GameManager : MonoBehaviour
     
     public void OnDragEnd(Tile tile)
     {
+
+        Debug.Log("just before the crash" + _currentlyDragging);
+
         if (tile != null && !_currentlyDragging.GetLocked())
         {
             _board.OnPieceMoved(_currentlyDragging, tile);
@@ -123,11 +134,13 @@ public class GameManager : MonoBehaviour
         else
         {
             _currentlyDragging.AddPiece(_currentlyDragging.GetPiece());
+            
         }
 
         _board.UnhighlightAll();
-        _currentlyDragging = null;
-        Debug.Log("OnDragEnd is called on the tile" + tile.ToString());
+
+        
+        //Debug.Log("OnDragEnd is called on the tile" + tile.ToString());
     }
 
     public void OnClick(Tile tile)
@@ -164,12 +177,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("in game Init" + _currentLevel);
         _playerColorTurn = PlayerColor.GREEN;
         _board.OnNextTurn(_playerColorTurn);
+
         //AddStartingPieces(_playerColorTurn);
-        
+
         // _playerColorTurn = PlayerColor.PURPLE;
         // OnNextTurn(_playerColorTurn);
         // AvailableSoldiers.Add(PlayerColor.GREEN, 3);
 
+        AvailableSoldiers.Add(PlayerColor.GREEN, 3);
+        AvailableSoldiers.Add(PlayerColor.PURPLE, 3);
     }
 
     private Dictionary<PlayerColor, Vector2Int[]> startingTilesDict = new()
@@ -178,6 +194,8 @@ public class GameManager : MonoBehaviour
         { PlayerColor.PURPLE, new[] { new Vector2Int(2, 2), new Vector2Int(4, 2), new Vector2Int(6, 2) } }
     };
 
+
+    
     // private void AddStartingPieces(PlayerColor color)
     // {
     //     AvailableSoldiers.Add(color, 3);
