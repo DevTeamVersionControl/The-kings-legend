@@ -51,17 +51,50 @@ public class Board : MonoBehaviour
         GameManager.Instance.GameInit(this);
     }
 
-    private Vector2Int ConvertToMapPosition(int i, int j)
+    public static Vector2Int ConvertToMapPosition(Vector2Int position)
     {
-        return new Vector2Int(j-EmptyBoardMap[i].Length/2, EmptyBoardMap.Length/2-i);
+        return new Vector2Int(position.y-EmptyBoardMap[position.x].Length/2, EmptyBoardMap.Length/2-position.x);
     }
     
-    private Vector2Int ConvertToArrayPosition(int x, int y)
+    public static Vector2Int ConvertMapToRealPosition(Vector2Int position)
     {
-        return new Vector2Int(EmptyBoardMap.Length/2-y, x+EmptyBoardMap[EmptyBoardMap.Length/2-y].Length/2);
+        Vector2Int realPosition = new Vector2Int(position.x, position.y);
+        if (position.x == 0 && Math.Abs(position.y)%2==1)
+        {
+            realPosition = new Vector2Int(1, position.y);
+        } else if (position.x == 1)
+        {
+            realPosition = new Vector2Int(2, position.y);
+        } else if (position.x == -1 && Math.Abs(position.y) % 2 == 0)
+        {
+            realPosition = new Vector2Int(-2, position.y);
+        }
+        return realPosition;
+    }
+    
+    public static Vector2Int ConvertRealToMapPosition(Vector2Int position)
+    {
+        Vector2Int mapPosition = new Vector2Int(position.x, position.y);
+        if (position.x == 1)
+        {
+            mapPosition = new Vector2Int(0, position.y);
+        } else if (position.x == 2)
+        {
+            mapPosition = new Vector2Int(1, position.y);
+        } else if (position.x == -2)
+        {
+            mapPosition = new Vector2Int(-1, position.y);
+        }
+        return mapPosition;
+    }
+    
+    public static Vector2Int ConvertToArrayPosition(Vector2Int position)
+    {
+        
+        return new Vector2Int(EmptyBoardMap.Length/2-position.y, position.x+EmptyBoardMap[EmptyBoardMap.Length/2-position.y].Length/2);
     }
 
-    private bool OutOfWorldCoords(Vector2Int position)
+    public static bool OutOfWorldCoords(Vector2Int position)
     {
         int i = EmptyBoardMap.Length / 2 - position.y;
         if (i < 0 || i >= EmptyBoardMap.Length)
@@ -142,7 +175,7 @@ public class Board : MonoBehaviour
         var piece = startingTile.GetPiece();
         if (BoardTiles.Contains(startingTile))
         {
-            var highlightedTiles = ClipMovesToBoard(piece.Movement, ConvertToMapPosition(_positions[startingTile].x, _positions[startingTile].y));
+            var highlightedTiles = ClipMovesToBoard(piece.Movement, ConvertToMapPosition(_positions[startingTile]));
             for (int i = 0; i < highlightedTiles.Length; i++)
             {
                 for (int j = 0; j < highlightedTiles[i].Length; j++)
@@ -204,7 +237,7 @@ public class Board : MonoBehaviour
     public void HighlightPieceAttack(Tile startingTile)
     {
         var piece = startingTile.GetPiece();
-        var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[startingTile].x, _positions[startingTile].y));
+        var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[startingTile]));
         for (int i = 0; i < highlightedTiles.Length; i++)
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
@@ -234,8 +267,9 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private bool[][] ClipMovesToBoard(bool[][] board, Vector2Int position)
+    bool[][] ClipMovesToBoard(bool[][] board, Vector2Int position)
     {
+        position = Board.ConvertMapToRealPosition(position);
         var clippedBoard = new bool[EmptyBoardMap.Length][];
         for (int i = 0; i < board.Length; i++)
         {
@@ -245,11 +279,16 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < EmptyBoardMap[i].Length; j++)
             {
-                var worldPosition = ConvertToMapPosition(i, j);
-                var offsetMapPosition = new Vector2Int(worldPosition.x + position.x, worldPosition.y + position.y);
-                if (!OutOfWorldCoords(offsetMapPosition))
+                var realPosition = Board.ConvertMapToRealPosition(Board.ConvertToMapPosition(new Vector2Int(i, j)));
+                var offsetMapPosition = realPosition + position;
+                Debug.Log($"i:{i} j:{j}");
+                Debug.Log($"realPosition:{realPosition}");
+                Debug.Log("offset : "+offsetMapPosition);
+                var mapPosition = Board.ConvertRealToMapPosition(offsetMapPosition);
+                Debug.Log("map : "+mapPosition);
+                if (!Board.OutOfWorldCoords(mapPosition))
                 {
-                    var arrayPosition = ConvertToArrayPosition(offsetMapPosition.x, offsetMapPosition.y);
+                    var arrayPosition = Board.ConvertToArrayPosition(mapPosition);
                     clippedBoard[arrayPosition.x][arrayPosition.y] = board[i][j];
                 }
             }
