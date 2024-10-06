@@ -15,8 +15,9 @@ public class Tile : MonoBehaviour
 
     [SerializeField] Material _materialHighlight;
     [SerializeField] Material _materialBase;
+    MeshRenderer _meshRenderer;
 
-    [SerializeField] float _pieceYOffset = 1.5f;
+    float _pieceYOffset = .5f;
 
     public void Start()
     {
@@ -24,7 +25,7 @@ public class Tile : MonoBehaviour
         {
             AddPiece(_piece);
         }
-        
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void AddPiece(Piece piece)
@@ -81,13 +82,13 @@ public class Tile : MonoBehaviour
     public void Highlight()
     {
         _highlighted = true;
-        gameObject.GetComponent<MeshRenderer>().materials[0] = _materialHighlight;
+        _meshRenderer.SetMaterials(new() { _materialHighlight, _meshRenderer.materials[1] });
     }
     
     public void Unhighlight()
     {
         _highlighted = false;
-        gameObject.GetComponent<MeshRenderer>().materials[0] = _materialBase;
+        _meshRenderer.SetMaterials(new() { _materialBase, _meshRenderer.materials[1] });
     }
 
     public bool IsHighlighted()

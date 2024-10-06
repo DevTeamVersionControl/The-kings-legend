@@ -14,12 +14,16 @@ public class MouseInteraction : MonoBehaviour
 
     private float dragThreshold = 10f;
 
-    [SerializeField] GameObject _piece;
-
     [SerializeField] float _dragHeightOffset;
 
-    public TileUnityEvent  MovePiece;
+    public TileUnityEvent StopMovePiece;
+    public PieceUnityEvent StartMovePiece;
 
+    public void Start()
+    {
+        StartMovePiece = new PieceUnityEvent();
+        StopMovePiece = new TileUnityEvent();
+    }
     private void OnMouseDown()
     {
         mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
@@ -33,6 +37,10 @@ public class MouseInteraction : MonoBehaviour
         isDragging = false;
 
         mouseDownPosition = Input.mousePosition;
+        
+        Piece piece = gameObject.GetComponent<Piece>();
+        
+        StartMovePiece.Invoke(piece);
 
     }
     
@@ -48,22 +56,17 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        int layerMask = 1 << LayerMask.NameToLayer("Board");
+        int layerOutsideBoard = 1 << LayerMask.NameToLayer("OutsideBoard");
 
-        if (Vector3.Distance(mouseDownPosition, Input.mousePosition) > dragThreshold)
+        if (!isDragging && Vector3.Distance(mouseDownPosition, Input.mousePosition) > dragThreshold)
         {
             isDragging = true;
-
-           // Debug.Log("dragging");
         }
 
         if(isDragging) { 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
-        int layerMask = 1 << LayerMask.NameToLayer("Board");
-        int layerOutsideBoard = 1 << LayerMask.NameToLayer("OutsideBoard");
-
- 
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerOutsideBoard))   
         {
@@ -75,7 +78,6 @@ public class MouseInteraction : MonoBehaviour
         }
         else
         {
-            Debug.DrawLine(Camera.main.transform.position, hit.transform.position);
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
            // Debug.Log("Did not Hit");
             transform.position = GetMouseWorldPos() + mouseOffset;
@@ -89,8 +91,7 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseUp()
     {
-
-
+        Tile TileDrop = null;
         if (isDragging) { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -102,9 +103,7 @@ public class MouseInteraction : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 //Debug.Log(hit.transform.name);
                 //Debug.Log("hit");
-                Tile TileDrop = hit.transform.GetComponent<Tile>();
-                
-                MovePiece.Invoke(TileDrop);
+                TileDrop = hit.transform.GetComponent<Tile>();
 
                 //Debug.Log("Mouse Position" + dropZone.ToString());
             }
@@ -112,13 +111,12 @@ public class MouseInteraction : MonoBehaviour
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
                // Debug.Log("Did not Hit");
-            }    
+            }  
+            StopMovePiece.Invoke(TileDrop);
 
-        }
-
-        else
+        } else
         {
-           // Debug.Log("this is a click");
+            
         }
 
     }
