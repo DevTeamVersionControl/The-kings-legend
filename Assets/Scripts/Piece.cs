@@ -29,7 +29,7 @@ public class Piece : MonoBehaviour
     
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
-    
+
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
         new []{false, false},
@@ -55,7 +55,6 @@ public class Piece : MonoBehaviour
     
     [SerializeField] GameObject _knightPrefabGreen;
     [SerializeField] GameObject _knightPrefabPurple;
-
     static readonly bool[][] KnightMovement = 
     {   new []{true}, 
         new []{true, true},
@@ -79,9 +78,8 @@ public class Piece : MonoBehaviour
         new []{false}
     };
     
-    [SerializeField] GameObject _magePrefaGreen;
+    [SerializeField] GameObject _magePrefabGreen;
     [SerializeField] GameObject _magePrefabPurple;
-
     static readonly bool[][] MageMovement = 
     {   new []{false}, 
         new []{false, false},
@@ -107,7 +105,6 @@ public class Piece : MonoBehaviour
     
     [SerializeField] GameObject _legendPrefabGreen;
     [SerializeField] GameObject _legendPrefabPurple;
-
     static readonly bool[][] LegendAttack = 
     {   new []{true}, 
         new []{true, true},
@@ -153,36 +150,33 @@ public class Piece : MonoBehaviour
     {
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
-        
-
-	if(Color == GREEN){
-        MeshMap = new ()
+        if (Color == PlayerColor.GREEN)
         {
-            {PieceType.SOLDIER, _soldierPrefabGreen},
-            {PieceType.MAGE, _magePrefabGreen},
-            {PieceType.KNIGHT, _knightPrefabGreen},
-            {PieceType.LEGEND, _legendPrefabGreen}
-	}
-	_mesh?.SetActive(false);
-        _mesh = MeshMap[Type];
-        _mesh.SetActive(true);
-	}
-
-	else if(Color == PURPLE){
-	MeshMap = new (){
-            {PieceType.SOLDIER, _soldierPrefabPurple},
-            {PieceType.MAGE, _magePrefabPurple},s
-            {PieceType.KNIGHT, _knightPrefabPurple},
-            {PieceType.LEGEND, _legendPrefabPurple}
-	}
-	_mesh?.SetActive(false);
-        _mesh = MeshMap[Type];
-        _mesh.SetActive(true);
-	}
-
-        };
+            MeshMap = new ()
+            {
+                {PieceType.SOLDIER, _soldierPrefabGreen},
+                {PieceType.MAGE, _magePrefabGreen},
+                {PieceType.KNIGHT, _knightPrefabGreen},
+                {PieceType.LEGEND, _legendPrefabGreen}
+            };
+        }
+        else if (Color == PlayerColor.PURPLE)
+        {
+            MeshMap = new()
+            {
+                { PieceType.SOLDIER, _soldierPrefabGreen },
+                { PieceType.MAGE, _magePrefabGreen },
+                { PieceType.KNIGHT, _knightPrefabGreen },
+                { PieceType.LEGEND, _legendPrefabGreen }
+            };
+        }
         
-
+        {
+            
+        };
+        _mesh?.SetActive(false);
+        _mesh = MeshMap[Type];
+        _mesh.SetActive(true);
         SetFreeze(true);
 
         OnCanBecomeLegend = new UnityEvent();

@@ -18,10 +18,10 @@ MonoBehaviour:
     m_Value: 4
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.491
   response:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.473
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb60a22f311433c4c962b888d1393f88, type: 3}
   m_Name: PaniniProjection
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   distance:
     m_OverrideState: 1
     m_Value: 0.1
@@ -428,7 +428,7 @@ MonoBehaviour:
     m_Value: 5
   focalLength:
     m_OverrideState: 1
-    m_Value: 200
+    m_Value: 150
   bladeCount:
     m_OverrideState: 0
     m_Value: 5
