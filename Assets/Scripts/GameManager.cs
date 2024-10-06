@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject game;
 
     private Tile _currentlyDragging;
+    
+    public static event Action changeTurn;
+
 
     public static GameManager Instance;
 
@@ -72,6 +76,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         _board.OnNextTurn(color);
+
+        changeTurn?.Invoke();
     }
 
     public void OnPieceKilled()
