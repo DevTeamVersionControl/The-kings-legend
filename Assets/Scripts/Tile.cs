@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-
-
-
     [CanBeNull] [SerializeField] Piece _piece;
     private Rigidbody rigidbodyPiece;
     private bool _locked;
     private bool _highlighted;
 
-    [SerializeField] Material _materialHighlight;
-    [SerializeField] Material _materialBase;
+    [SerializeField] Material _materialMove;
+    [SerializeField] Material _materialAttack;
     MeshRenderer _meshRenderer;
 
     float _pieceYOffset = .5f;
@@ -81,16 +78,16 @@ public class Tile : MonoBehaviour
         _piece?.gameObject.SetActive(true);
     }
 
-    public void Highlight()
+    public void Highlight(bool move)
     {
         _highlighted = true;
-        _meshRenderer.SetMaterials(new() { _materialHighlight, _meshRenderer.materials[1] });
+        _meshRenderer.SetMaterials(new() { _meshRenderer.materials[0], move ? _materialMove : _materialAttack });
     }
     
     public void Unhighlight()
     {
         _highlighted = false;
-        _meshRenderer.SetMaterials(new() { _materialBase, _meshRenderer.materials[1] });
+        _meshRenderer.SetMaterials(new() { _meshRenderer.materials[0] });
     }
 
     public bool IsHighlighted()

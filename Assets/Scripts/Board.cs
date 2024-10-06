@@ -185,7 +185,7 @@ public class Board : MonoBehaviour
                 {
                     if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
                     {
-                        BoardMap[i][j].Highlight();
+                        BoardMap[i][j].Highlight(true);
                     }
                 }
             }
@@ -205,7 +205,7 @@ public class Board : MonoBehaviour
             {
                 if (tile.GetPiece() == null)
                 {
-                    tile.Highlight();
+                    tile.Highlight(true);
                 }
             }
         }
@@ -220,7 +220,7 @@ public class Board : MonoBehaviour
                     {
                         if (tile.GetPiece()?.EnemiesKilled >= 3)
                         {
-                            tile.Highlight();
+                            tile.Highlight(true);
                         }
                     }
                     else
@@ -229,7 +229,7 @@ public class Board : MonoBehaviour
                         if (tile.GetPiece().Type == Piece.PieceType.SOLDIER)
                         {
                             Debug.Log("upgrade soldier tile");
-                            tile.Highlight();
+                            tile.Highlight(true);
                         }
                     }
                 }
@@ -247,7 +247,7 @@ public class Board : MonoBehaviour
             {
                 if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
                 {
-                    BoardMap[i][j].Highlight();
+                    BoardMap[i][j].Highlight(false);
                 }
             }
         }
