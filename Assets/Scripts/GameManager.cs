@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
 
     private _subState _subGameState;
 
+    [SerializeField] GameObject _winScreen;
+
+    [SerializeField] GameObject _skipButton;
+
     [SerializeField] Board _board;
 
     [SerializeField] GameObject game;
@@ -85,7 +89,10 @@ public class GameManager : MonoBehaviour
 
     public void OnPieceKilled()
     {
-
+        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
+        {
+            OnWin(_playerColorTurn);
+        }
     }
     public void OnEndTurn()
     {
@@ -146,6 +153,7 @@ public class GameManager : MonoBehaviour
             {
                 _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
                 Debug.Log("Available soldiers " + AvailableSoldiers[_playerColorTurn]);
+                //a changer
                 if(AvailableSoldiers[_playerColorTurn] <= 0)
                 {
                     OnNextTurn(PlayerColorExtensions.GetOpposite(_playerColorTurn));
@@ -169,7 +177,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("in Onclick");
         if(_currentGameState == _gameState.ATTACKMOVE)
         {
-
+            _board.HighlightPieceAttack(tile);
             Debug.Log("this is the start of an attack");
         }
         else
@@ -217,6 +225,8 @@ public class GameManager : MonoBehaviour
 
         AvailableSoldiers.Add(PlayerColor.GREEN, 3);
         AvailableSoldiers.Add(PlayerColor.PURPLE, 3);
+
+        _skipButton.SetActive(true);
     }
 
     private Dictionary<PlayerColor, Vector2Int[]> startingTilesDict = new()
@@ -225,7 +235,31 @@ public class GameManager : MonoBehaviour
         { PlayerColor.PURPLE, new[] { new Vector2Int(2, 2), new Vector2Int(4, 2), new Vector2Int(6, 2) } }
     };
 
+    private void OnWin(PlayerColor playerColor)
+    {
+        _skipButton.SetActive(false);
+        Debug.Log(playerColor + "has won!");
+        _winScreen.SetActive(true);
+    }
 
+    public void OnSkip()
+    {
+        if(_currentGameState == _gameState.ADDUPGRADE)
+        {
+            _currentGameState = _gameState.ATTACKMOVE;
+        }
+        else if(_currentGameState == _gameState.ATTACKMOVE)
+        {
+            OnNextTurn(PlayerColorExtensions.GetOpposite(_playerColorTurn));
+        }
+    }
+
+    public void PlayeAgain()
+    {
+        ChangeLevel(GameManager.GameLevel.GAME);
+        
+
+    }
     
     // private void AddStartingPieces(PlayerColor color)
     // {
