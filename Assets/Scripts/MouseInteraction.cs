@@ -18,6 +18,8 @@ public class MouseInteraction : MonoBehaviour
 
     [SerializeField] float _dragHeightOffset;
 
+    public TileUnityEvent MovePiece;
+
     private void OnMouseDown()
     {
         mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
@@ -100,10 +102,11 @@ public class MouseInteraction : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 //Debug.Log(hit.transform.name);
                 //Debug.Log("hit");
+                Tile TileDrop = hit.transform.GetComponent<Tile>();
+                
+                MovePiece.Invoke(TileDrop);
 
-                Vector3 dropZone = hit.transform.position;
                 //Debug.Log("Mouse Position" + dropZone.ToString());
-                Instantiate(_piece, dropZone, Quaternion.identity);
             }
             else
             {

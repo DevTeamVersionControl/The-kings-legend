@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +13,6 @@ public class GameManager : MonoBehaviour
     private PlayerColor _playerColorTurn;
     private enum _gameState { ADDUPGRADE, ATTACKMOVE };
 
-
     private enum _subState { DRAGGING, ATTACKING, NONE };
 
     public enum GameLevel { MAINMENU, GAME };
@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     private _gameState _currentGameState;
 
     private _subState _subGameState;
+
+    [SerializeField] Board board;
+
+
 
     public static GameManager Instance;
 
@@ -40,12 +44,8 @@ public class GameManager : MonoBehaviour
 
     }
 
+ 
 
-    public void Start()
-    {
-
-            
-    }
     // Update is called once per frames
     public void Update()
     {
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     public void OnDrag(Tile tile)
     {
-
+        Debug.Log("OnDrag is called on the tile" + tile.ToString());
     }
 
     public void OnClick(Tile tile)
@@ -111,6 +111,26 @@ public class GameManager : MonoBehaviour
 
     private void GameInit()
     {
+
+       GameObject boardGameObject = GameObject.Find("board");
+        board = boardGameObject.GetComponent<Board>();
+
+        foreach (Tile tile in board.BoardTiles){
+
+            tile.GetComponent<Tile>().GetPiece().GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
+        }
+
+        foreach (Tile tile in board.UpgradeTiles)
+        {
+
+            tile.GetComponent<Tile>().GetPiece().GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
+        }
+
+
+        //initialize starting tiles
+
+
+
         Debug.Log("in game Init" + _currentLevel);
         _playerColorTurn = PlayerColor.PURPLE;
         OnNextTurn(_playerColorTurn);

@@ -39,6 +39,8 @@ public class Board : MonoBehaviour
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
+
+        HighlightPieceMoves(BoardMap[2][0]);
     }
 
     private Vector2Int ConvertToMapPosition(int i, int j)

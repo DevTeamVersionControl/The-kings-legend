@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 774124519}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &115174583
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +255,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &282722195 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5499872506872629546, guid: e7beb285f2fa5014594a239781a186bd,
@@ -271,6 +277,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &301758474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e7beb285f2fa5014594a239781a186bd,
@@ -333,6 +342,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &319987236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4834184147046844406, guid: e7beb285f2fa5014594a239781a186bd,
@@ -352,6 +364,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 1084123286}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &409005406 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7882314159337030939, guid: e7beb285f2fa5014594a239781a186bd,
@@ -371,6 +386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &417406568 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3390678550765745324, guid: e7beb285f2fa5014594a239781a186bd,
@@ -390,6 +408,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &429850539 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6102026901090442619, guid: e7beb285f2fa5014594a239781a186bd,
@@ -409,6 +430,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &494611128 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5490596324850112625, guid: e7beb285f2fa5014594a239781a186bd,
@@ -428,6 +452,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 1663417941}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &513007723
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +468,7 @@ GameObject:
   - component: {fileID: 513007726}
   - component: {fileID: 513007725}
   - component: {fileID: 513007724}
+  - component: {fileID: 513007729}
   m_Layer: 0
   m_Name: Piece
   m_TagString: Untagged
@@ -548,6 +576,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &513007729
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513007723}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &528830466 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5148355624163178369, guid: e7beb285f2fa5014594a239781a186bd,
@@ -567,6 +622,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &668737942 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7707472784624110373, guid: e7beb285f2fa5014594a239781a186bd,
@@ -586,6 +644,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &774124518
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,6 +660,7 @@ GameObject:
   - component: {fileID: 774124521}
   - component: {fileID: 774124520}
   - component: {fileID: 774124519}
+  - component: {fileID: 774124524}
   m_Layer: 0
   m_Name: Piece (3)
   m_TagString: Untagged
@@ -706,6 +768,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &774124524
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774124518}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &847690892 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5363600963034612940, guid: e7beb285f2fa5014594a239781a186bd,
@@ -725,6 +814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 513007724}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &858505191
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +830,7 @@ GameObject:
   - component: {fileID: 858505194}
   - component: {fileID: 858505193}
   - component: {fileID: 858505192}
+  - component: {fileID: 858505197}
   m_Layer: 0
   m_Name: Piece (5)
   m_TagString: Untagged
@@ -845,6 +938,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &858505197
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858505191}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &937327451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2112873084975003520, guid: e7beb285f2fa5014594a239781a186bd,
@@ -864,6 +984,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 858505192}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &1084123285
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,6 +1000,7 @@ GameObject:
   - component: {fileID: 1084123288}
   - component: {fileID: 1084123287}
   - component: {fileID: 1084123286}
+  - component: {fileID: 1084123291}
   m_Layer: 0
   m_Name: Piece (1)
   m_TagString: Untagged
@@ -984,6 +1108,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1084123291
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084123285}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1181001107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3638012813081866515, guid: e7beb285f2fa5014594a239781a186bd,
@@ -1003,6 +1154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &1276088600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,6 +1170,7 @@ GameObject:
   - component: {fileID: 1276088603}
   - component: {fileID: 1276088602}
   - component: {fileID: 1276088601}
+  - component: {fileID: 1276088606}
   m_Layer: 0
   m_Name: Piece (2)
   m_TagString: Untagged
@@ -1123,6 +1278,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1276088606
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276088600}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1419336304 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -937588568859390157, guid: e7beb285f2fa5014594a239781a186bd,
@@ -1142,6 +1324,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &1608832061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6834619508167300461, guid: e7beb285f2fa5014594a239781a186bd,
@@ -1161,6 +1346,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 1276088601}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &1641842788 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 223290404201191161, guid: e7beb285f2fa5014594a239781a186bd,
@@ -1180,6 +1368,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &1663417940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,6 +1384,7 @@ GameObject:
   - component: {fileID: 1663417943}
   - component: {fileID: 1663417942}
   - component: {fileID: 1663417941}
+  - component: {fileID: 1663417946}
   m_Layer: 0
   m_Name: Piece (4)
   m_TagString: Untagged
@@ -1300,6 +1492,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1663417946
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663417940}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1664545087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6261320709255303670, guid: e7beb285f2fa5014594a239781a186bd,
@@ -1319,6 +1538,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1 &1767997637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1678,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _piece: {fileID: 0}
+  _materialHighlight: {fileID: 0}
+  _materialBase: {fileID: 0}
+  _pieceYOffset: 1.5
 --- !u!1001 &2004535801
 PrefabInstance:
   m_ObjectHideFlags: 0
