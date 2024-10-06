@@ -15,35 +15,53 @@ public class MouseInteraction : MonoBehaviour
 
     private float dragThreshold = 10f;
 
+    [SerializeField] bool isTile;
+
     [SerializeField] float _dragHeightOffset;
 
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
-    public TileUnityEvent StartAttack;
+    public PieceUnityEvent StartAttack;
+    public TileUnityEvent EndAttack;
 
     public void Start()
     {
         StartMovePiece = new PieceUnityEvent();
         StopMovePiece = new TileUnityEvent();
-        StartAttack = new TileUnityEvent();
+        StartAttack = new PieceUnityEvent();
+        EndAttack = new TileUnityEvent();
     }
     private void OnMouseDown()
     {
-        mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-
-        mouseOffset = gameObject.transform.position - GetMouseWorldPos();
-
-        //Debug.Log("Mouse is down");
-
-        //Debug.Log("mouseOffset" + mouseOffset.ToString());
-
-        isDragging = false;
-
-        mouseDownPosition = Input.mousePosition;
         
-        Piece piece = gameObject.GetComponent<Piece>();
-        
-        StartMovePiece.Invoke(piece);
+
+        if (isTile)
+        {
+            Tile tile = GetComponent<Tile>();
+            Debug.Log("this is a tile click");
+            if (tile.IsHighlighted()) {
+                Debug.Log("Mouse interaction attack");
+            EndAttack.Invoke(tile);
+            }
+        }
+        else
+        {
+            mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+
+            mouseOffset = gameObject.transform.position - GetMouseWorldPos();
+
+            Debug.Log("Mouse is down");
+
+            //Debug.Log("mouseOffset" + mouseOffset.ToString());
+
+            isDragging = false;
+
+            mouseDownPosition = Input.mousePosition;
+
+            Piece piece = gameObject.GetComponent<Piece>();
+
+            StartMovePiece.Invoke(piece);
+        }
 
     }
     
@@ -59,6 +77,11 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseDrag()
     {
+
+        if (isTile)
+        {
+            return;
+        }
         int layerMask = 1 << LayerMask.NameToLayer("Board");
         int layerOutsideBoard = 1 << LayerMask.NameToLayer("OutsideBoard");
 
@@ -94,6 +117,11 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseUp()
     {
+
+        if (isTile)
+        {
+            return;
+        }
         Debug.Log("start mouse up" + GameManager.Instance._currentlyDragging);
         Tile TileDrop = null;
         if (isDragging) {
@@ -126,18 +154,7 @@ public class MouseInteraction : MonoBehaviour
 
         {
             Debug.Log("this is a click");
-            //need to change this, only return the initial tile. should allow an other click
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            int layerMask = 1 << LayerMask.NameToLayer("Board");
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-            {
-                Debug.Log("raycast is working on click");
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                TileDrop = hit.transform.GetComponent<Tile>();
-                Debug.Log("tiledrop" + TileDrop);
-                StartAttack.Invoke(TileDrop);
-            }
+                StartAttack.Invoke(this.GetComponent<Piece>());
         }
             
 

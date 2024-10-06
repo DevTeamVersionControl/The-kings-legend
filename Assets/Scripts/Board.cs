@@ -164,11 +164,22 @@ public class Board : MonoBehaviour
         UnhighlightAll();
     }
 
-    public void OnPieceAttack(Tile endTile)
+    public void OnPieceAttack(Tile startTile, Tile endTile)
     {
         if (endTile.IsHighlighted())
         {
-            PieceKilledEvent.Invoke(endTile);
+           startTile.GetPiece().OnKill();
+           endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+        }
+        UnhighlightAll();
+    }
+    
+    public void OnPieceUpgrade(Tile startTile, Tile endTile)
+    {
+        if (endTile.IsHighlighted())
+        {
+            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+            endTile.AddPiece(startTile.RemovePiece());
         }
         UnhighlightAll();
     }
@@ -189,48 +200,52 @@ public class Board : MonoBehaviour
                     }
                 }
             }
-        } else if (SoldierTiles.Contains(startingTile))
-        {
-            var tiles = new Tile[3];
-            if (piece.Color == PlayerColor.GREEN)
-            {
-                tiles = new[]{BoardMap[2][0], BoardMap[4][0], BoardMap[6][0]};
-            }
-            else
-            {
-                tiles = new[]{BoardMap[2][2], BoardMap[4][2], BoardMap[6][2]};
-            }
+        }
+    }
 
-            foreach (var tile in tiles)
+    public void HighlightPieceSoldier(Tile startingTile)
+    {
+        Piece piece = startingTile.GetPiece();
+        var tiles = new Tile[3];
+        if (piece.Color == PlayerColor.GREEN)
+        {
+            tiles = new[]{BoardMap[2][0], BoardMap[4][0], BoardMap[6][0]};
+        }
+        else
+        {
+            tiles = new[]{BoardMap[2][2], BoardMap[4][2], BoardMap[6][2]};
+        }
+
+        foreach (var tile in tiles)
+        {
+            if (tile.GetPiece() == null)
             {
-                if (tile.GetPiece() == null)
-                {
-                    tile.Highlight(true);
-                }
+                tile.Highlight(true);
             }
         }
-        else if (UpgradeTiles.Contains(startingTile))
+    }
+
+    public void HighlightPieceUpgrade(Tile startingTile)
+    {
+        Piece piece = startingTile.GetPiece();
+        foreach (var tile in BoardTiles)
         {
-            Debug.Log("upgrade");
-            foreach (var tile in BoardTiles)
+            if (tile.GetPiece() != null && !tile.GetLocked())
             {
-                if (tile.GetPiece() != null && !tile.GetLocked())
+                if (piece.Type == Piece.PieceType.LEGEND)
                 {
-                    if (piece.Type == Piece.PieceType.LEGEND)
+                    if (tile.GetPiece()?.EnemiesKilled >= 3)
                     {
-                        if (tile.GetPiece()?.EnemiesKilled >= 3)
-                        {
-                            tile.Highlight(true);
-                        }
+                        tile.Highlight(true);
                     }
-                    else
+                }
+                else
+                {
+                    Debug.Log("upgrade unlocked tile");
+                    if (tile.GetPiece().Type == Piece.PieceType.SOLDIER)
                     {
-                        Debug.Log("upgrade unlocked tile");
-                        if (tile.GetPiece().Type == Piece.PieceType.SOLDIER)
-                        {
-                            Debug.Log("upgrade soldier tile");
-                            tile.Highlight(true);
-                        }
+                        Debug.Log("upgrade soldier tile");
+                        tile.Highlight(true);
                     }
                 }
             }
@@ -239,6 +254,8 @@ public class Board : MonoBehaviour
 
     public void HighlightPieceAttack(Tile startingTile)
     {
+        if (startingTile.GetLocked())
+            return;
         var piece = startingTile.GetPiece();
         var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[startingTile]));
         for (int i = 0; i < highlightedTiles.Length; i++)

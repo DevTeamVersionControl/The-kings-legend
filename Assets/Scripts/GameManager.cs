@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
     }
     public void OnNextTurn(PlayerColor color)
     {
+
+        changeTurn?.Invoke();
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         _board.OnNextTurn(color);
 
@@ -94,10 +96,7 @@ public class GameManager : MonoBehaviour
             OnWin(_playerColorTurn);
         }
     }
-    public void OnEndTurn()
-    {
-        changeTurn?.Invoke();
-    }
+  
 
     public void OnDragStart(Piece piece)
     {
@@ -172,11 +171,13 @@ public class GameManager : MonoBehaviour
         //Debug.Log("OnDragEnd is called on the tile" + tile.ToString());
     }
 
-    public void OnClick(Tile tile)
+    public void OnClick(Piece piece)
     {
         Debug.Log("in Onclick");
-        if(_currentGameState == _gameState.ATTACKMOVE)
+        Tile tile = FindTile(piece);
+        if (_currentGameState == _gameState.ATTACKMOVE && _board.BoardTiles.Contains(tile))
         {
+            
             _board.HighlightPieceAttack(tile);
             Debug.Log("this is the start of an attack");
         }
@@ -190,9 +191,9 @@ public class GameManager : MonoBehaviour
     {
 
     }
-    public void PotentialAttack()
+    public void PotentialAttack(Tile tile)
     {
-
+        _board.OnPieceAttack(tile, null);
     }
 
     public void GameInit(Board board)
@@ -200,14 +201,19 @@ public class GameManager : MonoBehaviour
 
         _board = board;
      
+        foreach(Tile tile in board.BoardTiles) 
+        {
+            tile.GetComponent<MouseInteraction>().EndAttack.AddListener(PotentialAttack);
+        }
         foreach (Tile tile in board.AllTiles){
-            var piece = tile.GetPiece();
+            var piece = tile.GetPiece();       
             if (piece != null)
             {
                 MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
                 interaction.StopMovePiece.AddListener(OnDragEnd);
                 interaction.StartMovePiece.AddListener(OnDragStart);
                 interaction.StartAttack.AddListener(OnClick);
+
                 piece.StartingTile = tile;
             }
         }
