@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
     public void PotentialAttack(Tile tile)
     {
         _board.OnPieceAttack(tile, _currentlyDragging);
+        attacking= false;
     }
 
     public void GameInit(Board board)
