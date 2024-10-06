@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     
     public static event Action changeTurn;
 
+    
 
     public static GameManager Instance;
 
@@ -76,6 +77,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         _board.OnNextTurn(color);
 
+
+        _currentGameState = _gameState.ADDUPGRADE;
+
         
     }
 
@@ -123,13 +127,30 @@ public class GameManager : MonoBehaviour
     public void OnDragEnd(Tile tile)
     {
 
-        Debug.Log("just before the crash" + _currentlyDragging);
+       
 
         if (tile != null && !_currentlyDragging.GetLocked())
         {
             _board.OnPieceMoved(_currentlyDragging, tile);
-            _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
-            Debug.Log("Available soldiers " + AvailableSoldiers[_playerColorTurn]);
+
+            if (_board.UpgradeTiles.Contains(_currentlyDragging)){
+                _currentGameState = _gameState.ATTACKMOVE;
+                Debug.Log("Upgraded");
+            }
+            if (_board.SoldierTiles.Contains(_currentlyDragging))
+            {
+                _currentGameState = _gameState.ATTACKMOVE;
+                Debug.Log("added a soldier");
+            }
+            else
+            {
+                _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
+                Debug.Log("Available soldiers " + AvailableSoldiers[_playerColorTurn]);
+                if(AvailableSoldiers[_playerColorTurn] <= 0)
+                {
+                    OnNextTurn(PlayerColorExtensions.GetOpposite(_playerColorTurn));
+                }
+            }
         }
         else
         {
@@ -145,7 +166,16 @@ public class GameManager : MonoBehaviour
 
     public void OnClick(Tile tile)
     {
-        
+        Debug.Log("in Onclick");
+        if(_currentGameState == _gameState.ATTACKMOVE)
+        {
+
+            Debug.Log("this is the start of an attack");
+        }
+        else
+        {
+            Debug.Log("cant attack");
+        }
     }
 
     public void CancelAttack()
@@ -169,6 +199,7 @@ public class GameManager : MonoBehaviour
                 MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
                 interaction.StopMovePiece.AddListener(OnDragEnd);
                 interaction.StartMovePiece.AddListener(OnDragStart);
+                interaction.StartAttack.AddListener(OnClick);
                 piece.StartingTile = tile;
             }
         }
@@ -176,7 +207,7 @@ public class GameManager : MonoBehaviour
         //initialize starting tiles
         Debug.Log("in game Init" + _currentLevel);
         _playerColorTurn = PlayerColor.GREEN;
-        _board.OnNextTurn(_playerColorTurn);
+        OnNextTurn(_playerColorTurn);
 
         //AddStartingPieces(_playerColorTurn);
 

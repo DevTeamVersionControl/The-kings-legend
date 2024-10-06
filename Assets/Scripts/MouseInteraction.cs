@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class MouseInteraction : MonoBehaviour
@@ -18,11 +19,13 @@ public class MouseInteraction : MonoBehaviour
 
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
+    public TileUnityEvent StartAttack;
 
     public void Start()
     {
         StartMovePiece = new PieceUnityEvent();
         StopMovePiece = new TileUnityEvent();
+        StartAttack = new TileUnityEvent();
     }
     private void OnMouseDown()
     {
@@ -117,13 +120,26 @@ public class MouseInteraction : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
                // Debug.Log("Did not Hit");
             }
-            Debug.Log("just before" + GameManager.Instance._currentlyDragging);
+            
             StopMovePiece.Invoke(TileDrop);
         } else
 
         {
-            
+            Debug.Log("this is a click");
+            //need to change this, only return the initial tile. should allow an other click
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Board");
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+            {
+                Debug.Log("raycast is working on click");
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                TileDrop = hit.transform.GetComponent<Tile>();
+                Debug.Log("tiledrop" + TileDrop);
+                StartAttack.Invoke(TileDrop);
+            }
         }
+            
 
     }
 
