@@ -166,10 +166,11 @@ public class Board : MonoBehaviour
 
     public void OnPieceAttack(Tile startTile, Tile endTile)
     {
-        if (endTile.IsHighlighted())
+        if (endTile != null && endTile.IsHighlighted())
         {
            startTile.GetPiece().OnKill();
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+            startTile.SetLocked(true);
         }
         UnhighlightAll();
     }
@@ -262,7 +263,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
             {
-                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
+                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece()?.Color != startingTile.GetPiece().Color)
                 {
                     BoardMap[i][j].Highlight(false);
                 }
