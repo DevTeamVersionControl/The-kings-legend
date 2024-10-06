@@ -25,7 +25,8 @@ public class Piece : MonoBehaviour
     public int EnemiesKilled;
     const int ENEMIES_FOR_LEGEND = 3;
     
-    [SerializeField] GameObject _soldierPrefab;
+    [SerializeField] GameObject _soldierPrefabGreen;
+    [SerializeField] GameObject _soldierPrefabPurple;
     
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
@@ -50,8 +51,9 @@ public class Piece : MonoBehaviour
         new []{false}
     };
     
-    [SerializeField] GameObject _knightPrefab;
-    
+    [SerializeField] GameObject _knightPrefabGreen;
+    [SerializeField] GameObject _knightPrefabPurple;
+
     static readonly bool[][] KnightMovement = 
     {   new []{true}, 
         new []{true, true},
@@ -75,8 +77,9 @@ public class Piece : MonoBehaviour
         new []{false}
     };
     
-    [SerializeField] GameObject _magePrefab;
-    
+    [SerializeField] GameObject _magePrefaGreen;
+    [SerializeField] GameObject _magePrefabPurple;
+
     static readonly bool[][] MageMovement = 
     {   new []{false}, 
         new []{false, false},
@@ -100,7 +103,8 @@ public class Piece : MonoBehaviour
         new []{true}
     };
     
-    [SerializeField] GameObject _legendPrefab;
+    [SerializeField] GameObject _legendPrefabGreen;
+    [SerializeField] GameObject _legendPrefabPurple;
 
     static readonly bool[][] LegendAttack = 
     {   new []{true}, 
@@ -147,16 +151,35 @@ public class Piece : MonoBehaviour
     {
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
+        
+
+	if(Color == GREEN){
         MeshMap = new ()
         {
-            {PieceType.SOLDIER, _soldierPrefab},
-            {PieceType.MAGE, _magePrefab},
-            {PieceType.KNIGHT, _knightPrefab},
-            {PieceType.LEGEND, _legendPrefab}
-        };
-        _mesh?.SetActive(false);
+            {PieceType.SOLDIER, _soldierPrefabGreen},
+            {PieceType.MAGE, _magePrefabGreen},
+            {PieceType.KNIGHT, _knightPrefabGreen},
+            {PieceType.LEGEND, _legendPrefabGreen}
+	}
+	_mesh?.SetActive(false);
         _mesh = MeshMap[Type];
         _mesh.SetActive(true);
+	}
+
+	else if(Color == PURPLE){
+	MeshMap = new (){
+            {PieceType.SOLDIER, _soldierPrefabPurple},
+            {PieceType.MAGE, _magePrefabPurple},s
+            {PieceType.KNIGHT, _knightPrefabPurple},
+            {PieceType.LEGEND, _legendPrefabPurple}
+	}
+	_mesh?.SetActive(false);
+        _mesh = MeshMap[Type];
+        _mesh.SetActive(true);
+	}
+
+        };
+        
 
         OnCanBecomeLegend = new UnityEvent();
     }

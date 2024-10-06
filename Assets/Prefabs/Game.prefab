@@ -3974,6 +3974,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8068953160397833020}
     m_Modifications:
+    - target: {fileID: 866414067004754831, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: _knightPrefab
+      value: 
+      objectReference: {fileID: 8352229627372041984, guid: 737dd75de37c3ee409ba55761941d5aa,
+        type: 3}
+    - target: {fileID: 3063266717421630987, guid: ac9137cd5aa627042ba5d9eb27062fc8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3425278904205113565, guid: ac9137cd5aa627042ba5d9eb27062fc8,
         type: 3}
       propertyPath: m_Name

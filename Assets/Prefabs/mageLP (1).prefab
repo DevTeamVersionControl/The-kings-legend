@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3184907467288475943
+--- !u!1001 &2738803949444591590
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ebc75df89083d82469c3d53ccdba199b,
         type: 3}
       propertyPath: m_Name
-      value: mageLP
+      value: mageLP (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ebc75df89083d82469c3d53ccdba199b,
         type: 3}
@@ -87,12 +87,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7baf1d99690649141a8c74d68d5108ff, type: 2}
+      objectReference: {fileID: 2100000, guid: c0629e4eb969ec84491dcc7c2515cb43, type: 2}
     - target: {fileID: 6055772684359761619, guid: ebc75df89083d82469c3d53ccdba199b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9492507dbb5117f4c9b866f95b033310, type: 2}
+      objectReference: {fileID: 2100000, guid: 4634c8061c508e6498219627d3ca7c18, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
