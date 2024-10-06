@@ -168,16 +168,18 @@ public class Board : MonoBehaviour
     {
         if (endTile.IsHighlighted())
         {
-           
+           startTile.GetPiece().OnKill();
+           endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
         }
         UnhighlightAll();
     }
     
-    public void OnPieceUpgrade(Tile endTile)
+    public void OnPieceUpgrade(Tile startTile, Tile endTile)
     {
         if (endTile.IsHighlighted())
         {
-            PieceKilledEvent.Invoke(endTile);
+            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+            endTile.AddPiece(startTile.RemovePiece());
         }
         UnhighlightAll();
     }
