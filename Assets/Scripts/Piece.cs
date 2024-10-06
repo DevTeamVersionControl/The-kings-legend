@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Piece : MonoBehaviour
 {
+    private UnityEvent CanBecomeLegend;
     public enum PieceType
     {
         SOLDIER,
@@ -12,17 +15,18 @@ public class Piece : MonoBehaviour
         LEGEND
     };
     
-    public PlayerColor _playerColor;
+    [FormerlySerializedAs("_playerColor")] public PlayerColor Color;
     public PieceType Type;
 
     public bool[][] Movement;
     public bool[][] Attack;
+    private GameObject _mesh;
 
-    int _EnemiesKilled;
-
-    bool _hasMoved;
+    public int EnemiesKilled;
 
     const int ENEMIES_FOR_LEGEND = 3;
+    
+    [SerializeField] GameObject _soldierPrefab;
     
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
@@ -47,6 +51,8 @@ public class Piece : MonoBehaviour
         new []{false}
     };
     
+    [SerializeField] GameObject _knightPrefab;
+    
     static readonly bool[][] KnightMovement = 
     {   new []{true}, 
         new []{true, true},
@@ -69,6 +75,9 @@ public class Piece : MonoBehaviour
         new []{false, false},
         new []{false}
     };
+    
+    [SerializeField] GameObject _magePrefab;
+    
     static readonly bool[][] MageMovement = 
     {   new []{false}, 
         new []{false, false},
@@ -91,6 +100,8 @@ public class Piece : MonoBehaviour
         new []{true, true},
         new []{true}
     };
+    
+    [SerializeField] GameObject _legendPrefab;
 
     static readonly bool[][] LegendAttack = 
     {   new []{true}, 
@@ -130,19 +141,30 @@ public class Piece : MonoBehaviour
         {PieceType.LEGEND, LegendAttack}
     };
 
+    public Dictionary<PieceType, GameObject> MeshMap;
+
     public void Start()
     {
+        MeshMap = new ()
+        {
+            {PieceType.SOLDIER, _soldierPrefab},
+            {PieceType.MAGE, _magePrefab},
+            {PieceType.KNIGHT, _knightPrefab},
+            {PieceType.LEGEND, _legendPrefab}
+        };
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
+        _mesh?.SetActive(false);
+        _mesh = MeshMap[Type];
+        _mesh.SetActive(true);
     }
 
     public void OnKill()
     {
-        
+        if (++EnemiesKilled == ENEMIES_FOR_LEGEND)
+        {
+            CanBecomeLegend.Invoke();
+        }
     }
 
-    public void Moved()
-    {
-
-    }
 }

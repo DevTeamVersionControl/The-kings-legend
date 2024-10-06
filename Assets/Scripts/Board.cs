@@ -85,18 +85,22 @@ public class Board : MonoBehaviour
 
     public void OnNextTurn(PlayerColor playerColor)
     {
-        foreach (var tile in _initBoardTiles)
+        Tile[][] allTiles = new[] { _initBoardTiles, _initSoldierTiles, _initUpgradeTiles };
+        foreach (var tiles in allTiles)
         {
-            var piece = tile.GetPiece();
-            if (piece != null)
+            foreach (var tile in tiles)
             {
-                if (piece._playerColor == playerColor)
+                var piece = tile.GetPiece();
+                if (piece != null)
                 {
-                    tile.Unlock();
-                }
-                else
-                {
-                    tile.Lock();
+                    if (piece.Color == playerColor)
+                    {
+                        tile.Unlock();
+                    }
+                    else
+                    {
+                        tile.Lock();
+                    }
                 }
             }
         }
@@ -107,12 +111,13 @@ public class Board : MonoBehaviour
         if (endTile.IsHighlighted())
         {
             endTile.AddPiece(startTile.RemovePiece());
+            endTile.Lock();
         }
         else
         {
             startTile.UnhidePiece();
         }
-        UnHighlightAll();
+        UnhighlightAll();
     }
 
     public void OnPieceAttack(Tile endTile)
@@ -121,13 +126,74 @@ public class Board : MonoBehaviour
         {
             PieceKilledEvent.Invoke(endTile);
         }
-        UnHighlightAll();
+        UnhighlightAll();
     }
 
-    public void HighlightPieceMoves(Tile tile)
+    public void HighlightPieceMoves(Tile startingTile)
     {
-        var piece = tile.GetPiece();
-        var highlightedTiles = ClipMovesToBoard(piece.Movement, ConvertToMapPosition(_positions[tile].x, _positions[tile].y));
+        var piece = startingTile.GetPiece();
+        if (BoardTiles.Contains(startingTile))
+        {
+            var highlightedTiles = ClipMovesToBoard(piece.Movement, ConvertToMapPosition(_positions[startingTile].x, _positions[startingTile].y));
+            for (int i = 0; i < highlightedTiles.Length; i++)
+            {
+                for (int j = 0; j < highlightedTiles[i].Length; j++)
+                {
+                    if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
+                    {
+                        BoardMap[i][j].Highlight();
+                    }
+                }
+            }
+        } else if (SoldierTiles.Contains(startingTile))
+        {
+            var tiles = new Tile[3];
+            if (piece.Color == PlayerColor.GREEN)
+            {
+                tiles = new[]{BoardMap[2][0], BoardMap[4][0], BoardMap[6][0]};
+            }
+            else
+            {
+                tiles = new[]{BoardMap[2][2], BoardMap[4][2], BoardMap[6][2]};
+            }
+
+            foreach (var tile in tiles)
+            {
+                if (tile.GetPiece() == null)
+                {
+                    tile.Highlight();
+                }
+            }
+        }
+        else if (UpgradeTiles.Contains(startingTile))
+        {
+            foreach (var tile in BoardTiles)
+            {
+                if (tile.GetPiece() != null && !tile.GetLocked())
+                {
+                    if (piece.Type == Piece.PieceType.LEGEND)
+                    {
+                        if (tile.GetPiece()?.EnemiesKilled >= 3)
+                        {
+                            tile.Highlight();
+                        }
+                    }
+                    else
+                    {
+                        if (tile.GetPiece().Type == Piece.PieceType.SOLDIER)
+                        {
+                            tile.Highlight();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void HighlightPieceAttack(Tile startingTile)
+    {
+        var piece = startingTile.GetPiece();
+        var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[startingTile].x, _positions[startingTile].y));
         for (int i = 0; i < highlightedTiles.Length; i++)
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
@@ -140,23 +206,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void HighlightPieceAttack(Tile tile)
-    {
-        var piece = tile.GetPiece();
-        var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[tile].x, _positions[tile].y));
-        for (int i = 0; i < highlightedTiles.Length; i++)
-        {
-            for (int j = 0; j < highlightedTiles[i].Length; j++)
-            {
-                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
-                {
-                    BoardMap[i][j].Highlight();
-                }
-            }
-        }
-    }
-
-    private void UnHighlightAll()
+    private void UnhighlightAll()
     {
         foreach (var tile in _initBoardTiles)
         {
@@ -166,7 +216,7 @@ public class Board : MonoBehaviour
 
     public bool HasPiece(PlayerColor playerColor)
     {
-        if (_initBoardTiles.Any(t => t.GetPiece()?._playerColor == playerColor))
+        if (_initBoardTiles.Any(t => t.GetPiece()?.Color == playerColor))
         {
             return true;
         }

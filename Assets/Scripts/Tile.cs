@@ -22,8 +22,7 @@ public class Tile : MonoBehaviour
         {
             AddPiece(_piece);
         }
-
-
+        
     }
 
     public void AddPiece(Piece piece)
@@ -52,7 +51,6 @@ public class Tile : MonoBehaviour
     {
         _locked = true;
         rigidbodyPiece.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-        
 
     }
 
@@ -69,12 +67,12 @@ public class Tile : MonoBehaviour
 
     public void HidePiece()
     {
-        _piece.gameObject.SetActive(false);
+        _piece?.gameObject.SetActive(false);
     }
 
     public void UnhidePiece()
     {
-        _piece.gameObject.SetActive(true);
+        _piece?.gameObject.SetActive(true);
     }
 
     public void Highlight()
