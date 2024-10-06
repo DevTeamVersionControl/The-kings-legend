@@ -164,11 +164,11 @@ public class Board : MonoBehaviour
         UnhighlightAll();
     }
 
-    public void OnPieceAttack(Tile endTile)
+    public void OnPieceAttack(Tile startTile, Tile endTile)
     {
         if (endTile.IsHighlighted())
         {
-            PieceKilledEvent.Invoke(endTile);
+           
         }
         UnhighlightAll();
     }
