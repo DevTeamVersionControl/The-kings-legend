@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject game;
 
     
-
+    public static event Action changeTurn;
 
 
     public static GameManager Instance;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
 
 
-
+        changeTurn?.Invoke();
 
     }
 
