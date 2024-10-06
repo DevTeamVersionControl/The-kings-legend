@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
+using static Piece;
 
 public class Board : MonoBehaviour
 {
@@ -129,16 +130,25 @@ public class Board : MonoBehaviour
     public void OnNextTurn(PlayerColor playerColor)
     {
         int piecesNb = 0;
+        bool soldier = false;
         SetLock(BoardTiles, playerColor, false);
         SetLock(BoardTiles, PlayerColorExtensions.GetOpposite(playerColor), true);
         foreach (var tile in BoardTiles)
         {
             if (tile.GetPiece()?.Color == playerColor)
             {
+                if (tile.GetPiece()?.Type == Piece.PieceType.SOLDIER)
+                {
+                    soldier = true;
+                }
                 piecesNb++;
             }
         }
         Debug.Log($"Saw {piecesNb} pieces");
+        if (soldier)
+        {
+            SetLock(UpgradeTiles, playerColor, false);
+        }
 
         if (piecesNb < 3)
         {
