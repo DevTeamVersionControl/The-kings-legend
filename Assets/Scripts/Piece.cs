@@ -143,7 +143,7 @@ public class Piece : MonoBehaviour
 
     public Dictionary<PieceType, GameObject> MeshMap;
 
-    public void Start()
+    public void Awake()
     {
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];

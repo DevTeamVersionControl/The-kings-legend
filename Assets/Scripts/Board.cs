@@ -36,18 +36,14 @@ public class Board : MonoBehaviour
 
     public void Start()
     {
+        PieceKilledEvent = new TileUnityEvent();
+        CancelMoveEvent = new UnityEvent();
         FillBoardMap();
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
         UpgradeTiles = new HashSet<Tile>(_initUpgradeTiles);
-
-
-        // Vector2Int pos = ConvertToArrayPosition(-1,2);
-        //
-        // HighlightPieceMoves(BoardMap[pos.x][pos.y]);
-
+        
         GameManager.Instance.GameInit(this);
-
     }
 
     private Vector2Int ConvertToMapPosition(int i, int j)
@@ -176,6 +172,7 @@ public class Board : MonoBehaviour
         }
         else if (UpgradeTiles.Contains(startingTile))
         {
+            Debug.Log("upgrade");
             foreach (var tile in BoardTiles)
             {
                 if (tile.GetPiece() != null && !tile.GetLocked())
@@ -189,8 +186,10 @@ public class Board : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log("upgrade unlocked tile");
                         if (tile.GetPiece().Type == Piece.PieceType.SOLDIER)
                         {
+                            Debug.Log("upgrade soldier tile");
                             tile.Highlight();
                         }
                     }
@@ -215,7 +214,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void UnhighlightAll()
+    public void UnhighlightAll()
     {
         foreach (var tile in _initBoardTiles)
         {
