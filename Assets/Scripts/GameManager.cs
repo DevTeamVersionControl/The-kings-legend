@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
-    private Tile _currentlyDragging;
+    public Tile _currentlyDragging;
 
     private Dictionary<PlayerColor, int> AvailableSoldiers = new();
     
@@ -122,6 +122,9 @@ public class GameManager : MonoBehaviour
     
     public void OnDragEnd(Tile tile)
     {
+
+        Debug.Log("just before the crash" + _currentlyDragging);
+
         if (tile != null && !_currentlyDragging.GetLocked())
         {
             _board.OnPieceMoved(_currentlyDragging, tile);
@@ -135,8 +138,8 @@ public class GameManager : MonoBehaviour
         }
 
         _board.UnhighlightAll();
-       
-        _currentlyDragging = null;
+
+        
         //Debug.Log("OnDragEnd is called on the tile" + tile.ToString());
     }
 
