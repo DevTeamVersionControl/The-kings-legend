@@ -312,11 +312,7 @@ public class Board : MonoBehaviour
             {
                 var realPosition = Board.ConvertMapToRealPosition(Board.ConvertToMapPosition(new Vector2Int(i, j)));
                 var offsetMapPosition = realPosition + position;
-                Debug.Log($"i:{i} j:{j}");
-                Debug.Log($"realPosition:{realPosition}");
-                Debug.Log("offset : "+offsetMapPosition);
                 var mapPosition = Board.ConvertRealToMapPosition(offsetMapPosition);
-                Debug.Log("map : "+mapPosition);
                 if (!Board.OutOfWorldCoords(mapPosition))
                 {
                     var arrayPosition = Board.ConvertToArrayPosition(mapPosition);
