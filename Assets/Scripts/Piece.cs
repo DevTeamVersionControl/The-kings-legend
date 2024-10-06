@@ -14,7 +14,9 @@ public class Piece : MonoBehaviour
         MAGE,
         LEGEND
     };
-    
+
+    private bool freeze;
+
     [FormerlySerializedAs("_playerColor")] public PlayerColor Color;
     public PieceType Type;
 
@@ -181,6 +183,8 @@ public class Piece : MonoBehaviour
         };
         
 
+        SetFreeze(true);
+
         OnCanBecomeLegend = new UnityEvent();
     }
 
@@ -195,6 +199,19 @@ public class Piece : MonoBehaviour
     public bool CanBecomeLegend()
     {
         return EnemiesKilled >= ENEMIES_FOR_LEGEND;
+    }
+
+    public void SetFreeze(bool freeze)
+    {
+        this.freeze= freeze;
+        if (freeze)
+        {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
 
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
+using static Piece;
 
 public class Board : MonoBehaviour
 {
@@ -129,16 +130,25 @@ public class Board : MonoBehaviour
     public void OnNextTurn(PlayerColor playerColor)
     {
         int piecesNb = 0;
+        bool soldier = false;
         SetLock(BoardTiles, playerColor, false);
         SetLock(BoardTiles, PlayerColorExtensions.GetOpposite(playerColor), true);
         foreach (var tile in BoardTiles)
         {
             if (tile.GetPiece()?.Color == playerColor)
             {
+                if (tile.GetPiece()?.Type == Piece.PieceType.SOLDIER)
+                {
+                    soldier = true;
+                }
                 piecesNb++;
             }
         }
         Debug.Log($"Saw {piecesNb} pieces");
+        if (soldier)
+        {
+            SetLock(UpgradeTiles, playerColor, false);
+        }
 
         if (piecesNb < 3)
         {
@@ -166,10 +176,11 @@ public class Board : MonoBehaviour
 
     public void OnPieceAttack(Tile startTile, Tile endTile)
     {
-        if (endTile.IsHighlighted())
+        if (endTile != null && endTile.IsHighlighted())
         {
            startTile.GetPiece().OnKill();
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+            startTile.SetLocked(true);
         }
         UnhighlightAll();
     }
@@ -262,7 +273,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
             {
-                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
+                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece()?.Color != startingTile.GetPiece().Color)
                 {
                     BoardMap[i][j].Highlight(false);
                 }
