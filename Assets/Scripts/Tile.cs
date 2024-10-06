@@ -41,7 +41,7 @@ public class Tile : MonoBehaviour
     [CanBeNull]
     public Piece RemovePiece()
     {
-
+        
         return _piece;
     }
 

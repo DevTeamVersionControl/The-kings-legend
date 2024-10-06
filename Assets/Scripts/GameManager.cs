@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         _board.OnNextTurn(color);
 
-        changeTurn?.Invoke();
+        
     }
 
     public void OnPieceKilled()
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnEndTurn()
     {
-        
+        changeTurn?.Invoke();
     }
 
     public void OnDragStart(Piece piece)
@@ -96,7 +96,22 @@ public class GameManager : MonoBehaviour
         if (!tile.GetLocked())
         {
             _board.HighlightPieceMoves(tile);
+            Debug.Log(_board._currentPlayerpieceTiles);
+            if (_board._currentPlayerpieceTiles.Contains(tile))
+            {
+
+                
+                _board._currentPlayerpieceTiles.Remove(tile);
+                
+                foreach (Tile tiles in _board._currentPlayerpieceTiles)
+                {
+                    tiles.Lock();
+                    Debug.Log(tiles + "is locked");
+                }
+                
+            }
         }
+        
         Debug.Log("OnDragStart is called on the tile" + tile);
     }
 
@@ -163,9 +178,14 @@ public class GameManager : MonoBehaviour
         foreach (Tile tile in board.UpgradeTiles)
         {
 
-            Debug.Log("getPiece: " + tile.GetPiece());
-            Debug.Log("all: " + tile.GetPiece()?.GetComponent<MouseInteraction>());
-           // tile.GetPiece()?.GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
+            var interaction = tile.GetPiece()?.GetComponent<MouseInteraction>(); ;
+            if(interaction != null)
+            {
+                interaction.StopMovePiece.AddListener(OnDragEnd);
+                interaction.StartMovePiece.AddListener(OnDragStart);
+            }
+           
+           
         }
 
 

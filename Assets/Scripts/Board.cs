@@ -34,6 +34,8 @@ public class Board : MonoBehaviour
     public HashSet<Tile> SoldierTiles;
     private Dictionary<Tile, Vector2Int> _positions; 
 
+    public List<Tile> _currentPlayerpieceTiles;
+
     public void Start()
     {
         PieceKilledEvent = new TileUnityEvent();
@@ -90,6 +92,7 @@ public class Board : MonoBehaviour
 
     public void OnNextTurn(PlayerColor playerColor)
     {
+        _currentPlayerpieceTiles.Clear();
         Tile[][] allTiles = new[] { _initBoardTiles, _initSoldierTiles, _initUpgradeTiles };
         foreach (var tiles in allTiles)
         {
@@ -101,6 +104,8 @@ public class Board : MonoBehaviour
                     if (piece.Color == playerColor)
                     {
                         tile.Unlock();
+                        _currentPlayerpieceTiles.Add(tile);
+                        Debug.Log("tiles of player one" + tile);
                     }
                     else
                     {
@@ -109,6 +114,10 @@ public class Board : MonoBehaviour
                 }
             }
         }
+        foreach (Tile tile in _currentPlayerpieceTiles)
+        {
+            Debug.Log(tile);
+        }
     }
 
     public void OnPieceMoved(Tile startTile, Tile endTile)
@@ -116,6 +125,7 @@ public class Board : MonoBehaviour
         if (endTile.IsHighlighted())
         {
             endTile.AddPiece(startTile.RemovePiece());
+            
             endTile.Lock();
         }
         else
