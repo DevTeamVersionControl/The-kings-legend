@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class Piece : MonoBehaviour
 {
-    private UnityEvent CanBecomeLegend;
+    private UnityEvent OnCanBecomeLegend;
     public enum PieceType
     {
         SOLDIER,
@@ -23,7 +23,6 @@ public class Piece : MonoBehaviour
     private GameObject _mesh;
 
     public int EnemiesKilled;
-
     const int ENEMIES_FOR_LEGEND = 3;
     
     [SerializeField] GameObject _soldierPrefab;
@@ -142,6 +141,7 @@ public class Piece : MonoBehaviour
     };
 
     public Dictionary<PieceType, GameObject> MeshMap;
+    public Tile StartingTile { set; get; }
 
     public void Awake()
     {
@@ -157,14 +157,21 @@ public class Piece : MonoBehaviour
         _mesh?.SetActive(false);
         _mesh = MeshMap[Type];
         _mesh.SetActive(true);
+
+        OnCanBecomeLegend = new UnityEvent();
     }
 
     public void OnKill()
     {
         if (++EnemiesKilled == ENEMIES_FOR_LEGEND)
         {
-            CanBecomeLegend.Invoke();
+            OnCanBecomeLegend.Invoke();
         }
+    }
+
+    public bool CanBecomeLegend()
+    {
+        return EnemiesKilled >= ENEMIES_FOR_LEGEND;
     }
 
 }

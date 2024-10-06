@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject game;
 
     private Tile _currentlyDragging;
+
+    private Dictionary<PlayerColor, int> AvailableSoldiers = new();
     
     public static event Action changeTurn;
 
@@ -35,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-
         if (Instance == null)
         {
             Instance = this;
@@ -96,37 +93,22 @@ public class GameManager : MonoBehaviour
         if (!tile.GetLocked())
         {
             _board.HighlightPieceMoves(tile);
-            Debug.Log(_board._currentPlayerpieceTiles);
-            if (_board._currentPlayerpieceTiles.Contains(tile))
-            {
-
-                
-                _board._currentPlayerpieceTiles.Remove(tile);
-                
-                foreach (Tile tiles in _board._currentPlayerpieceTiles)
-                {
-                    tiles.Lock();
-                    Debug.Log(tiles + "is locked");
-                }
-                
-            }
+            _board.SetLock(_board.AllTiles, piece.Color, true);
+            tile.SetLocked(false);
         }
-        
+
         Debug.Log("OnDragStart is called on the tile" + tile);
     }
 
     private Tile FindTile(Piece piece)
     {
-        List<List<Tile>> lists = new() {_board.BoardTiles.ToList(), _board.SoldierTiles.ToList(),_board.UpgradeTiles.ToList()};
-        foreach (var list in lists)
+        foreach (var tile in _board.AllTiles)
         {
-            foreach (var tile in list)
-            {
-                Piece pieceToCheck = tile.GetPiece();
-                if (tile.GetPiece() != null && pieceToCheck == piece)
-                    return tile;
-            }
+            Piece pieceToCheck = tile.GetPiece();
+            if (tile.GetPiece() != null && pieceToCheck == piece)
+                return tile;
         }
+
         return null;
     }
     
@@ -135,7 +117,8 @@ public class GameManager : MonoBehaviour
         if (tile != null && !_currentlyDragging.GetLocked())
         {
             _board.OnPieceMoved(_currentlyDragging, tile);
-            OnNextTurn(PlayerColor.GREEN);
+            _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
+            Debug.Log("Available soldiers " + AvailableSoldiers[_playerColorTurn]);
         }
         else
         {
@@ -166,37 +149,43 @@ public class GameManager : MonoBehaviour
 
         _board = board;
      
-        foreach (Tile tile in board.SoldierTiles){
-            var interaction = tile.GetPiece()?.GetComponent<MouseInteraction>();
-            if (interaction != null)
+        foreach (Tile tile in board.AllTiles){
+            var piece = tile.GetPiece();
+            if (piece != null)
             {
+                MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
                 interaction.StopMovePiece.AddListener(OnDragEnd);
                 interaction.StartMovePiece.AddListener(OnDragStart);
+                piece.StartingTile = tile;
             }
         }
-
-        foreach (Tile tile in board.UpgradeTiles)
-        {
-
-            var interaction = tile.GetPiece()?.GetComponent<MouseInteraction>(); ;
-            if(interaction != null)
-            {
-                interaction.StopMovePiece.AddListener(OnDragEnd);
-                interaction.StartMovePiece.AddListener(OnDragStart);
-            }
-           
-           
-        }
-
 
         //initialize starting tiles
-
-
-
         Debug.Log("in game Init" + _currentLevel);
         _playerColorTurn = PlayerColor.GREEN;
-        OnNextTurn(_playerColorTurn);
+        _board.OnNextTurn(_playerColorTurn);
+        //AddStartingPieces(_playerColorTurn);
+        
+        // _playerColorTurn = PlayerColor.PURPLE;
+        // OnNextTurn(_playerColorTurn);
+        // AvailableSoldiers.Add(PlayerColor.GREEN, 3);
 
     }
+
+    private Dictionary<PlayerColor, Vector2Int[]> startingTilesDict = new()
+    {
+        { PlayerColor.GREEN, new[] { new Vector2Int(2, 0), new Vector2Int(4, 0), new Vector2Int(6, 0) } },
+        { PlayerColor.PURPLE, new[] { new Vector2Int(2, 2), new Vector2Int(4, 2), new Vector2Int(6, 2) } }
+    };
+
+    // private void AddStartingPieces(PlayerColor color)
+    // {
+    //     AvailableSoldiers.Add(color, 3);
+    //     var startingTiles = startingTilesDict[color];
+    //     for(int i = 0; i < startingTiles.Length; i++)
+    //     {
+    //         
+    //     }
+    // }
 
 }

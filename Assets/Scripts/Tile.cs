@@ -34,7 +34,7 @@ public class Tile : MonoBehaviour
         rigidbodyPiece = _piece.GetComponent<Rigidbody>();
         
         _piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
-        Lock ();
+        SetLocked(true);
         
     }
 
@@ -45,18 +45,20 @@ public class Tile : MonoBehaviour
         return _piece;
     }
 
-    public void Unlock()
+    public void SetLocked(bool locked)
     {
-        _locked = false;
-        rigidbodyPiece.constraints = RigidbodyConstraints.FreezeRotation;
+        if (locked)
+        {
+            _locked = true;
+            rigidbodyPiece.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            _locked = false;
+            rigidbodyPiece.constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
-
-    public void Lock()
-    {
-        _locked = true;
-        rigidbodyPiece.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-
-    }
+    
 
     public bool GetLocked()
     {

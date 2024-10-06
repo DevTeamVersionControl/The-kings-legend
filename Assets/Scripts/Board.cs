@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     public UnityEvent CancelMoveEvent;
     public TileUnityEvent PieceKilledEvent;
 
+    [SerializeField] Tile[] _initLegendTiles;
     [SerializeField] Tile[] _initUpgradeTiles;
     [SerializeField] Tile[] _initSoldierTiles;
     [SerializeField] Tile[] _initBoardTiles;
@@ -32,9 +33,9 @@ public class Board : MonoBehaviour
     public HashSet<Tile> BoardTiles;
     public HashSet<Tile> UpgradeTiles;
     public HashSet<Tile> SoldierTiles;
-    private Dictionary<Tile, Vector2Int> _positions; 
-
-    public List<Tile> _currentPlayerpieceTiles;
+    public HashSet<Tile> LegendTiles;
+    public List<Tile> AllTiles;
+    private Dictionary<Tile, Vector2Int> _positions;
 
     public void Start()
     {
@@ -44,6 +45,8 @@ public class Board : MonoBehaviour
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
         UpgradeTiles = new HashSet<Tile>(_initUpgradeTiles);
+        LegendTiles = new HashSet<Tile>(_initLegendTiles);
+        AllTiles = new List<Tile>(BoardTiles.Union(UpgradeTiles).Union(LegendTiles).Union(SoldierTiles));
         
         GameManager.Instance.GameInit(this);
     }
@@ -92,31 +95,22 @@ public class Board : MonoBehaviour
 
     public void OnNextTurn(PlayerColor playerColor)
     {
-        _currentPlayerpieceTiles.Clear();
-        Tile[][] allTiles = new[] { _initBoardTiles, _initSoldierTiles, _initUpgradeTiles };
-        foreach (var tiles in allTiles)
+        int piecesNb = 0;
+        SetLock(BoardTiles, playerColor, false);
+        SetLock(BoardTiles, PlayerColorExtensions.GetOpposite(playerColor), true);
+        foreach (var tile in BoardTiles)
         {
-            foreach (var tile in tiles)
+            if (tile.GetPiece()?.Color == playerColor)
             {
-                var piece = tile.GetPiece();
-                if (piece != null)
-                {
-                    if (piece.Color == playerColor)
-                    {
-                        tile.Unlock();
-                        _currentPlayerpieceTiles.Add(tile);
-                        Debug.Log("tiles of player one" + tile);
-                    }
-                    else
-                    {
-                        tile.Lock();
-                    }
-                }
+                piecesNb++;
             }
         }
-        foreach (Tile tile in _currentPlayerpieceTiles)
+        Debug.Log($"Saw {piecesNb} pieces");
+
+        if (piecesNb < 3)
         {
-            Debug.Log(tile);
+            Debug.Log($"Unlocked {playerColor}'s soldiers since they have less than three pieces");
+            SetLock(SoldierTiles, playerColor, false);
         }
     }
 
@@ -125,8 +119,7 @@ public class Board : MonoBehaviour
         if (endTile.IsHighlighted())
         {
             endTile.AddPiece(startTile.RemovePiece());
-            
-            endTile.Lock();
+            endTile.SetLocked(true);
         }
         else
         {
@@ -262,5 +255,16 @@ public class Board : MonoBehaviour
             }
         }
         return clippedBoard;
+    }
+
+    public void SetLock(IEnumerable<Tile> tiles, PlayerColor playerColor, bool locked)
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile.GetPiece()?.Color == playerColor)
+            {
+                tile.SetLocked(locked);
+            }
+        }
     }
 }
