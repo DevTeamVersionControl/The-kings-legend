@@ -151,7 +151,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e7beb285f2fa5014594a239781a186bd,
         type: 3}
       propertyPath: m_Name
-      value: playTray_v01
+      value: Board
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e7beb285f2fa5014594a239781a186bd,
         type: 3}

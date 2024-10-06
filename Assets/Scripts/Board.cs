@@ -41,9 +41,13 @@ public class Board : MonoBehaviour
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
 
+
         // Vector2Int pos = ConvertToArrayPosition(-1,2);
         //
         // HighlightPieceMoves(BoardMap[pos.x][pos.y]);
+
+        GameManager.Instance.GameInit(this);
+
     }
 
     private Vector2Int ConvertToMapPosition(int i, int j)

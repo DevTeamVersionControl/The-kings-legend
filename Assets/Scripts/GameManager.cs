@@ -23,7 +23,11 @@ public class GameManager : MonoBehaviour
 
     private _subState _subGameState;
 
-    [SerializeField] Board board;
+    [SerializeField] Board boardRef;
+
+    [SerializeField] GameObject game;
+
+    
 
 
 
@@ -65,7 +69,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameLevel.GAME:
                 SceneManager.LoadScene("MainGame");
-                GameInit();
+                
 
                 break;
             default:
@@ -109,12 +113,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void GameInit()
+    public void GameInit(Board board)
     {
 
-       GameObject boardGameObject = GameObject.Find("board");
-        board = boardGameObject.GetComponent<Board>();
-
+        boardRef = board;
+     
         foreach (Tile tile in board.BoardTiles){
 
             tile.GetComponent<Tile>().GetPiece().GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
