@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
+    bool attacking = false;
+
     public Tile _currentlyDragging;
 
     private Dictionary<PlayerColor, int> AvailableSoldiers = new();
@@ -78,14 +80,14 @@ public class GameManager : MonoBehaviour
     }
     public void OnNextTurn(PlayerColor color)
     {
-
+        _playerColorTurn = color;
         changeTurn?.Invoke();
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         _board.OnNextTurn(color);
 
-
-        _currentGameState = _gameState.ADDUPGRADE;
-
+        AvailableSoldiers[color] = 1;
+        _currentGameState = _gameState.ATTACKMOVE;
+        
         
     }
 
@@ -103,16 +105,23 @@ public class GameManager : MonoBehaviour
         Tile tile = FindTile(piece);
         _currentlyDragging = tile;
        
-        
-
         if (!tile.GetLocked())
         {
-            _board.HighlightPieceMoves(tile);
-            _board.SetLock(_board.AllTiles, piece.Color, true);
             tile.SetLocked(false);
-            
-                        
-            
+
+            if (_board.UpgradeTiles.Contains(tile) || _board.LegendTiles.Contains(tile))
+            {
+                _board.HighlightPieceUpgrade(tile);
+            }
+            if (_board.SoldierTiles.Contains(tile))
+            {
+                _board.HighlightPieceSoldier(tile);
+            }
+            if (_board.BoardTiles.Contains(tile))
+            {
+                _board.HighlightPieceMoves(tile);
+            }
+            piece.SetFreeze(false);
         }
         
         Debug.Log("OnDragStart is called on the tile" + tile);
@@ -132,31 +141,27 @@ public class GameManager : MonoBehaviour
     
     public void OnDragEnd(Tile tile)
     {
-
-       
-
         if (tile != null && !_currentlyDragging.GetLocked())
         {
-            _board.OnPieceMoved(_currentlyDragging, tile);
-
-            if (_board.UpgradeTiles.Contains(_currentlyDragging)){
+        
+            if (_board.UpgradeTiles.Contains(_currentlyDragging) || _board.LegendTiles.Contains(_currentlyDragging))
+            {
                 _currentGameState = _gameState.ATTACKMOVE;
+                _board.OnPieceUpgrade(_currentlyDragging, tile);
                 Debug.Log("Upgraded");
             }
             if (_board.SoldierTiles.Contains(_currentlyDragging))
             {
-                _currentGameState = _gameState.ATTACKMOVE;
-                Debug.Log("added a soldier");
-            }
-            else
-            {
                 _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
                 Debug.Log("Available soldiers " + AvailableSoldiers[_playerColorTurn]);
-                //a changer
-                if(AvailableSoldiers[_playerColorTurn] <= 0)
-                {
-                    OnNextTurn(PlayerColorExtensions.GetOpposite(_playerColorTurn));
-                }
+                _currentGameState = _gameState.ATTACKMOVE;
+                Debug.Log("added a soldier");
+                _board.OnPieceMoved(_currentlyDragging, tile);
+            }
+            if (_board.BoardTiles.Contains(_currentlyDragging))
+            {
+                tile.SetLocked(true);
+                _board.OnPieceMoved(_currentlyDragging, tile);
             }
         }
         else
@@ -177,9 +182,16 @@ public class GameManager : MonoBehaviour
         Tile tile = FindTile(piece);
         if (_currentGameState == _gameState.ATTACKMOVE && _board.BoardTiles.Contains(tile))
         {
+            if (!attacking)
+            {
+                attacking = true;
+                _board.HighlightPieceAttack(tile);
+                Debug.Log("this is the start of an attack");
+            } else
+            {
+                PotentialAttack(tile);
+            }
             
-            _board.HighlightPieceAttack(tile);
-            Debug.Log("this is the start of an attack");
         }
         else
         {
@@ -193,7 +205,8 @@ public class GameManager : MonoBehaviour
     }
     public void PotentialAttack(Tile tile)
     {
-        _board.OnPieceAttack(tile, null);
+        _board.OnPieceAttack(tile, _currentlyDragging);
+        attacking= false;
     }
 
     public void GameInit(Board board)
@@ -221,6 +234,8 @@ public class GameManager : MonoBehaviour
         //initialize starting tiles
         Debug.Log("in game Init" + _currentLevel);
         _playerColorTurn = PlayerColor.GREEN;
+        AvailableSoldiers.Add(PlayerColor.GREEN, 3);
+        AvailableSoldiers.Add(PlayerColor.PURPLE, 3);
         OnNextTurn(_playerColorTurn);
 
         //AddStartingPieces(_playerColorTurn);
@@ -229,8 +244,7 @@ public class GameManager : MonoBehaviour
         // OnNextTurn(_playerColorTurn);
         // AvailableSoldiers.Add(PlayerColor.GREEN, 3);
 
-        AvailableSoldiers.Add(PlayerColor.GREEN, 3);
-        AvailableSoldiers.Add(PlayerColor.PURPLE, 3);
+        
 
         _skipButton.SetActive(true);
     }

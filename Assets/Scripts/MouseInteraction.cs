@@ -41,7 +41,7 @@ public class MouseInteraction : MonoBehaviour
             Debug.Log("this is a tile click");
             if (tile.IsHighlighted()) {
                 Debug.Log("Mouse interaction attack");
-            EndAttack.Invoke(tile);
+                EndAttack.Invoke(tile);
             }
         }
         else
@@ -148,7 +148,6 @@ public class MouseInteraction : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
                // Debug.Log("Did not Hit");
             }
-            
             StopMovePiece.Invoke(TileDrop);
         } else
 
