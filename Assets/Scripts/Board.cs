@@ -39,7 +39,7 @@ public class Board : MonoBehaviour
         FillBoardMap();
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
-        BoardTiles = new HashSet<Tile>(_initBoardTiles);
+        UpgradeTiles = new HashSet<Tile>(_initUpgradeTiles);
 
 
         // Vector2Int pos = ConvertToArrayPosition(-1,2);

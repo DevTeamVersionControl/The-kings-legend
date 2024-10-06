@@ -18,7 +18,7 @@ public class MouseInteraction : MonoBehaviour
 
     [SerializeField] float _dragHeightOffset;
 
-    public TileUnityEvent MovePiece;
+    public TileUnityEvent  MovePiece;
 
     private void OnMouseDown()
     {

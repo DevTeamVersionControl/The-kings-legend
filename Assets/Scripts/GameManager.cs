@@ -118,15 +118,21 @@ public class GameManager : MonoBehaviour
 
         boardRef = board;
      
-        foreach (Tile tile in board.BoardTiles){
+        foreach (Tile tile in board.SoldierTiles){
 
-            tile.GetComponent<Tile>().GetPiece().GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
+            
+            Debug.Log("getPiece: "+ tile.GetPiece());
+            Debug.Log("all: " + tile.GetPiece()?.GetComponent<MouseInteraction>());
+            tile.GetPiece()?.GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
+
         }
 
         foreach (Tile tile in board.UpgradeTiles)
         {
 
-            tile.GetComponent<Tile>().GetPiece().GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
+            Debug.Log("getPiece: " + tile.GetPiece());
+            Debug.Log("all: " + tile.GetPiece()?.GetComponent<MouseInteraction>());
+           // tile.GetPiece()?.GetComponent<MouseInteraction>().MovePiece.AddListener(OnDrag);
         }
 
 
