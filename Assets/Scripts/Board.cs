@@ -118,8 +118,11 @@ public class Board : MonoBehaviour
     {
         if (endTile.IsHighlighted())
         {
+
             endTile.AddPiece(startTile.RemovePiece());
             endTile.SetLocked(true);
+            startTile.RemovePiece();
+
         }
         else
         {

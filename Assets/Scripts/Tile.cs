@@ -41,8 +41,9 @@ public class Tile : MonoBehaviour
     [CanBeNull]
     public Piece RemovePiece()
     {
-        
-        return _piece;
+        var temp = _piece;
+        _piece = null;
+        return temp;
     }
 
     public void SetLocked(bool locked)
@@ -58,7 +59,6 @@ public class Tile : MonoBehaviour
             rigidbodyPiece.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
-    
 
     public bool GetLocked()
     {
