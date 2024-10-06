@@ -13,6 +13,8 @@ public class Tile : MonoBehaviour
     private bool _locked;
     private bool _highlighted;
 
+    [SerializeField] Material _materialHighlight;
+    [SerializeField] Material _materialBase;
 
     [SerializeField] float _pieceYOffset = 1.5f;
 
@@ -38,6 +40,7 @@ public class Tile : MonoBehaviour
     [CanBeNull]
     public Piece RemovePiece()
     {
+
         return _piece;
     }
 
@@ -78,11 +81,13 @@ public class Tile : MonoBehaviour
     public void Highlight()
     {
         _highlighted = true;
+        gameObject.GetComponent<MeshRenderer>().materials[0] = _materialHighlight;
     }
     
     public void Unhighlight()
     {
         _highlighted = false;
+        gameObject.GetComponent<MeshRenderer>().materials[0] = _materialBase;
     }
 
     public bool IsHighlighted()
