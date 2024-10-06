@@ -145,6 +145,8 @@ public class Piece : MonoBehaviour
 
     public void Start()
     {
+        Movement = MovementMap[Type];
+        Attack = AttackMap[Type];
         MeshMap = new ()
         {
             {PieceType.SOLDIER, _soldierPrefab},
@@ -152,8 +154,6 @@ public class Piece : MonoBehaviour
             {PieceType.KNIGHT, _knightPrefab},
             {PieceType.LEGEND, _legendPrefab}
         };
-        Movement = MovementMap[Type];
-        Attack = AttackMap[Type];
         _mesh?.SetActive(false);
         _mesh = MeshMap[Type];
         _mesh.SetActive(true);

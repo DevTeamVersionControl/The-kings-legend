@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -40,7 +41,9 @@ public class Board : MonoBehaviour
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
 
-        HighlightPieceMoves(BoardMap[2][0]);
+        // Vector2Int pos = ConvertToArrayPosition(-1,2);
+        //
+        // HighlightPieceMoves(BoardMap[pos.x][pos.y]);
     }
 
     private Vector2Int ConvertToMapPosition(int i, int j)
@@ -246,31 +249,5 @@ public class Board : MonoBehaviour
             }
         }
         return clippedBoard;
-    }
-    
-    private void printArray(Tile[][] tiles)
-    {
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            string row = "[";
-            for (int j = 0; j < tiles[i].Length; j++)
-            {
-                row += $"{tiles[i][j].GetPiece().name}, ";
-            }
-            Debug.Log(row+"]");
-        }
-    }
-    
-    private void printArray(bool[][] tiles)
-    {
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            string row = "[";
-            for (int j = 0; j < tiles[i].Length; j++)
-            {
-                row += $"{tiles[i][j]}, ";
-            }
-            Debug.Log(row+"]");
-        }
     }
 }

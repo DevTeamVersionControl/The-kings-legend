@@ -143,8 +143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1390f0b5124e5042b5aeb69ed522e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerColor: 0
+  Color: 0
   Type: 0
+  EnemiesKilled: 0
+  _soldierPrefab: {fileID: 950437334654235260}
+  _knightPrefab: {fileID: 950437334654235260}
+  _magePrefab: {fileID: 4731824089412798852}
+  _legendPrefab: {fileID: 8817950523890386897}
 --- !u!136 &6596661290169263664
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -242,6 +247,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 673247106059007183}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8817950523890386897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8289013537309733662, guid: b75ad43668dd5c3448d47bfcf7284469,
+    type: 3}
+  m_PrefabInstance: {fileID: 673247106059007183}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2349189092843349336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -316,6 +327,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2349189092843349336}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &950437334654235260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3290265116745127716, guid: bf9cd7cc8b022f1489a50ce24abd8bb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2349189092843349336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7014542606850641394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -384,6 +401,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 446ac361322226b41b766dc478728e24, type: 3}
+--- !u!1 &4731824089412798852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2374093709365658742, guid: 446ac361322226b41b766dc478728e24,
+    type: 3}
+  m_PrefabInstance: {fileID: 7014542606850641394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5395594227992646462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3150735278638538444, guid: 446ac361322226b41b766dc478728e24,
