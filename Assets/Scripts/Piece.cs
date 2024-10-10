@@ -164,10 +164,10 @@ public class Piece : MonoBehaviour
         {
             MeshMap = new()
             {
-                { PieceType.SOLDIER, _soldierPrefabGreen },
-                { PieceType.MAGE, _magePrefabGreen },
-                { PieceType.KNIGHT, _knightPrefabGreen },
-                { PieceType.LEGEND, _legendPrefabGreen }
+                { PieceType.SOLDIER, _soldierPrefabPurple },
+                { PieceType.MAGE, _magePrefabPurple },
+                { PieceType.KNIGHT, _knightPrefabPurple },
+                { PieceType.LEGEND, _legendPrefabPurple }
             };
         }
         

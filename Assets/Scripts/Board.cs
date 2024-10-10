@@ -48,7 +48,24 @@ public class Board : MonoBehaviour
         UpgradeTiles = new HashSet<Tile>(_initUpgradeTiles);
         LegendTiles = new HashSet<Tile>(_initLegendTiles);
         AllTiles = new List<Tile>(BoardTiles.Union(UpgradeTiles).Union(LegendTiles).Union(SoldierTiles));
-        
+        StartCoroutine(WaitUntilGameManagerIsReady());
+        //GameManager.Instance.GameInit(this);
+    }
+
+
+    private IEnumerator WaitUntilGameManagerIsReady()
+    {
+        // Wait until GameManager.Instance is not null
+        while (GameManager.Instance == null)
+        {
+            yield return null; // Wait for the next frame
+            Debug.Log("not ready yet");
+        }
+
+        yield return null;
+
+        // Now GameManager is ready, call GameInits
+        Debug.Log("ready!");
         GameManager.Instance.GameInit(this);
     }
 
