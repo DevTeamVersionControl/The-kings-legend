@@ -33,8 +33,6 @@ public class MouseInteraction : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        
-
         if (isTile)
         {
             Tile tile = GetComponent<Tile>();
@@ -117,9 +115,9 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseUp()
     {
-
         if (isTile)
         {
+            Debug.Log("Tile detected mouse up");
             return;
         }
         Debug.Log("start mouse up" + GameManager.Instance._currentlyDragging);
@@ -133,20 +131,14 @@ public class MouseInteraction : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
-
-                Debug.Log("raycast is dragging" + GameManager.Instance._currentlyDragging);
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                //Debug.Log(hit.transform.name);
-                //Debug.Log("hit");
                 TileDrop = hit.transform.GetComponent<Tile>();
-
-                //Debug.Log("Mouse Position" + dropZone.ToString());
+                Debug.Log("Tile hit!");
             }
             else
             {
-                Debug.Log("else is dragging" + GameManager.Instance._currentlyDragging);
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
-               // Debug.Log("Did not Hit");
+                Debug.Log("Tile not hit");
             }
             StopMovePiece.Invoke(TileDrop);
         } else

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using JetBrains.Annotations;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Tile : MonoBehaviour
 {
@@ -48,6 +50,9 @@ public class Tile : MonoBehaviour
     {
         if (locked)
         {
+            Debug.Log("Locked tile");
+            StackTrace stackTrace = new();
+            Debug.Log(stackTrace);
             _locked = true;
         }
         else

@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using static Piece;
+using Debug = UnityEngine.Debug;
 
 public class Board : MonoBehaviour
 {
@@ -180,7 +182,6 @@ public class Board : MonoBehaviour
         {
 
             endTile.AddPiece(startTile.RemovePiece());
-            endTile.SetLocked(true);
             startTile.RemovePiece();
 
         }
@@ -197,7 +198,6 @@ public class Board : MonoBehaviour
         {
            startTile.GetPiece().OnKill();
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-            startTile.SetLocked(true);
         }
         UnhighlightAll();
     }
@@ -347,6 +347,30 @@ public class Board : MonoBehaviour
             if (tile.GetPiece()?.Color == playerColor)
             {
                 tile.SetLocked(locked);
+            }
+        }
+    }
+    
+    
+    public void AddStartingPieces()
+    {
+        Dictionary<PlayerColor, Vector2Int[]> startingTilesDict = new()
+        {
+            { PlayerColor.GREEN, new[] { new Vector2Int(-1, 2), new Vector2Int(-1, 0), new Vector2Int(-1, -2) } },
+            { PlayerColor.PURPLE, new[] { new Vector2Int(1, 2), new Vector2Int(1, 0), new Vector2Int(1, -2) } }
+        };
+        int i = 0, j = 0;
+        foreach (var tile in SoldierTiles)
+        {
+            if (tile.GetPiece()?.Color == PlayerColor.GREEN)
+            {
+                var position = ConvertToArrayPosition(startingTilesDict[PlayerColor.GREEN][i++]);
+                BoardMap[position.x][position.y].AddPiece(tile.RemovePiece());
+            }
+            else if (tile.GetPiece()?.Color == PlayerColor.PURPLE)
+            {
+                var position = ConvertToArrayPosition(startingTilesDict[PlayerColor.PURPLE][j++]);
+                BoardMap[position.x][position.y].AddPiece(tile.RemovePiece());
             }
         }
     }

@@ -143,7 +143,6 @@ public class GameManager : MonoBehaviour
     {
         if (tile != null && !_currentlyDragging.GetLocked())
         {
-        
             if (_board.UpgradeTiles.Contains(_currentlyDragging) || _board.LegendTiles.Contains(_currentlyDragging))
             {
                 _currentGameState = _gameState.ATTACKMOVE;
@@ -153,21 +152,17 @@ public class GameManager : MonoBehaviour
             if (_board.SoldierTiles.Contains(_currentlyDragging))
             {
                 _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
-                Debug.Log("Available soldiers " + AvailableSoldiers[_playerColorTurn]);
-                _currentGameState = _gameState.ATTACKMOVE;
-                Debug.Log("added a soldier");
                 _board.OnPieceMoved(_currentlyDragging, tile);
             }
             if (_board.BoardTiles.Contains(_currentlyDragging))
             {
-                tile.SetLocked(true);
                 _board.OnPieceMoved(_currentlyDragging, tile);
             }
         }
         else
         {
             _currentlyDragging.AddPiece(_currentlyDragging.GetPiece());
-            
+            _currentlyDragging.SetLocked(false);
         }
 
         _board.UnhighlightAll();
@@ -233,27 +228,12 @@ public class GameManager : MonoBehaviour
 
         //initialize starting tiles
         Debug.Log("in game Init" + _currentLevel);
+        _board.AddStartingPieces();
         _playerColorTurn = PlayerColor.GREEN;
-        AvailableSoldiers.Add(PlayerColor.GREEN, 3);
-        AvailableSoldiers.Add(PlayerColor.PURPLE, 3);
         OnNextTurn(_playerColorTurn);
-
-        //AddStartingPieces(_playerColorTurn);
-
-        // _playerColorTurn = PlayerColor.PURPLE;
-        // OnNextTurn(_playerColorTurn);
-        // AvailableSoldiers.Add(PlayerColor.GREEN, 3);
-
-        
 
         _skipButton.SetActive(true);
     }
-
-    private Dictionary<PlayerColor, Vector2Int[]> startingTilesDict = new()
-    {
-        { PlayerColor.GREEN, new[] { new Vector2Int(2, 0), new Vector2Int(4, 0), new Vector2Int(6, 0) } },
-        { PlayerColor.PURPLE, new[] { new Vector2Int(2, 2), new Vector2Int(4, 2), new Vector2Int(6, 2) } }
-    };
 
     private void OnWin(PlayerColor playerColor)
     {
@@ -277,18 +257,6 @@ public class GameManager : MonoBehaviour
     public void PlayeAgain()
     {
         ChangeLevel(GameManager.GameLevel.GAME);
-        
-
     }
-    
-    // private void AddStartingPieces(PlayerColor color)
-    // {
-    //     AvailableSoldiers.Add(color, 3);
-    //     var startingTiles = startingTilesDict[color];
-    //     for(int i = 0; i < startingTiles.Length; i++)
-    //     {
-    //         
-    //     }
-    // }
 
 }
