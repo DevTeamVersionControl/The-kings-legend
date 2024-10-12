@@ -36,9 +36,7 @@ public class MouseInteraction : MonoBehaviour
         if (isTile)
         {
             Tile tile = GetComponent<Tile>();
-            Debug.Log("this is a tile click");
             if (tile.IsHighlighted()) {
-                Debug.Log("Mouse interaction attack");
                 EndAttack.Invoke(tile);
             }
         }
@@ -47,10 +45,6 @@ public class MouseInteraction : MonoBehaviour
             mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
 
             mouseOffset = gameObject.transform.position - GetMouseWorldPos();
-
-            Debug.Log("Mouse is down");
-
-            //Debug.Log("mouseOffset" + mouseOffset.ToString());
 
             isDragging = false;
 
@@ -95,15 +89,12 @@ public class MouseInteraction : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerOutsideBoard))   
         {
             Debug.DrawLine(Camera.main.transform.position, hit.point);
-            //Debug.Log(hit.transform.name);
-            //Debug.Log("outisde board");
 
             gameObject.transform.position = hit.point + hit.normal *_dragHeightOffset;
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
-           // Debug.Log("Did not Hit");
             transform.position = GetMouseWorldPos() + mouseOffset;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
@@ -117,13 +108,10 @@ public class MouseInteraction : MonoBehaviour
     {
         if (isTile)
         {
-            Debug.Log("Tile detected mouse up");
             return;
         }
-        Debug.Log("start mouse up" + GameManager.Instance._currentlyDragging);
         Tile TileDrop = null;
         if (isDragging) {
-            Debug.Log("mouse up is dragging" + GameManager.Instance._currentlyDragging);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -133,12 +121,10 @@ public class MouseInteraction : MonoBehaviour
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 TileDrop = hit.transform.GetComponent<Tile>();
-                Debug.Log("Tile hit!");
             }
             else
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
-                Debug.Log("Tile not hit");
             }
             StopMovePiece.Invoke(TileDrop);
         } else

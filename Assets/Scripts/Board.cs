@@ -161,6 +161,7 @@ public class Board : MonoBehaviour
         if (soldier)
         {
             SetLock(UpgradeTiles, playerColor, false);
+            SetLock(LegendTiles, playerColor, false);
         }
 
         return piecesNb;
@@ -177,17 +178,18 @@ public class Board : MonoBehaviour
         }
         else
         {
-            startTile.UnhidePiece();
+            startTile.AddPiece(startTile.RemovePiece());
+            startTile.SetLocked(false);
         }
         UnhighlightAll();
     }
 
     public void OnPieceAttack(Tile startTile, Tile endTile)
     {
-        Debug.Log($"OnPieceAttack | startTile : {startTile.name}, endTile : {endTile.name}");
         if (endTile != null && endTile.IsHighlighted())
         {
            startTile.GetPiece().OnKill();
+           endTile.GetPiece().EnemiesKilled = 0;
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
            startTile.AddPiece(startTile.RemovePiece());
         }
@@ -248,23 +250,26 @@ public class Board : MonoBehaviour
     public void HighlightPieceUpgrade(Tile startingTile)
     {
         Piece piece = startingTile.GetPiece();
+        if(piece.Type == Piece.PieceType.LEGEND){
+            Debug.Log("Should highlight a legend");
+        }
         foreach (var tile in BoardTiles)
         {
-            if (tile.GetPiece() != null && !tile.GetLocked())
+            var potentialPiece = tile.GetPiece();
+            if (potentialPiece != null && !tile.GetLocked())
             {
                 if (piece.Type == Piece.PieceType.LEGEND)
                 {
-                    if (tile.GetPiece()?.EnemiesKilled >= 3)
+                    Debug.Log($"Piece {piece.name} killed : {piece.EnemiesKilled}");
+                    if (potentialPiece.EnemiesKilled >= 3)
                     {
                         tile.Highlight(true);
                     }
                 }
                 else
                 {
-                    Debug.Log("upgrade unlocked tile");
-                    if (tile.GetPiece().Type == Piece.PieceType.SOLDIER)
+                    if (potentialPiece.Type == Piece.PieceType.SOLDIER)
                     {
-                        Debug.Log("upgrade soldier tile");
                         tile.Highlight(true);
                     }
                 }

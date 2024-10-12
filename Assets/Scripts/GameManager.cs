@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
-    public Tile _currentlyDragging;
+    public Tile _current;
     
     public static event Action changeTurn;
 
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameLevel.GAME:
                 SceneManager.LoadScene("MainGame");
+                _subState = subState.NONE;
                 break;
             default:
                 break;
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
     public void OnNextTurn(PlayerColor color)
     {
         _playerColorTurn = color;
+        _subState = subState.NONE;
         changeTurn?.Invoke();
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         if (_board.OnNextTurn(color) < 3){
@@ -77,11 +79,19 @@ public class GameManager : MonoBehaviour
     public void OnDragStart(Piece piece)
     {
         Tile tile = FindTile(piece);
-        _currentlyDragging = tile;
-
+        if(piece.Type == Piece.PieceType.LEGEND){
+            Debug.Log("OnDragStart called on Legend");
+            Debug.Log("Legend is " + (tile.GetLocked() ? "locked" : "unlocked"));
+        }
         if(_subState == subState.ATTACKING)
         {
             PotentialAttack(tile);
+            return;
+        } else if (_subState == subState.NONE){
+            _subState = subState.DRAGGING;
+            _current = tile;
+        } else {
+            Debug.LogError("Invalid state");
             return;
         }
        
@@ -121,28 +131,34 @@ public class GameManager : MonoBehaviour
     
     public void OnDragEnd(Tile tile)
     {
-        if (tile != null && !_currentlyDragging.GetLocked() && tile != _currentlyDragging)
+        if(_subState != subState.DRAGGING){
+            Debug.LogError($"{_subState} is not valid in this function");
+            return;
+        }
+        _subState = subState.NONE;
+        if (tile != null && !_current.GetLocked() && tile != _current)
         {
-            if (_board.UpgradeTiles.Contains(_currentlyDragging) || _board.LegendTiles.Contains(_currentlyDragging))
+            if (_board.UpgradeTiles.Contains(_current) || _board.LegendTiles.Contains(_current))
             {
-                _board.OnPieceUpgrade(_currentlyDragging, tile);
+                _board.OnPieceUpgrade(_current, tile);
                 _board.SetLock(_board.UpgradeTiles, _playerColorTurn, true);
+                _board.SetLock(_board.LegendTiles, _playerColorTurn, true);
             }
-            if (_board.SoldierTiles.Contains(_currentlyDragging))
+            if (_board.SoldierTiles.Contains(_current))
             {
-                _board.OnPieceMoved(_currentlyDragging, tile);
+                _board.OnPieceMoved(_current, tile);
                 _board.SetLock(_board.SoldierTiles, _playerColorTurn, true);
             }
-            if (_board.BoardTiles.Contains(_currentlyDragging))
+            if (_board.BoardTiles.Contains(_current))
             {
-                _board.OnPieceMoved(_currentlyDragging, tile);
+                _board.OnPieceMoved(_current, tile);
             }
         }
         else
         {
-            var temp = _currentlyDragging.GetLocked();
-            _currentlyDragging.AddPiece(_currentlyDragging.GetPiece());
-            _currentlyDragging.SetLocked(temp);
+            var temp = _current.GetLocked();
+            _current.AddPiece(_current.GetPiece());
+            _current.SetLocked(temp);
         }
 
         _board.UnhighlightAll();
@@ -156,6 +172,7 @@ public class GameManager : MonoBehaviour
             if (_subState != subState.ATTACKING)
             {
                 _subState = subState.ATTACKING;
+                _current = tile;
                 _board.UnhighlightAll();
                 _board.HighlightPieceAttack(tile);
                 tile.AddPiece(tile.GetPiece());
@@ -169,7 +186,8 @@ public class GameManager : MonoBehaviour
 
     public void PotentialAttack(Tile tile)
     {
-        _board.OnPieceAttack(tile, _currentlyDragging);
+        _board.OnPieceAttack(_current, tile);
+        _board.UnhighlightAll();
         if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
         {
             OnWin(_playerColorTurn);
@@ -200,7 +218,6 @@ public class GameManager : MonoBehaviour
         }
 
         //initialize starting tiles
-        Debug.Log("in game Init" + _currentLevel);
         _board.AddStartingPieces();
         _playerColorTurn = PlayerColor.GREEN;
         OnNextTurn(_playerColorTurn);
