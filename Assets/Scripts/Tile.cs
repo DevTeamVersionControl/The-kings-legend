@@ -50,9 +50,6 @@ public class Tile : MonoBehaviour
     {
         if (locked)
         {
-            Debug.Log("Locked tile");
-            StackTrace stackTrace = new();
-            Debug.Log(stackTrace);
             _locked = true;
         }
         else

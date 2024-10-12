@@ -142,10 +142,8 @@ public class MouseInteraction : MonoBehaviour
             }
             StopMovePiece.Invoke(TileDrop);
         } else
-
         {
-            Debug.Log("this is a click");
-                StartAttack.Invoke(this.GetComponent<Piece>());
+            StartAttack.Invoke(GetComponent<Piece>());
         }
             
 

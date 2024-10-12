@@ -11,8 +11,6 @@ using Debug = UnityEngine.Debug;
 
 public class Board : MonoBehaviour
 {
-    public UnityEvent CancelMoveEvent;
-    public TileUnityEvent PieceKilledEvent;
 
     [SerializeField] Tile[] _initLegendTiles;
     [SerializeField] Tile[] _initUpgradeTiles;
@@ -42,8 +40,6 @@ public class Board : MonoBehaviour
 
     public void Start()
     {
-        PieceKilledEvent = new TileUnityEvent();
-        CancelMoveEvent = new UnityEvent();
         FillBoardMap();
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
@@ -51,7 +47,6 @@ public class Board : MonoBehaviour
         LegendTiles = new HashSet<Tile>(_initLegendTiles);
         AllTiles = new List<Tile>(BoardTiles.Union(UpgradeTiles).Union(LegendTiles).Union(SoldierTiles));
         StartCoroutine(WaitUntilGameManagerIsReady());
-        //GameManager.Instance.GameInit(this);
     }
 
 
@@ -146,7 +141,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void OnNextTurn(PlayerColor playerColor)
+    public int OnNextTurn(PlayerColor playerColor)
     {
         int piecesNb = 0;
         bool soldier = false;
@@ -163,17 +158,12 @@ public class Board : MonoBehaviour
                 piecesNb++;
             }
         }
-        Debug.Log($"Saw {piecesNb} pieces");
         if (soldier)
         {
             SetLock(UpgradeTiles, playerColor, false);
         }
 
-        if (piecesNb < 3)
-        {
-            Debug.Log($"Unlocked {playerColor}'s soldiers since they have less than three pieces");
-            SetLock(SoldierTiles, playerColor, false);
-        }
+        return piecesNb;
     }
 
     public void OnPieceMoved(Tile startTile, Tile endTile)
@@ -194,10 +184,12 @@ public class Board : MonoBehaviour
 
     public void OnPieceAttack(Tile startTile, Tile endTile)
     {
+        Debug.Log($"OnPieceAttack | startTile : {startTile.name}, endTile : {endTile.name}");
         if (endTile != null && endTile.IsHighlighted())
         {
            startTile.GetPiece().OnKill();
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+           startTile.AddPiece(startTile.RemovePiece());
         }
         UnhighlightAll();
     }
@@ -282,15 +274,14 @@ public class Board : MonoBehaviour
 
     public void HighlightPieceAttack(Tile startingTile)
     {
-        if (startingTile.GetLocked())
-            return;
         var piece = startingTile.GetPiece();
         var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[startingTile]));
         for (int i = 0; i < highlightedTiles.Length; i++)
         {
             for (int j = 0; j < highlightedTiles[i].Length; j++)
             {
-                if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece()?.Color != startingTile.GetPiece().Color)
+                var highlightedPiece = BoardMap[i][j].GetPiece();
+                if (highlightedTiles[i][j] && highlightedPiece != null && highlightedPiece.Color != piece.Color)
                 {
                     BoardMap[i][j].Highlight(false);
                 }

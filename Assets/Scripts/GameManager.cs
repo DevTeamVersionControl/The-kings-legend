@@ -1,22 +1,20 @@
 using System;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private PlayerColor _playerColorTurn;
-    private enum _gameState { ADDUPGRADE, ATTACKMOVE };
 
-    private enum _subState { DRAGGING, ATTACKING, NONE };
+    private enum subState { DRAGGING, ATTACKING, NONE };
 
     public enum GameLevel { MAINMENU, GAME };
 
     private GameLevel _currentLevel;
 
-    private _gameState _currentGameState;
-
-    private _subState _subGameState;
+    private subState _subState;
 
     [SerializeField] GameObject _winScreen;
 
@@ -26,19 +24,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
-    bool attacking = false;
-
     public Tile _currentlyDragging;
-
-    private Dictionary<PlayerColor, int> AvailableSoldiers = new();
     
     public static event Action changeTurn;
 
-    
-
     public static GameManager Instance;
 
-    
 
     public void Awake()
     {
@@ -51,13 +42,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-    }
-
-    // Update is called once per frames
-    public void Update()
-    {
-    
     }
 
 
@@ -68,7 +52,6 @@ public class GameManager : MonoBehaviour
         switch (level)
         {
             case GameLevel.MAINMENU:
-                
                 SceneManager.LoadScene("MainMenu");
                 break;
             case GameLevel.GAME:
@@ -78,32 +61,29 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
     public void OnNextTurn(PlayerColor color)
     {
         _playerColorTurn = color;
         changeTurn?.Invoke();
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
-        _board.OnNextTurn(color);
-
-        AvailableSoldiers[color] = 1;
-        _currentGameState = _gameState.ATTACKMOVE;
-        
-        
-    }
-
-    public void OnPieceKilled()
-    {
-        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
-        {
-            OnWin(_playerColorTurn);
+        if (_board.OnNextTurn(color) < 3){
+            Debug.Log($"Unlocked {color}'s soldiers since they have less than three pieces");
+            _board.SetLock(_board.SoldierTiles, color, false);
         }
+        
     }
-  
 
     public void OnDragStart(Piece piece)
     {
         Tile tile = FindTile(piece);
         _currentlyDragging = tile;
+
+        if(_subState == subState.ATTACKING)
+        {
+            PotentialAttack(tile);
+            return;
+        }
        
         if (!tile.GetLocked())
         {
@@ -141,18 +121,17 @@ public class GameManager : MonoBehaviour
     
     public void OnDragEnd(Tile tile)
     {
-        if (tile != null && !_currentlyDragging.GetLocked())
+        if (tile != null && !_currentlyDragging.GetLocked() && tile != _currentlyDragging)
         {
             if (_board.UpgradeTiles.Contains(_currentlyDragging) || _board.LegendTiles.Contains(_currentlyDragging))
             {
-                _currentGameState = _gameState.ATTACKMOVE;
                 _board.OnPieceUpgrade(_currentlyDragging, tile);
-                Debug.Log("Upgraded");
+                _board.SetLock(_board.UpgradeTiles, _playerColorTurn, true);
             }
             if (_board.SoldierTiles.Contains(_currentlyDragging))
             {
-                _board.SetLock(_board.SoldierTiles, _playerColorTurn, --AvailableSoldiers[_playerColorTurn] <= 0);
                 _board.OnPieceMoved(_currentlyDragging, tile);
+                _board.SetLock(_board.SoldierTiles, _playerColorTurn, true);
             }
             if (_board.BoardTiles.Contains(_currentlyDragging))
             {
@@ -161,47 +140,41 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            var temp = _currentlyDragging.GetLocked();
             _currentlyDragging.AddPiece(_currentlyDragging.GetPiece());
-            _currentlyDragging.SetLocked(false);
+            _currentlyDragging.SetLocked(temp);
         }
 
         _board.UnhighlightAll();
-
-        
-        //Debug.Log("OnDragEnd is called on the tile" + tile.ToString());
     }
 
     public void OnClick(Piece piece)
     {
-        Debug.Log("in Onclick");
         Tile tile = FindTile(piece);
-        if (_currentGameState == _gameState.ATTACKMOVE && _board.BoardTiles.Contains(tile))
+        if (_board.BoardTiles.Contains(tile) && !tile.GetLocked())
         {
-            if (!attacking)
+            if (_subState != subState.ATTACKING)
             {
-                attacking = true;
+                _subState = subState.ATTACKING;
+                _board.UnhighlightAll();
                 _board.HighlightPieceAttack(tile);
-                Debug.Log("this is the start of an attack");
+                tile.AddPiece(tile.GetPiece());
+                tile.SetLocked(false);
             } else
             {
                 PotentialAttack(tile);
             }
-            
-        }
-        else
-        {
-            Debug.Log("cant attack");
         }
     }
 
-    public void CancelAttack()
-    {
-
-    }
     public void PotentialAttack(Tile tile)
     {
         _board.OnPieceAttack(tile, _currentlyDragging);
-        attacking= false;
+        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
+        {
+            OnWin(_playerColorTurn);
+        }
+        _subState = subState.NONE;
     }
 
     public void GameInit(Board board)
@@ -238,25 +211,20 @@ public class GameManager : MonoBehaviour
     private void OnWin(PlayerColor playerColor)
     {
         _skipButton.SetActive(false);
-        Debug.Log(playerColor + "has won!");
+        _winScreen.GetComponentInChildren<TMP_Text>().text = $"{_playerColorTurn} has won";
         _winScreen.SetActive(true);
     }
 
     public void OnSkip()
     {
-        if(_currentGameState == _gameState.ADDUPGRADE)
-        {
-            _currentGameState = _gameState.ATTACKMOVE;
-        }
-        else if(_currentGameState == _gameState.ATTACKMOVE)
-        {
-            OnNextTurn(PlayerColorExtensions.GetOpposite(_playerColorTurn));
-        }
+        OnNextTurn(PlayerColorExtensions.GetOpposite(_playerColorTurn));
     }
 
-    public void PlayeAgain()
+    public void PlayAgain()
     {
-        ChangeLevel(GameManager.GameLevel.GAME);
+        _winScreen.SetActive(false);
+        _skipButton.SetActive(true);
+        ChangeLevel(GameLevel.GAME);
     }
 
 }
