@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,6 +32,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
 
+    public AudioSource audioSource; 
+    public AudioClip[] musicTracks;
+
+    private int currentTrackIndex;
+
+
     public void Awake()
     {
         if (Instance == null)
@@ -44,6 +51,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void Start()
+    {
+        PlayRandomTrack();
+    }
 
     public void ChangeLevel(GameLevel level)
     {
@@ -243,5 +255,31 @@ public class GameManager : MonoBehaviour
         _skipButton.SetActive(true);
         ChangeLevel(GameLevel.GAME);
     }
+
+    void PlayRandomTrack()
+    {
+        
+        int newTrackIndex;
+        do
+        {
+            newTrackIndex = UnityEngine.Random.Range(0, musicTracks.Length);
+        } while (newTrackIndex == currentTrackIndex);
+
+        currentTrackIndex = newTrackIndex;
+        audioSource.clip = musicTracks[currentTrackIndex];
+        audioSource.Play();
+
+        
+        StartCoroutine(WaitForTrackEnd(audioSource.clip.length));
+    }
+
+
+    IEnumerator WaitForTrackEnd(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        PlayRandomTrack();  // Play the next random track
+    }
+
+
 
 }

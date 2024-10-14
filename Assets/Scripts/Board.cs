@@ -38,6 +38,9 @@ public class Board : MonoBehaviour
     public List<Tile> AllTiles;
     private Dictionary<Tile, Vector2Int> _positions;
 
+    public AudioSource AudioKill;
+    public AudioClip[] SoundKill;
+
     public void Start()
     {
         FillBoardMap();
@@ -188,10 +191,13 @@ public class Board : MonoBehaviour
     {
         if (endTile != null && endTile.IsHighlighted())
         {
+           AudioClip randomClip = SoundKill[UnityEngine.Random.Range(0, SoundKill.Length)];
+           AudioKill.PlayOneShot(randomClip);
            startTile.GetPiece().OnKill();
            endTile.GetPiece().EnemiesKilled = 0;
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
            startTile.AddPiece(startTile.RemovePiece());
+           
         }
         UnhighlightAll();
     }

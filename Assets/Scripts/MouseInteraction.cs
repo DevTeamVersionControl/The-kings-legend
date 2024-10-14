@@ -19,6 +19,11 @@ public class MouseInteraction : MonoBehaviour
 
     [SerializeField] float _dragHeightOffset;
 
+    [SerializeField] AudioSource audioPickUp;
+    [SerializeField] AudioSource audioDrop;
+    public AudioClip[] soundPickUp;
+    public AudioClip[] soundDrop;
+
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
     public PieceUnityEvent StartAttack;
@@ -51,6 +56,9 @@ public class MouseInteraction : MonoBehaviour
             mouseDownPosition = Input.mousePosition;
 
             Piece piece = gameObject.GetComponent<Piece>();
+
+            AudioClip randomClip = soundPickUp[Random.Range(0, soundPickUp.Length)];
+            audioPickUp.PlayOneShot(randomClip);
 
             StartMovePiece.Invoke(piece);
         }
@@ -112,6 +120,10 @@ public class MouseInteraction : MonoBehaviour
         }
         Tile TileDrop = null;
         if (isDragging) {
+
+            AudioClip randomClip = soundDrop[Random.Range(0, soundDrop.Length)];
+            audioDrop.PlayOneShot(randomClip);
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -136,6 +148,6 @@ public class MouseInteraction : MonoBehaviour
     }
 
 
-
+    
 
 }

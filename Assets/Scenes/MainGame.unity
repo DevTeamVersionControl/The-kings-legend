@@ -151,6 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &33915517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +184,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &39299256
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -514,6 +522,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &139125847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,6 +555,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!1001 &159555746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5804,6 +5820,13 @@ MonoBehaviour:
   - {fileID: 493746168}
   - {fileID: 1221898850}
   AllTiles: []
+  AudioKill: {fileID: 1780572671}
+  SoundKill:
+  - {fileID: 8300000, guid: 1eaf3f616b92a3c4a9d62ff15e352abb, type: 3}
+  - {fileID: 8300000, guid: 0023a4d45fe37f54397d4e7e5f97aa2c, type: 3}
+  - {fileID: 8300000, guid: 8cacb1b0c7ef15e4fa518ae3a5fa25d7, type: 3}
+  - {fileID: 8300000, guid: b4e11e843b24f2d4fbe7f12fdef01c5e, type: 3}
+  - {fileID: 8300000, guid: 0adb86c5e924ddf4c88e7fada05d36e4, type: 3}
 --- !u!64 &331980494
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5939,6 +5962,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &425569653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5968,6 +5995,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &493746168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5997,6 +6028,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &520111054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6026,6 +6061,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!1 &554883049
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,6 +6212,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!1 &566176054
 GameObject:
   m_ObjectHideFlags: 0
@@ -6320,6 +6363,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &752843959
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6415,6 +6462,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &957247901
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9030,6 +9081,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 298244475}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e870ad305ed36a54f84ddfde47443a25,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1780572671}
     - targetCorrespondingSourceObject: {fileID: -1597440301061839860, guid: e870ad305ed36a54f84ddfde47443a25,
         type: 3}
       insertIndex: -1
@@ -9408,6 +9463,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &1024659025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9437,6 +9496,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!114 &1024659027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9466,6 +9529,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &1024659029
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14610,6 +14677,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &1221898852
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14789,6 +14860,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &1353588580
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15781,6 +15856,103 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52a5f925952298741b281145fe9cc65e, type: 3}
+--- !u!82 &1780572671
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024659003}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -8797008840828700237, guid: 59ffc95fc01b106449fccd4b0bbeb1de,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1787814148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15810,6 +15982,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &1787814150
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15897,6 +16073,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &1915397616
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15948,6 +16128,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTile: 1
   _dragHeightOffset: 0
+  audioPickUp: {fileID: 0}
+  audioDrop: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
 --- !u!64 &2005713322
 MeshCollider:
   m_ObjectHideFlags: 0
