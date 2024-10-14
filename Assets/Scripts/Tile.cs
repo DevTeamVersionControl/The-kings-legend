@@ -16,7 +16,7 @@ public class Tile : MonoBehaviour
     [SerializeField] Material _materialAttack;
     MeshRenderer _meshRenderer;
 
-    float _pieceYOffset = .5f;
+    public float _pieceYOffset = .5f;
 
     public void Start()
     {
