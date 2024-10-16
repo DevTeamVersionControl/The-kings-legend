@@ -197,7 +197,6 @@ public class Board : MonoBehaviour
            endTile.GetPiece().EnemiesKilled = 0;
            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
            startTile.AddPiece(startTile.RemovePiece());
-           
         }
         UnhighlightAll();
     }
@@ -208,6 +207,11 @@ public class Board : MonoBehaviour
         {
             endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
             endTile.AddPiece(startTile.RemovePiece());
+        }
+        else
+        {
+            startTile.AddPiece(startTile.RemovePiece());
+            startTile.SetLocked(false);
         }
         UnhighlightAll();
     }
