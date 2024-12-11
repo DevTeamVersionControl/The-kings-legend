@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,6 +34,11 @@ public class Tile : MonoBehaviour
         rigidbodyPiece = _piece.GetComponent<Rigidbody>();
         
         _piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
+        if (piece.Color == PlayerColor.GREEN){
+            _piece.transform.rotation = Quaternion.LookRotation(new Vector3(-1, 0, UnityEngine.Random.Range(-0.5f, 0.5f)));
+        } else {
+            _piece.transform.rotation = Quaternion.LookRotation(new Vector3(1, 0, UnityEngine.Random.Range(-0.5f, 0.5f)));
+        }
         piece.SetFreeze(true);
         SetLocked(true);
         
