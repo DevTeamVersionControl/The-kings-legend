@@ -78,6 +78,7 @@ Material:
     - _NoiseStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _normalStrength: 0
     m_Colors:
     - _Albedo: {r: 0, g: 5.992157, b: 2.3162193, a: 0}
     - _EdgeColor: {r: 1.0088992, g: 5.992157, b: 0.37647063, a: 0}
