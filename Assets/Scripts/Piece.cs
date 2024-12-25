@@ -34,7 +34,15 @@ public class Piece : MonoBehaviour
     public Material materialKilled;
     public Material materialVFXGreen;
     public Material materialVFXPurple;
-    
+
+    [SerializeField] AudioSource audioPickUp;
+
+    [SerializeField] AudioClip horsePickUpSound;
+    [SerializeField] AudioClip soldierPickUpSound;
+    [SerializeField] AudioClip magePickUpSound;
+    [SerializeField] AudioClip legendPickUpSound;
+
+    public float pitchRange = 0.1f;
 
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
@@ -264,6 +272,32 @@ public class Piece : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void PLayPickUpSound()
+    {
+
+        audioPickUp.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+            
+            
+        switch (Type)
+        {
+            case PieceType.SOLDIER:
+                audioPickUp.PlayOneShot(soldierPickUpSound);
+                break;
+
+            case PieceType.MAGE:
+                audioPickUp.PlayOneShot(magePickUpSound);
+                break;
+            case PieceType.KNIGHT:
+                audioPickUp.PlayOneShot(horsePickUpSound);
+                break;
+            case PieceType.LEGEND:
+                audioPickUp.PlayOneShot(legendPickUpSound);
+                break;
+
+        }
+        
     }
 
 }

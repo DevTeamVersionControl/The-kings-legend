@@ -27,6 +27,8 @@ public class MouseInteraction : MonoBehaviour
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
 
+    public float pitchRange = 0.1f;
+
     public void Start()
     {
         StartMovePiece = new PieceUnityEvent();
@@ -47,9 +49,10 @@ public class MouseInteraction : MonoBehaviour
 
         Piece piece = gameObject.GetComponent<Piece>();
 
-        AudioClip randomClip = soundPickUp[Random.Range(0, soundPickUp.Length)];
+        AudioClip randomClip = soundPickUp[0];
+        audioPickUp.pitch = 1f + Random.Range(-pitchRange, pitchRange);
         audioPickUp.PlayOneShot(randomClip);
-
+        piece.PLayPickUpSound();
         StartMovePiece.Invoke(piece);
     }
     
@@ -106,7 +109,8 @@ public class MouseInteraction : MonoBehaviour
             return;
         }
         Tile TileDrop = null;
-        AudioClip randomClip = soundDrop[Random.Range(0, soundDrop.Length)];
+        AudioClip randomClip = soundDrop[0];
+        audioDrop.pitch = 1f + Random.Range(-pitchRange, pitchRange);
         audioDrop.PlayOneShot(randomClip);
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -119,6 +123,7 @@ public class MouseInteraction : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance,
                 Color.yellow);
             TileDrop = hit.transform.GetComponent<Tile>();
+           
         }
         else
         {
