@@ -230,6 +230,7 @@ public class Board : MonoBehaviour
         else
         {
             startTile.AddPiece(startTile.RemovePiece());
+            startTile.SetLocked(false);
         }
         UnhighlightAll();
     }

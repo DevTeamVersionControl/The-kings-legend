@@ -50,10 +50,7 @@ public class MouseInteraction : MonoBehaviour
 
         StartMovePiece.Invoke(piece);
     }
-
-
-
-
+    
     private Vector3 GetMouseWorldPos()
     {
         Vector3 mousePoint = Input.mousePosition;
