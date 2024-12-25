@@ -231,30 +231,32 @@ public class Board : MonoBehaviour
             Piece soldier = endTile.RemovePiece();
             Material dissolve;
             
-            if (endTile.GetPiece().Color == PlayerColor.PURPLE)
+            if (soldier.Color == PlayerColor.PURPLE)
             {
-                dissolve = endTile.GetPiece().materialVFXPurple;
+                dissolve = soldier.materialVFXPurple;
             }
             else
             {
-                dissolve = endTile.GetPiece().materialVFXGreen;
+                dissolve = soldier.materialVFXGreen;
             }
             
             soldier.ActivateVFX(dissolve);
             upgrade.gameObject.SetActive(false);
             upgrade.ActivateVFX(dissolve);
-            
+
             yield return new WaitForSeconds(2);
-            
+
             upgrade.gameObject.SetActive(true);
             soldier.AddVFX(dissolve);
-            
-            upgrade.EnemiesKilled = soldier.EnemiesKilled;
-            soldier.EnemiesKilled = 0;
+
             soldier.StartingTile.AddPiece(soldier);
             endTile.AddPiece(upgrade);
+            upgrade.AddVFX(dissolve);
+            upgrade.EnemiesKilled = soldier.EnemiesKilled;
+            soldier.EnemiesKilled = 0;
             SetLock(UpgradeTiles, upgrade.Color, true);
             SetLock(LegendTiles, upgrade.Color, true);
+            
         }
         else
         {
