@@ -35,6 +35,8 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(isTile)
+            return;
         mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
 
         mouseOffset = gameObject.transform.position - GetMouseWorldPos();

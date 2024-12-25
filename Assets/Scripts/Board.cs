@@ -224,44 +224,43 @@ public class Board : MonoBehaviour
     
     public IEnumerator OnPieceUpgrade(Tile startTile, Tile endTile)
     {
-
-
-        Material dissolve;
+        Piece upgrade = startTile.RemovePiece();
         
-
-
-        if (endTile.GetPiece().Color == PlayerColor.PURPLE)
-        {
-            dissolve = endTile.GetPiece().materialVFXPurple;
-        }
-        else
-        {
-            dissolve = endTile.GetPiece().materialVFXGreen;
-        }
-
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
-
-            Piece removedPiece = endTile.GetPiece();
-            removedPiece.ActivateVFX(dissolve);
-            startTile.GetPiece().gameObject.SetActive(false);
-            startTile.GetPiece().ActivateVFX(dissolve);
+            Piece soldier = endTile.RemovePiece();
+            Material dissolve;
+            
+            if (soldier.Color == PlayerColor.PURPLE)
+            {
+                dissolve = soldier.materialVFXPurple;
+            }
+            else
+            {
+                dissolve = soldier.materialVFXGreen;
+            }
+            
+            soldier.ActivateVFX(dissolve);
+            upgrade.gameObject.SetActive(false);
+            upgrade.ActivateVFX(dissolve);
 
             yield return new WaitForSeconds(2);
 
-            startTile.GetPiece().gameObject.SetActive(true);
-            removedPiece.AddVFX(dissolve);
+            upgrade.gameObject.SetActive(true);
+            soldier.AddVFX(dissolve);
 
-            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-            endTile.AddPiece(startTile.RemovePiece());
-            Piece piece = endTile.GetPiece();
-            piece.AddVFX(dissolve);
-            SetLock(UpgradeTiles, endTile.GetPiece().Color, true);
-            SetLock(LegendTiles, endTile.GetPiece().Color, true);
+            soldier.StartingTile.AddPiece(soldier);
+            endTile.AddPiece(upgrade);
+            upgrade.AddVFX(dissolve);
+            upgrade.EnemiesKilled = soldier.EnemiesKilled;
+            soldier.EnemiesKilled = 0;
+            SetLock(UpgradeTiles, upgrade.Color, true);
+            SetLock(LegendTiles, upgrade.Color, true);
+            
         }
         else
         {
-            startTile.AddPiece(startTile.RemovePiece());
+            startTile.AddPiece(upgrade);
             startTile.SetLocked(false);
         }
         UnhighlightAll();
