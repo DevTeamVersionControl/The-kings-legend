@@ -41,7 +41,7 @@ public class MouseInteraction : MonoBehaviour
         if (isTile)
         {
             Tile tile = GetComponent<Tile>();
-            if (tile.IsHighlighted()) {
+            if (tile.GetHighlight() != Tile.HighlightType.NONE) {
                 EndAttack.Invoke(tile);
             }
         }

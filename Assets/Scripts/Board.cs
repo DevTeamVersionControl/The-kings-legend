@@ -112,14 +112,14 @@ public class Board : MonoBehaviour
         return new Vector2Int(EmptyBoardMap.Length/2-position.y, position.x+EmptyBoardMap[EmptyBoardMap.Length/2-position.y].Length/2);
     }
 
-    public static bool OutOfWorldCoords(Vector2Int position)
+    public static bool OutOfWorldCoords(Vector2Int arrayPosition)
     {
-        int i = EmptyBoardMap.Length / 2 - position.y;
+        int i = EmptyBoardMap.Length / 2 - arrayPosition.y;
         if (i < 0 || i >= EmptyBoardMap.Length)
         {
             return true;
         }
-        int j = position.x + EmptyBoardMap[i].Length / 2;
+        int j = arrayPosition.x + EmptyBoardMap[i].Length / 2;
         if (j < 0 || j >= EmptyBoardMap[i].Length)
         {
             return true;
@@ -172,38 +172,35 @@ public class Board : MonoBehaviour
 
     public void OnPieceMoved(Tile startTile, Tile endTile)
     {
-        if (endTile.IsHighlighted())
+        switch (endTile.GetHighlight())
         {
-
-            endTile.AddPiece(startTile.RemovePiece());
-            startTile.RemovePiece();
-
-        }
-        else
-        {
-            startTile.AddPiece(startTile.RemovePiece());
-            startTile.SetLocked(false);
-        }
-        UnhighlightAll();
-    }
-
-    public void OnPieceAttack(Tile startTile, Tile endTile)
-    {
-        if (endTile != null && endTile.IsHighlighted())
-        {
-           AudioClip randomClip = SoundKill[UnityEngine.Random.Range(0, SoundKill.Length)];
-           AudioKill.PlayOneShot(randomClip);
-           startTile.GetPiece().OnKill();
-           endTile.GetPiece().EnemiesKilled = 0;
-           endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-           startTile.AddPiece(startTile.RemovePiece());
+            case Tile.HighlightType.NONE:
+                startTile.AddPiece(startTile.RemovePiece());
+                startTile.SetLocked(false);
+                if (!BoardTiles.Contains(startTile)){
+                    SetLock(SoldierTiles, startTile.GetPiece().Color, false);
+                }
+                break;
+            case Tile.HighlightType.MOVE:
+                endTile.AddPiece(startTile.RemovePiece());
+                startTile.RemovePiece();
+                break;
+            case Tile.HighlightType.ATTACK:
+                AudioClip randomClip = SoundKill[UnityEngine.Random.Range(0, SoundKill.Length)];
+                AudioKill.PlayOneShot(randomClip);
+                startTile.GetPiece().OnKill();
+                endTile.GetPiece().EnemiesKilled = 0;
+                endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+                startTile.AddPiece(startTile.RemovePiece());
+                break;
         }
         UnhighlightAll();
     }
     
+    
     public void OnPieceUpgrade(Tile startTile, Tile endTile)
     {
-        if (endTile.IsHighlighted())
+        if (endTile.GetHighlight() != Tile.HighlightType.NONE)
         {
             endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
             endTile.AddPiece(startTile.RemovePiece());
@@ -211,12 +208,12 @@ public class Board : MonoBehaviour
         else
         {
             startTile.AddPiece(startTile.RemovePiece());
-            startTile.SetLocked(false);
+            SetLock(UpgradeTiles, startTile.GetPiece().Color, false);
         }
         UnhighlightAll();
     }
 
-    public void HighlightPieceMoves(Tile startingTile)
+    public void HighlightPiece(Tile startingTile)
     {
         var piece = startingTile.GetPiece();
         if (BoardTiles.Contains(startingTile))
@@ -228,10 +225,11 @@ public class Board : MonoBehaviour
                 {
                     if (highlightedTiles[i][j] && BoardMap[i][j].GetPiece() == null)
                     {
-                        BoardMap[i][j].Highlight(true);
+                        BoardMap[i][j].Highlight(Tile.HighlightType.MOVE);
                     }
                 }
             }
+            HighlightPieceAttack(startingTile);
         }
     }
 
@@ -252,7 +250,7 @@ public class Board : MonoBehaviour
         {
             if (tile.GetPiece() == null)
             {
-                tile.Highlight(true);
+                tile.Highlight(Tile.HighlightType.MOVE);
             }
         }
     }
@@ -273,21 +271,21 @@ public class Board : MonoBehaviour
                     Debug.Log($"Piece {piece.name} killed : {piece.EnemiesKilled}");
                     if (potentialPiece.EnemiesKilled >= 3)
                     {
-                        tile.Highlight(true);
+                        tile.Highlight(Tile.HighlightType.MOVE);
                     }
                 }
                 else
                 {
                     if (potentialPiece.Type == Piece.PieceType.SOLDIER)
                     {
-                        tile.Highlight(true);
+                        tile.Highlight(Tile.HighlightType.MOVE);
                     }
                 }
             }
         }
     }
 
-    public void HighlightPieceAttack(Tile startingTile)
+    private void HighlightPieceAttack(Tile startingTile)
     {
         var piece = startingTile.GetPiece();
         var highlightedTiles = ClipMovesToBoard(piece.Attack, ConvertToMapPosition(_positions[startingTile]));
@@ -298,7 +296,7 @@ public class Board : MonoBehaviour
                 var highlightedPiece = BoardMap[i][j].GetPiece();
                 if (highlightedTiles[i][j] && highlightedPiece != null && highlightedPiece.Color != piece.Color)
                 {
-                    BoardMap[i][j].Highlight(false);
+                    BoardMap[i][j].Highlight(Tile.HighlightType.ATTACK);
                 }
             }
         }
@@ -308,7 +306,7 @@ public class Board : MonoBehaviour
     {
         foreach (var tile in _initBoardTiles)
         {
-            tile.Unhighlight();
+            tile.Highlight(Tile.HighlightType.NONE);
         }
     }
 

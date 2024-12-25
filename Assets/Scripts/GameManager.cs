@@ -9,13 +9,9 @@ public class GameManager : MonoBehaviour
 {
     private PlayerColor _playerColorTurn;
 
-    private enum subState { DRAGGING, ATTACKING, NONE };
-
     public enum GameLevel { MAINMENU, GAME };
 
     private GameLevel _currentLevel;
-
-    private subState _subState;
 
     [SerializeField] GameObject _winScreen;
 
@@ -68,9 +64,6 @@ public class GameManager : MonoBehaviour
                 break;
             case GameLevel.GAME:
                 SceneManager.LoadScene("MainGame");
-                _subState = subState.NONE;
-                break;
-            default:
                 break;
         }
     }
@@ -78,7 +71,6 @@ public class GameManager : MonoBehaviour
     public void OnNextTurn(PlayerColor color)
     {
         _playerColorTurn = color;
-        _subState = subState.NONE;
         changeTurn?.Invoke();
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
         if (_board.OnNextTurn(color) < 3){
@@ -91,22 +83,7 @@ public class GameManager : MonoBehaviour
     public void OnDragStart(Piece piece)
     {
         Tile tile = FindTile(piece);
-        if(piece.Type == Piece.PieceType.LEGEND){
-            Debug.Log("OnDragStart called on Legend");
-            Debug.Log("Legend is " + (tile.GetLocked() ? "locked" : "unlocked"));
-        }
-        if(_subState == subState.ATTACKING)
-        {
-            PotentialAttack(tile);
-            return;
-        } else if (_subState == subState.NONE){
-            _subState = subState.DRAGGING;
-            _current = tile;
-        } else {
-            Debug.LogError("Invalid state");
-            return;
-        }
-       
+        _current = tile;
         if (!tile.GetLocked())
         {
             tile.SetLocked(false);
@@ -121,7 +98,7 @@ public class GameManager : MonoBehaviour
             }
             if (_board.BoardTiles.Contains(tile))
             {
-                _board.HighlightPieceMoves(tile);
+                _board.HighlightPiece(tile);
             }
             piece.SetFreeze(false);
         }
@@ -143,11 +120,6 @@ public class GameManager : MonoBehaviour
     
     public void OnDragEnd(Tile tile)
     {
-        if(_subState != subState.DRAGGING){
-            Debug.LogError($"{_subState} is not valid in this function");
-            return;
-        }
-        _subState = subState.NONE;
         if (tile != null && !_current.GetLocked() && tile != _current)
         {
             if (_board.UpgradeTiles.Contains(_current) || _board.LegendTiles.Contains(_current))
@@ -172,50 +144,19 @@ public class GameManager : MonoBehaviour
             _current.AddPiece(_current.GetPiece());
             _current.SetLocked(temp);
         }
-
-        _board.UnhighlightAll();
-    }
-
-    public void OnClick(Piece piece)
-    {
-        Tile tile = FindTile(piece);
-        if (_board.BoardTiles.Contains(tile) && !tile.GetLocked())
-        {
-            if (_subState != subState.ATTACKING)
-            {
-                _subState = subState.ATTACKING;
-                _current = tile;
-                _board.UnhighlightAll();
-                _board.HighlightPieceAttack(tile);
-                tile.AddPiece(tile.GetPiece());
-                tile.SetLocked(false);
-            } else
-            {
-                PotentialAttack(tile);
-            }
-        }
-    }
-
-    public void PotentialAttack(Tile tile)
-    {
-        _board.OnPieceAttack(_current, tile);
         _board.UnhighlightAll();
         if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
         {
             OnWin(_playerColorTurn);
         }
-        _subState = subState.NONE;
     }
+    
 
     public void GameInit(Board board)
     {
 
         _board = board;
-     
-        foreach(Tile tile in board.BoardTiles) 
-        {
-            tile.GetComponent<MouseInteraction>().EndAttack.AddListener(PotentialAttack);
-        }
+        
         foreach (Tile tile in board.AllTiles){
             var piece = tile.GetPiece();       
             if (piece != null)
@@ -223,7 +164,6 @@ public class GameManager : MonoBehaviour
                 MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
                 interaction.StopMovePiece.AddListener(OnDragEnd);
                 interaction.StartMovePiece.AddListener(OnDragStart);
-                interaction.StartAttack.AddListener(OnClick);
 
                 piece.StartingTile = tile;
             }
@@ -258,7 +198,6 @@ public class GameManager : MonoBehaviour
 
     void PlayRandomTrack()
     {
-        
         int newTrackIndex;
         do
         {

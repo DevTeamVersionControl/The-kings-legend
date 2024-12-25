@@ -11,7 +11,16 @@ public class Tile : MonoBehaviour
     [CanBeNull] [SerializeField] Piece _piece;
     private Rigidbody rigidbodyPiece;
     private bool _locked;
-    private bool _highlighted;
+    private HighlightType _highlight = HighlightType.NONE;
+
+    public enum HighlightType
+    {
+        NONE,
+        MOVE,
+        ATTACK
+    }
+
+    private Dictionary<HighlightType, List<Material>> _highlightMaterials = null;
 
     [SerializeField] Material _materialMove;
     [SerializeField] Material _materialAttack;
@@ -26,6 +35,12 @@ public class Tile : MonoBehaviour
             AddPiece(_piece);
         }
         _meshRenderer = GetComponent<MeshRenderer>();
+        _highlightMaterials = new()
+        {
+            {HighlightType.NONE, new(){_meshRenderer.materials[0]}},
+            {HighlightType.MOVE, new(){_meshRenderer.materials[0], _materialMove}},
+            {HighlightType.ATTACK, new(){_meshRenderer.materials[0], _materialAttack}}
+        };
     }
 
     public void AddPiece(Piece piece)
@@ -85,21 +100,15 @@ public class Tile : MonoBehaviour
         _piece?.gameObject.SetActive(true);
     }
 
-    public void Highlight(bool move)
+    public void Highlight(HighlightType type)
     {
-        _highlighted = true;
-        _meshRenderer.SetMaterials(new() { _meshRenderer.materials[0], move ? _materialMove : _materialAttack });
-    }
-    
-    public void Unhighlight()
-    {
-        _highlighted = false;
-        _meshRenderer.SetMaterials(new() { _meshRenderer.materials[0] });
+        _highlight = type;
+        _meshRenderer.SetMaterials(_highlightMaterials[type]);
     }
 
-    public bool IsHighlighted()
+    public HighlightType GetHighlight()
     {
-        return _highlighted;
+        return _highlight;
     }
 
 }
