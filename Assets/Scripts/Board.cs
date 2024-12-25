@@ -59,13 +59,11 @@ public class Board : MonoBehaviour
         while (GameManager.Instance == null)
         {
             yield return null; // Wait for the next frame
-            Debug.Log("not ready yet");
         }
 
         yield return null;
 
         // Now GameManager is ready, call GameInits
-        Debug.Log("ready!");
         GameManager.Instance.GameInit(this);
     }
 
@@ -222,16 +220,16 @@ public class Board : MonoBehaviour
     
     public void OnPieceUpgrade(Tile startTile, Tile endTile)
     {
-        if (endTile.GetHighlight() != Tile.HighlightType.NONE)
+        if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
             endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
             endTile.AddPiece(startTile.RemovePiece());
-            
+            SetLock(UpgradeTiles, endTile.GetPiece().Color, true);
+            SetLock(LegendTiles, endTile.GetPiece().Color, true);
         }
         else
         {
             startTile.AddPiece(startTile.RemovePiece());
-            SetLock(UpgradeTiles, startTile.GetPiece().Color, false);
         }
         UnhighlightAll();
     }
@@ -281,9 +279,6 @@ public class Board : MonoBehaviour
     public void HighlightPieceUpgrade(Tile startingTile)
     {
         Piece piece = startingTile.GetPiece();
-        if(piece.Type == Piece.PieceType.LEGEND){
-            Debug.Log("Should highlight a legend");
-        }
         foreach (var tile in BoardTiles)
         {
             var potentialPiece = tile.GetPiece();
@@ -291,7 +286,6 @@ public class Board : MonoBehaviour
             {
                 if (piece.Type == Piece.PieceType.LEGEND)
                 {
-                    Debug.Log($"Piece {piece.name} killed : {piece.EnemiesKilled}");
                     if (potentialPiece.EnemiesKilled >= 3)
                     {
                         tile.Highlight(Tile.HighlightType.MOVE);

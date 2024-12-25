@@ -82,21 +82,10 @@ public class ShaderAssigner : MonoBehaviour
             elapsedTime += Time.deltaTime; // Increment elapsed time
             yield return null; // Wait for the next frame
         }
-
-        
-
-
-       
-
-
-
     }
 
     public IEnumerator AddVFXCoroutine()
     {
-
-
-        Debug.Log("Add vfxcoroutine is called");
         Renderer renderer = GetComponent<Renderer>();
         Material material = renderer.material;
         string sliderProperty = "_CutoffHeight";
@@ -107,12 +96,9 @@ public class ShaderAssigner : MonoBehaviour
         duration = 1.0f;
         while (elapsedTime < duration)
         {
-
-            
             // Interpolate the slider value over time
             float newValue = Mathf.Lerp(startValue, targetValue, elapsedTime / duration);
             material.SetFloat(sliderProperty, newValue);
-            Debug.Log($"Lerp value: {newValue} at elapsed time: {elapsedTime}");
             elapsedTime += Time.deltaTime; // Increment elapsed time
             yield return null; // Wait for the next frame
         }

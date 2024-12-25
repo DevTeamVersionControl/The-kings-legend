@@ -26,45 +26,33 @@ public class MouseInteraction : MonoBehaviour
 
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
-    public PieceUnityEvent StartAttack;
-    public TileUnityEvent EndAttack;
 
     public void Start()
     {
         StartMovePiece = new PieceUnityEvent();
         StopMovePiece = new TileUnityEvent();
-        StartAttack = new PieceUnityEvent();
-        EndAttack = new TileUnityEvent();
     }
+
     private void OnMouseDown()
     {
-        if (isTile)
-        {
-            Tile tile = GetComponent<Tile>();
-            if (tile.GetHighlight() != Tile.HighlightType.NONE) {
-                EndAttack.Invoke(tile);
-            }
-        }
-        else
-        {
-            mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+        mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
 
-            mouseOffset = gameObject.transform.position - GetMouseWorldPos();
+        mouseOffset = gameObject.transform.position - GetMouseWorldPos();
 
-            isDragging = false;
+        isDragging = false;
 
-            mouseDownPosition = Input.mousePosition;
+        mouseDownPosition = Input.mousePosition;
 
-            Piece piece = gameObject.GetComponent<Piece>();
+        Piece piece = gameObject.GetComponent<Piece>();
 
-            AudioClip randomClip = soundPickUp[Random.Range(0, soundPickUp.Length)];
-            audioPickUp.PlayOneShot(randomClip);
+        AudioClip randomClip = soundPickUp[Random.Range(0, soundPickUp.Length)];
+        audioPickUp.PlayOneShot(randomClip);
 
-            StartMovePiece.Invoke(piece);
-        }
-
+        StartMovePiece.Invoke(piece);
     }
-    
+
+
+
 
     private Vector3 GetMouseWorldPos()
     {
@@ -119,35 +107,28 @@ public class MouseInteraction : MonoBehaviour
             return;
         }
         Tile TileDrop = null;
-        if (isDragging) {
+        AudioClip randomClip = soundDrop[Random.Range(0, soundDrop.Length)];
+        audioDrop.PlayOneShot(randomClip);
 
-            AudioClip randomClip = soundDrop[Random.Range(0, soundDrop.Length)];
-            audioDrop.PlayOneShot(randomClip);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        int layerMask = 1 << LayerMask.NameToLayer("Board");
 
-            int layerMask = 1 << LayerMask.NameToLayer("Board");     
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-            {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                TileDrop = hit.transform.GetComponent<Tile>();
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
-            }
-            StopMovePiece.Invoke(TileDrop);
-        } else
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
-            StartAttack.Invoke(GetComponent<Piece>());
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance,
+                Color.yellow);
+            TileDrop = hit.transform.GetComponent<Tile>();
         }
-            
-
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
+        }
+        StopMovePiece.Invoke(TileDrop);
     }
 
 
-    
+
 
 }
