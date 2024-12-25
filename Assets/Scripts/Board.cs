@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using static Piece;
@@ -199,31 +200,55 @@ public class Board : MonoBehaviour
     {
         Material dissolve;
         Piece piece = endTile.GetPiece();
-        if(endTile.GetPiece().Color == PlayerColor.PURPLE)
-        {
-            dissolve = endTile.GetPiece().materialDeathPurple;
-        }
-        else
-        {
-            dissolve = endTile.GetPiece().materialDeathGreen;
-        }
+
+        dissolve = piece.materialKilled;
+
         endTile.GetPiece().ActivateVFX(dissolve);
         
         yield return new WaitForSeconds(1);
+        //change the dissolve for the corresponding team
+        if (endTile.GetPiece().Color == PlayerColor.PURPLE)
+        {
+            dissolve = endTile.GetPiece().materialVFXPurple;
+        }
+        else
+        {
+            dissolve = endTile.GetPiece().materialVFXGreen;
+        }
 
-        
         endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-        piece.AddVFX();
+        piece.AddVFX(dissolve);
         yield return new WaitForSeconds(1);
 
     }
     
-    public void OnPieceUpgrade(Tile startTile, Tile endTile)
+    public IEnumerator OnPieceUpgrade(Tile startTile, Tile endTile)
     {
         Piece upgrade = startTile.RemovePiece();
+        
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
             Piece soldier = endTile.RemovePiece();
+            Material dissolve;
+            
+            if (endTile.GetPiece().Color == PlayerColor.PURPLE)
+            {
+                dissolve = endTile.GetPiece().materialVFXPurple;
+            }
+            else
+            {
+                dissolve = endTile.GetPiece().materialVFXGreen;
+            }
+            
+            soldier.ActivateVFX(dissolve);
+            upgrade.gameObject.SetActive(false);
+            upgrade.ActivateVFX(dissolve);
+            
+            yield return new WaitForSeconds(2);
+            
+            upgrade.gameObject.SetActive(true);
+            soldier.AddVFX(dissolve);
+            
             upgrade.EnemiesKilled = soldier.EnemiesKilled;
             soldier.EnemiesKilled = 0;
             soldier.StartingTile.AddPiece(soldier);
@@ -237,7 +262,9 @@ public class Board : MonoBehaviour
             startTile.SetLocked(false);
         }
         UnhighlightAll();
+        yield return null;
     }
+
 
     public void HighlightPiece(Tile startingTile)
     {
