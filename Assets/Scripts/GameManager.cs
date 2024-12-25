@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     public void ChangeLevel(GameLevel level)
     {
         _currentLevel = level;
-        Debug.Log("changeLevel :" + _currentLevel.ToString());
         switch (level)
         {
             case GameLevel.MAINMENU:
@@ -76,9 +75,7 @@ public class GameManager : MonoBehaviour
         }
         _playerColorTurn = color;
         changeTurn?.Invoke();
-        Debug.Log("Player turn : " + _playerColorTurn.ToString());
         if (_board.OnNextTurn(color) < 3){
-            Debug.Log($"Unlocked {color}'s soldiers since they have less than three pieces");
             _board.SetLock(_board.SoldierTiles, color, false);
         }
         
@@ -106,8 +103,6 @@ public class GameManager : MonoBehaviour
             }
             piece.SetFreeze(false);
         }
-        
-        Debug.Log("OnDragStart is called on the tile" + tile);
     }
 
     private Tile FindTile(Piece piece)
@@ -131,6 +126,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(_board.OnPieceUpgrade(_current, tile));
                 _board.SetLock(_board.UpgradeTiles, _playerColorTurn, true);
                 _board.SetLock(_board.LegendTiles, _playerColorTurn, true);
+
             }
             if (_board.SoldierTiles.Contains(_current))
             {

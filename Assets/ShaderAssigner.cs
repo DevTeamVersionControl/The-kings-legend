@@ -84,14 +84,6 @@ public class ShaderAssigner : MonoBehaviour
             elapsedTime += Time.deltaTime; // Increment elapsed time
             yield return null; // Wait for the next frame
         }
-
-        
-
-
-       
-
-
-
     }
 
     public IEnumerator AddVFXCoroutine(Material newMaterial)
@@ -114,6 +106,7 @@ public class ShaderAssigner : MonoBehaviour
         meshRenderer.material = materialInstance;
  
         Material material = meshRenderer.material;
+
         string sliderProperty = "_CutoffHeight";
         float startValue = 0.0f;
         float targetValue = 6.0f;
@@ -122,12 +115,9 @@ public class ShaderAssigner : MonoBehaviour
         duration = 1.0f;
         while (elapsedTime < duration)
         {
-
-            
             // Interpolate the slider value over time
             float newValue = Mathf.Lerp(startValue, targetValue, elapsedTime / duration);
             material.SetFloat(sliderProperty, newValue);
-            Debug.Log($"Lerp value: {newValue} at elapsed time: {elapsedTime}");
             elapsedTime += Time.deltaTime; // Increment elapsed time
             yield return null; // Wait for the next frame
         }
