@@ -53,13 +53,15 @@ public class ShaderAssigner : MonoBehaviour
 
             // Apply the new material to the object
             meshRenderer.material = materialInstance;
-            StartCoroutine(ActivateVFX(newMaterial));
+           
+            StartCoroutine(ActivateVFX(newMaterial));           
         }
         else
         {
             Debug.LogWarning("MeshRenderer or newMaterial is missing!");
         }
     }
+
 
     IEnumerator ActivateVFX(Material newMaterial)
     {
@@ -92,13 +94,26 @@ public class ShaderAssigner : MonoBehaviour
 
     }
 
-    public IEnumerator AddVFXCoroutine()
+    public IEnumerator AddVFXCoroutine(Material newMaterial)
     {
+
+        // Create a copy of the new material to avoid affecting shared assets
+        Material materialInstance = new Material(newMaterial);
+
+        // Assign the stored textures to the new material
+        materialInstance.mainTexture = mainTexture;
+        if (normalMap) materialInstance.SetTexture("_BumpMap", normalMap);
+        if (metallicMap) materialInstance.SetTexture("_MetallicGlossMap", metallicMap);
+        if (roughnessMap) materialInstance.SetTexture("_SpecGlossMap", roughnessMap);
+        if (aoMap) materialInstance.SetTexture("_OcclusionMap", aoMap);
 
 
         Debug.Log("Add vfxcoroutine is called");
-        Renderer renderer = GetComponent<Renderer>();
-        Material material = renderer.material;
+        Renderer meshRenderer = GetComponent<Renderer>();
+        // Apply the new material to the object
+        meshRenderer.material = materialInstance;
+ 
+        Material material = meshRenderer.material;
         string sliderProperty = "_CutoffHeight";
         float startValue = 0.0f;
         float targetValue = 6.0f;

@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
         {
             if (_board.UpgradeTiles.Contains(_current) || _board.LegendTiles.Contains(_current))
             {
-                _board.OnPieceUpgrade(_current, tile);
+                StartCoroutine(_board.OnPieceUpgrade(_current, tile));
                 _board.SetLock(_board.UpgradeTiles, _playerColorTurn, true);
                 _board.SetLock(_board.LegendTiles, _playerColorTurn, true);
             }

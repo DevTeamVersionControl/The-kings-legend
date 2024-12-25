@@ -26,13 +26,14 @@ public class Piece : MonoBehaviour
     private GameObject _mesh;
 
     public int EnemiesKilled;
-    const int ENEMIES_FOR_LEGEND = 3;
+    const int ENEMIES_FOR_LEGEND = 2;
     
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
 
-    public Material materialDeathGreen;
-    public Material materialDeathPurple;
+    public Material materialKilled;
+    public Material materialVFXGreen;
+    public Material materialVFXPurple;
     
 
     static readonly bool[][] SoldierMovement = 
@@ -241,7 +242,7 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public void AddVFX()
+    public void AddVFX(Material shaderMat)
     {
 
         foreach (Transform child in transform)
@@ -255,7 +256,7 @@ public class Piece : MonoBehaviour
                     var bodyPartScript = bodyPart.GetComponent<ShaderAssigner>();
                     if (bodyPartScript != null)
                     {
-                        StartCoroutine(bodyPartScript.AddVFXCoroutine());
+                        StartCoroutine(bodyPartScript.AddVFXCoroutine(shaderMat));
                     }
                 }
 

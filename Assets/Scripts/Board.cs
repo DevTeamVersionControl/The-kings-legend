@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using static Piece;
@@ -201,32 +202,62 @@ public class Board : MonoBehaviour
     {
         Material dissolve;
         Piece piece = endTile.GetPiece();
-        if(endTile.GetPiece().Color == PlayerColor.PURPLE)
-        {
-            dissolve = endTile.GetPiece().materialDeathPurple;
-        }
-        else
-        {
-            dissolve = endTile.GetPiece().materialDeathGreen;
-        }
+
+        dissolve = piece.materialKilled;
+
         endTile.GetPiece().ActivateVFX(dissolve);
         
         yield return new WaitForSeconds(1);
+        //change the dissolve for the corresponding team
+        if (endTile.GetPiece().Color == PlayerColor.PURPLE)
+        {
+            dissolve = endTile.GetPiece().materialVFXPurple;
+        }
+        else
+        {
+            dissolve = endTile.GetPiece().materialVFXGreen;
+        }
 
-        
         endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-        piece.AddVFX();
+        piece.AddVFX(dissolve);
         yield return new WaitForSeconds(1);
 
     }
     
-    public void OnPieceUpgrade(Tile startTile, Tile endTile)
+    public IEnumerator OnPieceUpgrade(Tile startTile, Tile endTile)
     {
+
+        Material dissolve;
+        
+
+
+        if (endTile.GetPiece().Color == PlayerColor.PURPLE)
+        {
+            dissolve = endTile.GetPiece().materialVFXPurple;
+        }
+        else
+        {
+            dissolve = endTile.GetPiece().materialVFXGreen;
+        }
+
         if (endTile.GetHighlight() != Tile.HighlightType.NONE)
         {
+
+            Piece removedPiece = endTile.GetPiece();
+            removedPiece.ActivateVFX(dissolve);
+            startTile.GetPiece().gameObject.SetActive(false);
+            startTile.GetPiece().ActivateVFX(dissolve);
+
+            yield return new WaitForSeconds(2);
+
+            startTile.GetPiece().gameObject.SetActive(true);
+            removedPiece.AddVFX(dissolve);
+
             endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
             endTile.AddPiece(startTile.RemovePiece());
-            
+            Piece piece = endTile.GetPiece();
+            piece.AddVFX(dissolve);
+
         }
         else
         {
@@ -234,7 +265,9 @@ public class Board : MonoBehaviour
             SetLock(UpgradeTiles, startTile.GetPiece().Color, false);
         }
         UnhighlightAll();
+        yield return null;
     }
+
 
     public void HighlightPiece(Tile startingTile)
     {
