@@ -98,9 +98,7 @@ public class ShaderAssigner : MonoBehaviour
         if (metallicMap) materialInstance.SetTexture("_MetallicGlossMap", metallicMap);
         if (roughnessMap) materialInstance.SetTexture("_SpecGlossMap", roughnessMap);
         if (aoMap) materialInstance.SetTexture("_OcclusionMap", aoMap);
-
-
-        Debug.Log("Add vfxcoroutine is called");
+        
         Renderer meshRenderer = GetComponent<Renderer>();
         // Apply the new material to the object
         meshRenderer.material = materialInstance;
