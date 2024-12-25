@@ -220,16 +220,20 @@ public class Board : MonoBehaviour
     
     public void OnPieceUpgrade(Tile startTile, Tile endTile)
     {
+        Piece upgrade = startTile.RemovePiece();
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
-            endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-            endTile.AddPiece(startTile.RemovePiece());
-            SetLock(UpgradeTiles, endTile.GetPiece().Color, true);
-            SetLock(LegendTiles, endTile.GetPiece().Color, true);
+            Piece soldier = endTile.RemovePiece();
+            upgrade.EnemiesKilled = soldier.EnemiesKilled;
+            soldier.EnemiesKilled = 0;
+            soldier.StartingTile.AddPiece(soldier);
+            endTile.AddPiece(upgrade);
+            SetLock(UpgradeTiles, upgrade.Color, true);
+            SetLock(LegendTiles, upgrade.Color, true);
         }
         else
         {
-            startTile.AddPiece(startTile.RemovePiece());
+            startTile.AddPiece(upgrade);
             startTile.SetLocked(false);
         }
         UnhighlightAll();
