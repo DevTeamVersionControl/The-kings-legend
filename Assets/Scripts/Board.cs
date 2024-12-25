@@ -199,25 +199,29 @@ public class Board : MonoBehaviour
     IEnumerator PieceDeath(Tile startTile, Tile endTile)
     {
         Material dissolve;
-        Piece piece = endTile.GetPiece();
+        Piece piece = endTile.RemovePiece();
+        
+        Vector3 animationPosition = piece.transform.position;
+        piece.StartingTile.AddPiece(piece);
+        Vector3 finalPosition = piece.transform.position;
+        piece.transform.position = animationPosition;
 
         dissolve = piece.materialKilled;
 
-        endTile.GetPiece().ActivateVFX(dissolve);
+        piece.ActivateVFX(dissolve);
         
         yield return new WaitForSeconds(1);
         //change the dissolve for the corresponding team
-        if (endTile.GetPiece().Color == PlayerColor.PURPLE)
+        if (piece.Color == PlayerColor.PURPLE)
         {
-            dissolve = endTile.GetPiece().materialVFXPurple;
+            dissolve = piece.materialVFXPurple;
         }
         else
         {
-            dissolve = endTile.GetPiece().materialVFXGreen;
+            dissolve = piece.materialVFXGreen;
         }
-
-        endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
         piece.AddVFX(dissolve);
+        piece.transform.position = finalPosition;
         yield return new WaitForSeconds(1);
 
     }
@@ -229,6 +233,17 @@ public class Board : MonoBehaviour
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
             Piece soldier = endTile.RemovePiece();
+            
+            Vector3 animationPosition = soldier.transform.position;
+            soldier.StartingTile.AddPiece(soldier);
+            Vector3 finalPosition = soldier.transform.position;
+            soldier.transform.position = animationPosition;
+            
+            endTile.AddPiece(upgrade);
+            upgrade.EnemiesKilled = soldier.EnemiesKilled;
+            soldier.EnemiesKilled = 0;
+            SetLock(UpgradeTiles, upgrade.Color, true);
+            SetLock(LegendTiles, upgrade.Color, true);
             Material dissolve;
             
             if (soldier.Color == PlayerColor.PURPLE)
@@ -247,16 +262,9 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(2);
 
             upgrade.gameObject.SetActive(true);
+            soldier.transform.position = finalPosition;
             soldier.AddVFX(dissolve);
-
-            soldier.StartingTile.AddPiece(soldier);
-            endTile.AddPiece(upgrade);
             upgrade.AddVFX(dissolve);
-            upgrade.EnemiesKilled = soldier.EnemiesKilled;
-            soldier.EnemiesKilled = 0;
-            SetLock(UpgradeTiles, upgrade.Color, true);
-            SetLock(LegendTiles, upgrade.Color, true);
-            
         }
         else
         {
