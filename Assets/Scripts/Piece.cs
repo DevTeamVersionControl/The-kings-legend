@@ -31,6 +31,10 @@ public class Piece : MonoBehaviour
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
 
+    public Material materialDeathGreen;
+    public Material materialDeathPurple;
+    
+
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
         new []{false, false},
@@ -149,6 +153,8 @@ public class Piece : MonoBehaviour
 
     public void Awake()
     {
+
+        
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
         if (Color == PlayerColor.GREEN)
@@ -189,6 +195,7 @@ public class Piece : MonoBehaviour
         {
             OnCanBecomeLegend.Invoke();
         }
+        
     }
 
     public bool CanBecomeLegend()
@@ -208,5 +215,56 @@ public class Piece : MonoBehaviour
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
+    
+
+    public void ActivateVFX(Material shaderMat)
+    {
+        
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.activeSelf) 
+            {
+                
+                foreach (Transform bodyPart in child)
+                {
+                    
+                    var bodyPartScript = bodyPart.GetComponent<ShaderAssigner>();
+                    if (bodyPartScript != null)
+                    {
+                        bodyPartScript.assignShaderMaterial(shaderMat); 
+                    }
+                }
+
+               
+                break;
+            }
+        }
+    }
+
+    public void AddVFX()
+    {
+
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.activeSelf)
+            {
+
+                foreach (Transform bodyPart in child)
+                {
+
+                    var bodyPartScript = bodyPart.GetComponent<ShaderAssigner>();
+                    if (bodyPartScript != null)
+                    {
+                        StartCoroutine(bodyPartScript.AddVFXCoroutine());
+                    }
+                }
+
+
+                break;
+            }
+        }
+    }
 
 }
+
+

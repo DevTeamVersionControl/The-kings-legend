@@ -192,11 +192,35 @@ public class Board : MonoBehaviour
                 endTile.GetPiece().EnemiesKilled = 0;
                 endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
                 startTile.AddPiece(startTile.RemovePiece());
+                StartCoroutine(PieceDeath(startTile, endTile));
                 break;
         }
         UnhighlightAll();
     }
     
+    IEnumerator PieceDeath(Tile startTile, Tile endTile)
+    {
+        Material dissolve;
+        Piece piece = endTile.GetPiece();
+        if(endTile.GetPiece().Color == PlayerColor.PURPLE)
+        {
+            dissolve = endTile.GetPiece().materialDeathPurple;
+        }
+        else
+        {
+            dissolve = endTile.GetPiece().materialDeathGreen;
+        }
+        endTile.GetPiece().ActivateVFX(dissolve);
+        
+        yield return new WaitForSeconds(1);
+
+        
+        endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
+        startTile.AddPiece(startTile.RemovePiece());
+        piece.AddVFX();
+        yield return new WaitForSeconds(1);
+
+    }
     
     public void OnPieceUpgrade(Tile startTile, Tile endTile)
     {
@@ -204,6 +228,7 @@ public class Board : MonoBehaviour
         {
             endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
             endTile.AddPiece(startTile.RemovePiece());
+            
         }
         else
         {

@@ -169,6 +169,8 @@ MonoBehaviour:
   EnemiesKilled: 0
   _soldierPrefabGreen: {fileID: 950437334654235260}
   _soldierPrefabPurple: {fileID: 9108872110140002034}
+  materialDeathGreen: {fileID: 2100000, guid: 157b59eeee786244484e068327d8547a, type: 2}
+  materialDeathPurple: {fileID: 2100000, guid: d0202b75709db734e808b0f63631e6fd, type: 2}
   _knightPrefabGreen: {fileID: 8715733552807905504}
   _knightPrefabPurple: {fileID: 4951067258321175554}
   _magePrefabGreen: {fileID: 4731824089412798852}
