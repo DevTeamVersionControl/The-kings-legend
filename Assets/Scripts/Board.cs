@@ -190,7 +190,6 @@ public class Board : MonoBehaviour
                 AudioKill.PlayOneShot(randomClip);
                 startTile.GetPiece().OnKill();
                 endTile.GetPiece().EnemiesKilled = 0;
-                endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
                 startTile.AddPiece(startTile.RemovePiece());
                 StartCoroutine(PieceDeath(startTile, endTile));
                 break;
@@ -216,7 +215,6 @@ public class Board : MonoBehaviour
 
         
         endTile.GetPiece().StartingTile.AddPiece(endTile.RemovePiece());
-        startTile.AddPiece(startTile.RemovePiece());
         piece.AddVFX();
         yield return new WaitForSeconds(1);
 

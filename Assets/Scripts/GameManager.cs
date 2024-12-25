@@ -70,6 +70,10 @@ public class GameManager : MonoBehaviour
 
     public void OnNextTurn(PlayerColor color)
     {
+        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
+        {
+            OnWin(_playerColorTurn);
+        }
         _playerColorTurn = color;
         changeTurn?.Invoke();
         Debug.Log("Player turn : " + _playerColorTurn.ToString());
@@ -145,10 +149,6 @@ public class GameManager : MonoBehaviour
             _current.SetLocked(temp);
         }
         _board.UnhighlightAll();
-        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
-        {
-            OnWin(_playerColorTurn);
-        }
     }
     
 
