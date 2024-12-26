@@ -424,7 +424,19 @@ public class Board : MonoBehaviour
             }
         }
     }
-    
+
+    public void ResetBoard()
+    {
+        foreach (var tile in BoardTiles)
+        {
+            if (tile.GetPiece() != null)
+            {
+                Piece piece = tile.RemovePiece();
+                piece.StartingTile.AddPiece(piece);
+                piece.StartingTile.SetLocked(false);
+            }
+        }
+    }
     
     public void AddStartingPieces()
     {

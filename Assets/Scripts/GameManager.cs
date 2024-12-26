@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
         _skipButton.SetActive(false);
         _winScreen.GetComponentInChildren<TMP_Text>().text = $"{_playerColorTurn} has won";
         _winScreen.SetActive(true);
+        _board.ResetBoard();
     }
 
     public void OnSkip()
