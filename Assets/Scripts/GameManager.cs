@@ -69,7 +69,8 @@ public class GameManager : MonoBehaviour
             case GameLevel.GAME:
                 UI.SetActive(false);
                 _playerColorTurn = PlayerColor.GREEN;
-                loadGame?.Invoke();            
+                loadGame?.Invoke();  
+                hasWon = false;
                 break;
         }
     }
