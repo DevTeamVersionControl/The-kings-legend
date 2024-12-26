@@ -160,7 +160,17 @@ public class Piece : MonoBehaviour
     public Dictionary<PieceType, GameObject> MeshMap;
     public Tile StartingTile { set; get; }
 
+
     public void Awake()
+    {
+        GameManager.loadGame += PieceStart;
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.loadGame -= PieceStart;
+    }
+    public void PieceStart()
     {
 
         

@@ -42,8 +42,20 @@ public class Board : MonoBehaviour
     public AudioSource AudioKill;
     public AudioClip[] SoundKill;
 
-    public void Start()
+
+    public void Awake()
     {
+        GameManager.loadGame += BoardStart;
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.loadGame -= BoardStart;
+    }
+    public void BoardStart()
+    {
+
+        
         FillBoardMap();
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
@@ -142,7 +154,6 @@ public class Board : MonoBehaviour
             }
         }
     }
-
     public int OnNextTurn(PlayerColor playerColor)
     {
         int piecesNb = 0;

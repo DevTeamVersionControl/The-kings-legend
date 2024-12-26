@@ -28,7 +28,18 @@ public class Tile : MonoBehaviour
 
     public float _pieceYOffset = .5f;
 
-    public void Start()
+
+
+    public void Awake()
+    {
+        GameManager.loadGame += TileStart;
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.loadGame -= TileStart;
+    }
+    public void TileStart()
     {
         if (_piece != null)
         {

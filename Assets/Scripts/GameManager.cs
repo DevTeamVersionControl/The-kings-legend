@@ -21,9 +21,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
+    [SerializeField] GameObject UI;
+
     public Tile _current;
     
     public static event Action changeTurn;
+
+    public static event Action loadGame;
 
     public static GameManager Instance;
 
@@ -33,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private int currentTrackIndex;
 
-
+    private bool hasWon;
     public void Awake()
     {
         if (Instance == null)
@@ -51,6 +55,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         PlayRandomTrack();
+        
     }
 
     public void ChangeLevel(GameLevel level)
@@ -59,19 +64,23 @@ public class GameManager : MonoBehaviour
         switch (level)
         {
             case GameLevel.MAINMENU:
-                SceneManager.LoadScene("MainMenu");
+                UI.SetActive(true);
                 break;
             case GameLevel.GAME:
-                SceneManager.LoadScene("MainGame");
+                UI.SetActive(false);
+                _playerColorTurn = PlayerColor.GREEN;
+                loadGame?.Invoke();            
                 break;
         }
     }
 
     public void OnNextTurn(PlayerColor color)
     {
-        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)))
+        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)) && !hasWon)
         {
+            hasWon = true;
             OnWin(_playerColorTurn);
+
         }
         _playerColorTurn = color;
         changeTurn?.Invoke();
@@ -186,6 +195,10 @@ public class GameManager : MonoBehaviour
     {
         _winScreen.SetActive(false);
         _skipButton.SetActive(true);
+        foreach (Tile tile in _board.BoardTiles)
+        {
+            tile.RemovePiece();
+        }
         ChangeLevel(GameLevel.GAME);
     }
 
