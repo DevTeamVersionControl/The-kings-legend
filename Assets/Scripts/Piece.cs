@@ -171,7 +171,7 @@ public class Piece : MonoBehaviour
     public void PieceStart()
     {
 
-        
+        EnemiesKilled = 0;
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
         if (Color == PlayerColor.GREEN)

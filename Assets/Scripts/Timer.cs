@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     private bool active = false;
     public bool Active { get => active; set => active = value; }
     
-    public Animation animation;
+    public Animation animation = null;
 
     public UnityEvent timeout = new();
     
@@ -24,7 +24,10 @@ public class Timer : MonoBehaviour
 
         if (remainingTime > 0)
         {
-            animation["burn"].time = animation["burn"].length * (1 - remainingTime / waitTime);
+            if (animation)
+            {
+                animation["burn"].time = animation["burn"].length * (1 - remainingTime / waitTime);
+            }
             return;
         }
         
@@ -36,14 +39,20 @@ public class Timer : MonoBehaviour
     {
         active = true;
         remainingTime = waitTime;
-        animation["burn"].time = 0;
+        if (animation)
+        {
+            animation["burn"].time = 0;
+        }
     }
 
     public void StopTimer()
     {
         active = false;
         remainingTime = 0;
-        animation.Play("fill");
+        if (animation)
+        {
+            animation.Play("fill");
+        }
     }
 
 }
