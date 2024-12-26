@@ -3,7 +3,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -127,8 +126,8 @@ public class GameManager : MonoBehaviour
             }
             if (_board.SoldierTiles.Contains(_current))
             {
-                _board.OnPieceMoved(_current, tile);
                 _board.SetLock(_board.SoldierTiles, _playerColorTurn, true);
+                _board.OnPieceMoved(_current, tile);
             }
             if (_board.BoardTiles.Contains(_current))
             {

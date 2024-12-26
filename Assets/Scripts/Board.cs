@@ -1,14 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using static Piece;
-using Debug = UnityEngine.Debug;
 
 public class Board : MonoBehaviour
 {
@@ -176,7 +170,7 @@ public class Board : MonoBehaviour
             case Tile.HighlightType.NONE:
                 startTile.AddPiece(startTile.RemovePiece());
                 startTile.SetLocked(false);
-                if (!BoardTiles.Contains(startTile)){
+                if (SoldierTiles.Contains(startTile)){
                     SetLock(SoldierTiles, startTile.GetPiece().Color, false);
                 }
                 break;
@@ -233,6 +227,7 @@ public class Board : MonoBehaviour
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
             Piece soldier = endTile.RemovePiece();
+            bool locked = endTile.GetLocked();
             
             Vector3 animationPosition = soldier.transform.position;
             soldier.StartingTile.AddPiece(soldier);
@@ -242,6 +237,7 @@ public class Board : MonoBehaviour
             endTile.AddPiece(upgrade);
             upgrade.EnemiesKilled = soldier.EnemiesKilled;
             soldier.EnemiesKilled = 0;
+            endTile.SetLocked(locked);
             SetLock(UpgradeTiles, upgrade.Color, true);
             SetLock(LegendTiles, upgrade.Color, true);
             Material dissolve;
@@ -324,7 +320,7 @@ public class Board : MonoBehaviour
         foreach (var tile in BoardTiles)
         {
             var potentialPiece = tile.GetPiece();
-            if (potentialPiece != null && !tile.GetLocked())
+            if (potentialPiece != null && potentialPiece.Color.Equals(piece.Color))
             {
                 if (piece.Type == Piece.PieceType.LEGEND)
                 {
