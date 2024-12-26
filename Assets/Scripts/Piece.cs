@@ -24,7 +24,7 @@ public class Piece : MonoBehaviour
     private GameObject _mesh;
 
     public int EnemiesKilled;
-    const int ENEMIES_FOR_LEGEND = 2;
+    public const int ENEMIES_FOR_LEGEND = 2;
     
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
@@ -158,7 +158,17 @@ public class Piece : MonoBehaviour
     public Dictionary<PieceType, GameObject> MeshMap;
     public Tile StartingTile { set; get; }
 
+
     public void Awake()
+    {
+        GameManager.loadGame += PieceStart;
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.loadGame -= PieceStart;
+    }
+    public void PieceStart()
     {
 
         

@@ -36,8 +36,20 @@ public class Board : MonoBehaviour
     public AudioSource AudioKill;
     public AudioClip[] SoundKill;
 
-    public void Start()
+
+    public void Awake()
     {
+        GameManager.loadGame += BoardStart;
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.loadGame -= BoardStart;
+    }
+    public void BoardStart()
+    {
+
+        
         FillBoardMap();
         BoardTiles = new HashSet<Tile>(_initBoardTiles);
         SoldierTiles = new HashSet<Tile>(_initSoldierTiles);
@@ -136,7 +148,6 @@ public class Board : MonoBehaviour
             }
         }
     }
-
     public int OnNextTurn(PlayerColor playerColor)
     {
         int piecesNb = 0;
@@ -324,7 +335,7 @@ public class Board : MonoBehaviour
             {
                 if (piece.Type == Piece.PieceType.LEGEND)
                 {
-                    if (potentialPiece.EnemiesKilled >= 3)
+                    if (potentialPiece.EnemiesKilled >= Piece.ENEMIES_FOR_LEGEND)
                     {
                         tile.Highlight(Tile.HighlightType.MOVE);
                     }
@@ -409,7 +420,19 @@ public class Board : MonoBehaviour
             }
         }
     }
-    
+
+    public void ResetBoard()
+    {
+        foreach (var tile in BoardTiles)
+        {
+            if (tile.GetPiece() != null)
+            {
+                Piece piece = tile.RemovePiece();
+                piece.StartingTile.AddPiece(piece);
+                piece.StartingTile.SetLocked(false);
+            }
+        }
+    }
     
     public void AddStartingPieces()
     {

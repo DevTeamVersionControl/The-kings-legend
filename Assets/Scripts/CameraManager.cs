@@ -9,11 +9,13 @@ public class CameraManager : MonoBehaviour
     public void Awake()
     {
         GameManager.changeTurn += changeCamera;
+        GameManager.loadGame += initialPosition;
     }
 
     private void OnDestroy()
     {
         GameManager.changeTurn -= changeCamera;
+        GameManager.loadGame -= initialPosition;
     }
 
     void changeCamera()
@@ -26,8 +28,14 @@ public class CameraManager : MonoBehaviour
         else
         {
             Camera1.SetActive(true);
-            Camera2.SetActive(true);
+            Camera2.SetActive(false);
         }
+    }
+
+    void initialPosition()
+    {
+        Camera1.SetActive(true);
+        Camera2.SetActive(false);
     }
 
 

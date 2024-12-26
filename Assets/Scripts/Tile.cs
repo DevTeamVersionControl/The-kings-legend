@@ -24,7 +24,18 @@ public class Tile : MonoBehaviour
 
     public float _pieceYOffset = .5f;
 
-    public void Start()
+
+
+    public void Awake()
+    {
+        GameManager.loadGame += TileStart;
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.loadGame -= TileStart;
+    }
+    public void TileStart()
     {
         if (_piece != null)
         {
@@ -42,7 +53,7 @@ public class Tile : MonoBehaviour
     public void AddPiece(Piece piece)
     {
         _piece = piece;
-        rigidbodyPiece = _piece.GetComponent<Rigidbody>();
+        //rigidbodyPiece = _piece.GetComponent<Rigidbody>();
         
         _piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
         if (piece.Color == PlayerColor.GREEN){
