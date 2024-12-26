@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     private int currentTrackIndex;
 
     private bool hasWon;
+
+    private bool firstGame; 
     public void Awake()
     {
         if (Instance == null)
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
             case GameLevel.GAME:
                 UI.SetActive(false);
                 _playerColorTurn = PlayerColor.GREEN;
+                _current = null;
                 loadGame?.Invoke();  
                 hasWon = false;
                 break;
@@ -200,6 +203,17 @@ public class GameManager : MonoBehaviour
         foreach (Tile tile in _board.BoardTiles)
         {
             tile.RemovePiece();
+        }
+
+        foreach (Tile tile in _board.AllTiles)
+        {
+            var piece = tile.GetPiece();
+            if (piece != null)
+            {
+                MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
+                interaction.StopMovePiece.RemoveListener(OnDragEnd);
+                interaction.StartMovePiece.RemoveListener(OnDragStart);
+            }
         }
         ChangeLevel(GameLevel.GAME);
     }

@@ -57,7 +57,7 @@ public class Tile : MonoBehaviour
     public void AddPiece(Piece piece)
     {
         _piece = piece;
-        rigidbodyPiece = _piece.GetComponent<Rigidbody>();
+        //rigidbodyPiece = _piece.GetComponent<Rigidbody>();
         
         _piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
         if (piece.Color == PlayerColor.GREEN){
