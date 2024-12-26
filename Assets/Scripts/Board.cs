@@ -339,7 +339,7 @@ public class Board : MonoBehaviour
             {
                 if (piece.Type == Piece.PieceType.LEGEND)
                 {
-                    if (potentialPiece.EnemiesKilled >= 3)
+                    if (potentialPiece.EnemiesKilled >= Piece.ENEMIES_FOR_LEGEND)
                     {
                         tile.Highlight(Tile.HighlightType.MOVE);
                     }

@@ -26,7 +26,7 @@ public class Piece : MonoBehaviour
     private GameObject _mesh;
 
     public int EnemiesKilled;
-    const int ENEMIES_FOR_LEGEND = 2;
+    public const int ENEMIES_FOR_LEGEND = 2;
     
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
