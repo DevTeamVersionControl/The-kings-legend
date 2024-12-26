@@ -56,22 +56,6 @@ public class Board : MonoBehaviour
         UpgradeTiles = new HashSet<Tile>(_initUpgradeTiles);
         LegendTiles = new HashSet<Tile>(_initLegendTiles);
         AllTiles = new List<Tile>(BoardTiles.Union(UpgradeTiles).Union(LegendTiles).Union(SoldierTiles));
-        StartCoroutine(WaitUntilGameManagerIsReady());
-    }
-
-
-    private IEnumerator WaitUntilGameManagerIsReady()
-    {
-        // Wait until GameManager.Instance is not null
-        while (GameManager.Instance == null)
-        {
-            yield return null; // Wait for the next frame
-        }
-
-        yield return null;
-
-        // Now GameManager is ready, call GameInits
-        GameManager.Instance.GameInit(this);
     }
 
     public static Vector2Int ConvertToMapPosition(Vector2Int position)

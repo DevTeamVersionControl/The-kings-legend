@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource; 
     public AudioClip[] musicTracks;
 
+    [SerializeField] private Timer greenTimer;
+    [SerializeField] private Timer purpleTimer;
+
     private int currentTrackIndex;
 
     private bool hasWon;
@@ -56,7 +60,6 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         PlayRandomTrack();
-        
     }
 
     public void ChangeLevel(GameLevel level)
@@ -71,7 +74,8 @@ public class GameManager : MonoBehaviour
                 UI.SetActive(false);
                 _playerColorTurn = PlayerColor.GREEN;
                 _current = null;
-                loadGame?.Invoke();  
+                loadGame?.Invoke();
+                GameInit();
                 hasWon = false;
                 break;
         }
@@ -79,13 +83,25 @@ public class GameManager : MonoBehaviour
 
     public void OnNextTurn(PlayerColor color)
     {
-        if (!_board.HasPiece(PlayerColorExtensions.GetOpposite(_playerColorTurn)) && !hasWon)
+        if (!_board.HasPiece(color) && !hasWon)
         {
             hasWon = true;
             OnWin(_playerColorTurn);
-
         }
+
+        if (color == PlayerColor.GREEN)
+        {
+            greenTimer.StartTimer();
+            purpleTimer.StopTimer();
+        }
+        else
+        {
+            purpleTimer.StartTimer();
+            greenTimer.StopTimer();
+        }
+        
         _playerColorTurn = color;
+        
         changeTurn?.Invoke();
         if (_board.OnNextTurn(color) < 3){
             _board.SetLock(_board.SoldierTiles, color, false);
@@ -139,8 +155,8 @@ public class GameManager : MonoBehaviour
             }
             if (_board.SoldierTiles.Contains(_current))
             {
-                _board.SetLock(_board.SoldierTiles, _playerColorTurn, true);
                 _board.OnPieceMoved(_current, tile);
+                _board.SetLock(_board.SoldierTiles, _playerColorTurn, true);
             }
             if (_board.BoardTiles.Contains(_current))
             {
@@ -157,12 +173,12 @@ public class GameManager : MonoBehaviour
     }
     
 
-    public void GameInit(Board board)
+    public void GameInit()
     {
-
-        _board = board;
+        greenTimer.timeout.AddListener(()=>OnNextTurn(PlayerColor.PURPLE));
+        purpleTimer.timeout.AddListener(()=>OnNextTurn(PlayerColor.GREEN));
         
-        foreach (Tile tile in board.AllTiles){
+        foreach (Tile tile in _board.AllTiles){
             var piece = tile.GetPiece();       
             if (piece != null)
             {
