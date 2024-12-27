@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class MouseInteraction : MonoBehaviour
 {
@@ -7,35 +11,52 @@ public class MouseInteraction : MonoBehaviour
     private float mouseZCoordinate;
 
     private bool isDragging;
+    private bool isHovering;
 
     private Vector3 mouseDownPosition;
 
     private float dragThreshold = 10f;
 
-    [SerializeField] bool isTile;
+    [SerializeField] bool canDrag;
 
     [SerializeField] float _dragHeightOffset;
 
-    [SerializeField] AudioSource audioPickUp;
-    [SerializeField] AudioSource audioDrop;
+    [FormerlySerializedAs("audioPickUp")] [SerializeField] AudioSource audioSource;
     public AudioClip[] soundPickUp;
     public AudioClip[] soundDrop;
+    public AudioClip[] soundClick;
+    public AudioClip[] soundHover;
+
+    [SerializeField] private Material highlightMaterial;
 
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
+    public UnityEvent OnClick;
 
     public float pitchRange = 0.1f;
+    
+    private MeshRenderer[] _meshRenderers;
 
     public void Start()
     {
         StartMovePiece = new PieceUnityEvent();
         StopMovePiece = new TileUnityEvent();
+        OnClick ??= new UnityEvent();
+        _meshRenderers = GetComponentsInChildren<MeshRenderer>().Append(GetComponent<MeshRenderer>()).ToArray();
     }
 
     private void OnMouseDown()
     {
-        if(isTile)
+        if (!canDrag)
+        {
+            OnClick.Invoke();
+            if (soundClick.Length > 0)
+            {
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(soundClick[Random.Range(0, soundClick.Length)]);
+            }
             return;
+        }
         mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
 
         mouseOffset = gameObject.transform.position - GetMouseWorldPos();
@@ -47,8 +68,8 @@ public class MouseInteraction : MonoBehaviour
         Piece piece = gameObject.GetComponent<Piece>();
 
         AudioClip randomClip = soundPickUp[0];
-        audioPickUp.pitch = 1f + Random.Range(-pitchRange, pitchRange);
-        audioPickUp.PlayOneShot(randomClip);
+        audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+        audioSource.PlayOneShot(randomClip);
         piece.PLayPickUpSound();
         StartMovePiece.Invoke(piece);
     }
@@ -64,8 +85,7 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseDrag()
     {
-
-        if (isTile)
+        if (!canDrag)
         {
             return;
         }
@@ -93,22 +113,19 @@ public class MouseInteraction : MonoBehaviour
             transform.position = GetMouseWorldPos() + mouseOffset;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
-
         }
-
-        
     }
 
     private void OnMouseUp()
     {
-        if (isTile)
+        if (!canDrag)
         {
             return;
         }
         Tile TileDrop = null;
         AudioClip randomClip = soundDrop[0];
-        audioDrop.pitch = 1f + Random.Range(-pitchRange, pitchRange);
-        audioDrop.PlayOneShot(randomClip);
+        audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+        audioSource.PlayOneShot(randomClip);
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -128,8 +145,46 @@ public class MouseInteraction : MonoBehaviour
         }
         StopMovePiece.Invoke(TileDrop);
     }
+    
+    void OnMouseOver()
+    {
+        if (isHovering)
+            return;
+        isHovering = true;
+        if (highlightMaterial)
+        {
+            foreach (var meshRenderer in _meshRenderers)
+            {
+                if (!meshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                {
+                    meshRenderer.SetMaterials(meshRenderer.materials.Append(highlightMaterial).ToList());
+                }
+            }
+        }
 
+        if (soundHover.Length > 0)
+        {
+            audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+            audioSource.PlayOneShot(soundHover[0]);
+        }
+    }
 
+    void OnMouseExit()
+    {
+        isHovering = false;
+        if (highlightMaterial)
+        {
+            foreach (var meshRenderer in _meshRenderers)
+            {
+                if (meshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                {
+                    var materials = meshRenderer.materials.ToList();
+                    materials.Remove(materials.Last());
+                    meshRenderer.SetMaterials(materials);
+                }
+            }
+        }
+    }
 
 
 }
