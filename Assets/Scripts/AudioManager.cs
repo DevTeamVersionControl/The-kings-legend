@@ -26,10 +26,13 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        LoadVolume();
+        
     }
 
-
+    private void Start()
+    {
+        LoadVolume();
+    }
 
     void LoadVolume()
     {
@@ -37,6 +40,16 @@ public class AudioManager : MonoBehaviour
         float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
         float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
         float ambianceVolume = PlayerPrefs.GetFloat(AMBIANCE_KEY, 1f);
+
+        Debug.Log(masterVolume);
+        Debug.Log(musicVolume);
+        Debug.Log(sfxVolume);
+        Debug.Log(ambianceVolume);
+
+        Debug.Log(MenuOptions.MIXER_MUSIC);
+        Debug.Log(MenuOptions.MIXER_MASTER);
+        Debug.Log(MenuOptions.MIXER_SFX);
+        Debug.Log(MenuOptions.MIXER_AMBIANCE);
 
         mixer.SetFloat(MenuOptions.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
         mixer.SetFloat(MenuOptions.MIXER_MASTER, Mathf.Log10(masterVolume) * 20);
