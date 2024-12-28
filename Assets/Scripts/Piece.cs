@@ -39,8 +39,11 @@ public class Piece : MonoBehaviour
     [SerializeField] AudioClip soldierPickUpSound;
     [SerializeField] AudioClip magePickUpSound;
     [SerializeField] AudioClip legendPickUpSound;
+    
+    [SerializeField] Object killParticle;
 
     public float pitchRange = 0.1f;
+    public List<Object> particles = new();
 
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
@@ -208,11 +211,17 @@ public class Piece : MonoBehaviour
 
     public void OnKill()
     {
+        if (Type == PieceType.LEGEND)
+        {
+            return;
+        }
+        
         if (++EnemiesKilled == ENEMIES_FOR_LEGEND)
         {
             OnCanBecomeLegend.Invoke();
         }
-        
+
+        particles.Add(Instantiate(killParticle, transform));
     }
 
     public bool CanBecomeLegend()

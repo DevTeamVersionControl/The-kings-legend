@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject _winScreen;
 
-    [SerializeField] GameObject _skipButton;
-
     [SerializeField] Board _board;
 
     [SerializeField] GameObject game;
@@ -194,13 +192,10 @@ public class GameManager : MonoBehaviour
         _board.AddStartingPieces();
         _playerColorTurn = PlayerColor.GREEN;
         OnNextTurn(_playerColorTurn);
-
-        _skipButton.SetActive(true);
     }
 
     private void OnWin(PlayerColor playerColor)
     {
-        _skipButton.SetActive(false);
         _winScreen.GetComponentInChildren<TMP_Text>().text = $"{_playerColorTurn} has won";
         _winScreen.SetActive(true);
         _board.ResetBoard();
@@ -214,7 +209,6 @@ public class GameManager : MonoBehaviour
     public void PlayAgain()
     {
         _winScreen.SetActive(false);
-        _skipButton.SetActive(true);
         foreach (Tile tile in _board.BoardTiles)
         {
             tile.RemovePiece();

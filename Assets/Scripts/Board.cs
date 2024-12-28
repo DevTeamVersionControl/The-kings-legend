@@ -198,6 +198,11 @@ public class Board : MonoBehaviour
         dissolve = piece.materialKilled;
 
         piece.ActivateVFX(dissolve);
+        foreach (var vfx in piece.particles)
+        {
+            Destroy(vfx);
+        }
+        piece.particles.Clear();
         
         yield return new WaitForSeconds(1);
         //change the dissolve for the corresponding team
@@ -230,7 +235,7 @@ public class Board : MonoBehaviour
             soldier.transform.position = animationPosition;
             
             endTile.AddPiece(upgrade);
-            upgrade.EnemiesKilled = soldier.EnemiesKilled;
+            int enemiesKilled = soldier.EnemiesKilled;
             soldier.EnemiesKilled = 0;
             endTile.SetLocked(locked);
             SetLock(UpgradeTiles, upgrade.Color, true);
@@ -249,6 +254,11 @@ public class Board : MonoBehaviour
             soldier.ActivateVFX(dissolve);
             upgrade.gameObject.SetActive(false);
             upgrade.ActivateVFX(dissolve);
+            foreach (var vfx in soldier.particles)
+            {
+                Destroy(vfx);
+            }
+            soldier.particles.Clear();
 
             yield return new WaitForSeconds(2);
 
@@ -256,6 +266,11 @@ public class Board : MonoBehaviour
             soldier.transform.position = finalPosition;
             soldier.AddVFX(dissolve);
             upgrade.AddVFX(dissolve);
+            for (int i = 0; i < enemiesKilled; i++)
+            {
+                upgrade.OnKill();
+                yield return new WaitForSeconds(0.5f);
+            }
         }
         else
         {
@@ -319,7 +334,7 @@ public class Board : MonoBehaviour
             {
                 if (piece.Type == Piece.PieceType.LEGEND)
                 {
-                    if (potentialPiece.EnemiesKilled >= Piece.ENEMIES_FOR_LEGEND)
+                    if (potentialPiece.CanBecomeLegend())
                     {
                         tile.Highlight(Tile.HighlightType.MOVE);
                     }
