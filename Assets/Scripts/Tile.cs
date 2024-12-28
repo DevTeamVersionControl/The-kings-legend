@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -53,9 +54,11 @@ public class Tile : MonoBehaviour
     public void AddPiece(Piece piece)
     {
         _piece = piece;
+
         //rigidbodyPiece = _piece.GetComponent<Rigidbody>();
         
         _piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
+
         if (piece.Color == PlayerColor.GREEN){
             _piece.transform.rotation = Quaternion.LookRotation(new Vector3(-1, 0, UnityEngine.Random.Range(-0.5f, 0.5f)));
         } else {
@@ -64,6 +67,49 @@ public class Tile : MonoBehaviour
         piece.SetFreeze(true);
         SetLocked(true);
         
+    }
+
+    public void AddPieceAndMoveBack(Piece piece)
+    {
+        _piece = piece;
+        //rigidbodyPiece = _piece.GetComponent<Rigidbody>();
+        float distance = Vector3.Distance(transform.position, piece.transform.position);
+        float speed = 100;
+        float lerpDuration = distance/speed;
+
+        StartCoroutine(LerpToTile(lerpDuration, piece));
+        
+        if (piece.Color == PlayerColor.GREEN)
+        {
+            _piece.transform.rotation = Quaternion.LookRotation(new Vector3(-1, 0, UnityEngine.Random.Range(-0.5f, 0.5f)));
+        }
+        else
+        {
+            _piece.transform.rotation = Quaternion.LookRotation(new Vector3(1, 0, UnityEngine.Random.Range(-0.5f, 0.5f)));
+        }
+        piece.SetFreeze(true);
+        SetLocked(true);
+
+    }
+
+    private IEnumerator LerpToTile(float lerpDuration, Piece piece)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = piece.transform.position;
+
+        while (elapsedTime < lerpDuration)
+        {
+            // Calculate the position at the current lerp factor
+            piece.transform.position = Vector3.Lerp(startPosition, transform.position + Vector3.up * _pieceYOffset, elapsedTime / lerpDuration);
+            elapsedTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Ensure the piece is exactly at the original position
+        piece.transform.position = transform.position + Vector3.up * _pieceYOffset;
+    
     }
 
     [CanBeNull]

@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
         else
         {
             var temp = _current.GetLocked();
-            _current.AddPiece(_current.GetPiece());
+            _current.AddPieceAndMoveBack(_current.GetPiece());
             _current.SetLocked(temp);
         }
         _board.UnhighlightAll();
@@ -192,7 +192,6 @@ public class GameManager : MonoBehaviour
                 MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
                 interaction.StopMovePiece.AddListener(OnDragEnd);
                 interaction.StartMovePiece.AddListener(OnDragStart);
-
                 piece.StartingTile = tile;
             }
         }

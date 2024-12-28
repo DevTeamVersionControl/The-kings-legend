@@ -163,7 +163,7 @@ public class Board : MonoBehaviour
         switch (endTile.GetHighlight())
         {
             case Tile.HighlightType.NONE:
-                startTile.AddPiece(startTile.RemovePiece());
+                startTile.AddPieceAndMoveBack(startTile.RemovePiece());
                 startTile.SetLocked(false);
                 if (SoldierTiles.Contains(startTile)){
                     SetLock(SoldierTiles, startTile.GetPiece().Color, false);
@@ -178,7 +178,7 @@ public class Board : MonoBehaviour
                 AudioKill.PlayOneShot(randomClip);
                 startTile.GetPiece().OnKill();
                 endTile.GetPiece().EnemiesKilled = 0;
-                startTile.AddPiece(startTile.RemovePiece());
+                startTile.AddPieceAndMoveBack(startTile.RemovePiece());
                 StartCoroutine(PieceDeath(startTile, endTile));
                 break;
         }
@@ -274,7 +274,7 @@ public class Board : MonoBehaviour
         }
         else
         {
-            startTile.AddPiece(upgrade);
+            startTile.AddPieceAndMoveBack(upgrade);
             startTile.SetLocked(false);
         }
         UnhighlightAll();
