@@ -4,7 +4,7 @@ public class MainMenu : MonoBehaviour
 {
 
     [SerializeField] GameObject _tuto;
-
+    [SerializeField] GameObject menuOptions;
 
     public void OnStartGame()
     {
@@ -16,5 +16,10 @@ public class MainMenu : MonoBehaviour
     public void OnOpenTuto()
     {
         _tuto.SetActive(true);
+    }
+
+    public void OnOpenOptions()
+    {
+        menuOptions.SetActive(true);
     }
 }
