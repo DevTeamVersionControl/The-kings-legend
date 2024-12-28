@@ -6,18 +6,29 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] GameObject Camera1;
     [SerializeField] GameObject Camera2;
+    [SerializeField] GameObject CameraMenu;
     public void Awake()
     {
         GameManager.changeTurn += changeCamera;
         GameManager.loadGame += initialPosition;
+        GameManager.mainMenu += InMenu;
+        GameManager.pause += InMenu;
     }
 
     private void OnDestroy()
     {
         GameManager.changeTurn -= changeCamera;
         GameManager.loadGame -= initialPosition;
+        GameManager.mainMenu -= InMenu;
     }
 
+    void InMenu()
+    {
+        CameraMenu.SetActive(true);
+        Camera1.SetActive(false);
+        Camera2.SetActive(false);
+
+    }
     void changeCamera()
     {
         if (Camera1.activeInHierarchy)
@@ -37,6 +48,8 @@ public class CameraManager : MonoBehaviour
         Camera1.SetActive(true);
         Camera2.SetActive(false);
     }
+
+
 
 
 }

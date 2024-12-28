@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 {
     private PlayerColor _playerColorTurn;
 
-    public enum GameLevel { MAINMENU, GAME };
+    public enum GameLevel { MAINMENU, GAME, PAUSE };
 
-    private GameLevel _currentLevel;
+    public GameLevel _currentLevel;
 
     [SerializeField] GameObject _winScreen;
 
@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     public static event Action changeTurn;
 
     public static event Action loadGame;
+
+    public static event Action mainMenu;
+
+    public static event Action pause;
 
     public static GameManager Instance;
 
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
         switch (level)
         {
             case GameLevel.MAINMENU:
+                mainMenu?.Invoke();
                 UI.SetActive(true);
                 break;
             case GameLevel.GAME:
@@ -75,6 +80,10 @@ public class GameManager : MonoBehaviour
                 loadGame?.Invoke();
                 GameInit();
                 hasWon = false;
+                break;
+            case GameLevel.PAUSE:
+                UI.SetActive(true);
+                pause?.Invoke();
                 break;
         }
     }
