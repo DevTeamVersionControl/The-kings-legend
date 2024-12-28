@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -222,6 +224,8 @@ public class Piece : MonoBehaviour
         }
 
         particles.Add(Instantiate(killParticle, transform));
+        var main = particles.Last().GetComponent<ParticleSystem>().main;
+        main.simulationSpeed = Random.Range(0.8f, 1.2f);
     }
 
     public bool CanBecomeLegend()
