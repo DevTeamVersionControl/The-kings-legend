@@ -282,6 +282,10 @@ MonoBehaviour:
   soundClick: []
   soundHover: []
   highlightMaterial: {fileID: 2100000, guid: 4c83b708aa1af4c4186a8f75e6eefea8, type: 2}
+  rotationMultiplier: 10
+  clamp: 10
+  rotationSmoothingSpeed: 5
+  maxSpeed: 5
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -7243,6 +7247,10 @@ MonoBehaviour:
   soundClick: []
   soundHover: []
   highlightMaterial: {fileID: 2100000, guid: 4c83b708aa1af4c4186a8f75e6eefea8, type: 2}
+  rotationMultiplier: 10
+  clamp: 10
+  rotationSmoothingSpeed: 5
+  maxSpeed: 5
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -9352,6 +9360,10 @@ MonoBehaviour:
   soundClick: []
   soundHover: []
   highlightMaterial: {fileID: 2100000, guid: 4c83b708aa1af4c4186a8f75e6eefea8, type: 2}
+  rotationMultiplier: 10
+  clamp: 10
+  rotationSmoothingSpeed: 5
+  maxSpeed: 5
   OnClick:
     m_PersistentCalls:
       m_Calls:

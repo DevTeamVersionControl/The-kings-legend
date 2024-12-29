@@ -14,8 +14,11 @@ public class MouseInteraction : MonoBehaviour
     private bool isHovering;
 
     private Vector3 mouseDownPosition;
+    private Vector3 lastFramePosition;
 
     private float dragThreshold = 10f;
+
+
 
     [SerializeField] bool canDrag;
 
@@ -28,6 +31,14 @@ public class MouseInteraction : MonoBehaviour
     public AudioClip[] soundHover;
 
     [SerializeField] private Material highlightMaterial;
+    [SerializeField] float rotationMultiplier = 5f;
+    [SerializeField] float clamp = 10f;
+    [SerializeField] private float rotationSmoothingSpeed = 5f; // Adjust for smoothness
+    [SerializeField] private float maxSpeed = 1f; // Adjust for smoothness
+    [SerializeField] private Vector3 dragOffset = new Vector3(0.1f, 0.0f, 0.0f);  // Example: small offset on the X-axis
+    [SerializeField] private Vector3 lastDragPosition;
+    [SerializeField] private float rotationDelay = 0.1f;  // Delay time before applying rotation
+    [SerializeField] private float rotationTimer = 0f;   // Timer to track the delay
 
     public TileUnityEvent StopMovePiece;
     public PieceUnityEvent StartMovePiece;
@@ -65,6 +76,8 @@ public class MouseInteraction : MonoBehaviour
 
         mouseDownPosition = Input.mousePosition;
 
+        lastFramePosition = transform.position; // Initialize last frame position
+
         Piece piece = gameObject.GetComponent<Piece>();
 
         AudioClip randomClip = soundPickUp[0];
@@ -72,6 +85,7 @@ public class MouseInteraction : MonoBehaviour
         audioSource.PlayOneShot(randomClip);
         piece.PLayPickUpSound();
         StartMovePiece.Invoke(piece);
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
     }
     
     private Vector3 GetMouseWorldPos()
@@ -98,21 +112,72 @@ public class MouseInteraction : MonoBehaviour
         }
 
         if(isDragging) { 
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerOutsideBoard))   
-        {
-            Debug.DrawLine(Camera.main.transform.position, hit.point);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerOutsideBoard))   
+            {
+                Debug.DrawLine(Camera.main.transform.position, hit.point);
 
-            gameObject.transform.position = hit.point + hit.normal *_dragHeightOffset;
+                gameObject.transform.position = hit.point + hit.normal * _dragHeightOffset;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
+                transform.position = GetMouseWorldPos() + mouseOffset;
+                
+            }
+            // Calculate velocity
+            Vector3 currentFramePosition = transform.position;
+            Vector3 velocity = (currentFramePosition - lastFramePosition) / Time.deltaTime;
+
+
+            float speed = velocity.magnitude;
+            // Calculate rotation
+            if (speed > maxSpeed)
+            {
+
+                // Start the timer when the object starts moving
+                if (rotationTimer <= 0f)
+                {
+                    lastDragPosition = currentFramePosition;
+                }
+
+                rotationTimer += Time.deltaTime;
+
+                if (rotationTimer >= rotationDelay)
+                {
+
+                    Vector3 velocityDirection = currentFramePosition - lastDragPosition;
+                    Vector3 rotationAxis = Vector3.Cross(Vector3.up, velocity.normalized);
+
+
+
+                    float rotationAngle = Mathf.Clamp(speed * rotationMultiplier, 0, clamp); // Clamp to a max value
+
+                    Quaternion targetRotation = Quaternion.AngleAxis(rotationAngle, rotationAxis) * transform.rotation;
+
+
+                    // Apply rotation
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmoothingSpeed);
+
+                }
+            }
+
+            else
+            {
+                Quaternion uprightRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, uprightRotation, Time.deltaTime * rotationSmoothingSpeed);
+                rotationTimer = 0f;
+            }
+            // Update last frame position
+            lastFramePosition = currentFramePosition;
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
-            transform.position = GetMouseWorldPos() + mouseOffset;
-            gameObject.GetComponent<Rigidbody>().useGravity = false;
-        }
+            rotationTimer = 0f;  // Reset the rotation timer if dragging stops
         }
     }
 

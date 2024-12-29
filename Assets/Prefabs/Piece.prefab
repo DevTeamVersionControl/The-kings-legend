@@ -110,14 +110,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683cf381e9d5c784194cf50b636c9381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTile: 0
+  canDrag: 0
   _dragHeightOffset: 1.5
-  audioPickUp: {fileID: 8418487616771549891}
-  audioDrop: {fileID: 608982371911215863}
+  audioSource: {fileID: 8418487616771549891}
   soundPickUp:
   - {fileID: 8300000, guid: 88b81ef9f2574a348bad0a4d0796dbc2, type: 3}
   soundDrop:
   - {fileID: 8300000, guid: 5153917b7405b2e4b8d125992e5ba405, type: 3}
+  soundClick: []
+  soundHover: []
+  highlightMaterial: {fileID: 0}
+  rotationMultiplier: 250
+  clamp: 20
+  rotationSmoothingSpeed: 5
+  maxSpeed: 0.1
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
   pitchRange: 0.1
 --- !u!54 &315338288082395377
 Rigidbody:
@@ -171,7 +180,9 @@ MonoBehaviour:
   soldierPickUpSound: {fileID: 8300000, guid: 4e6938ad36d485e48acb73ead8d8e8b4, type: 3}
   magePickUpSound: {fileID: 8300000, guid: 4b4411f400fff4c4091f98c5033b88a1, type: 3}
   legendPickUpSound: {fileID: 8300000, guid: b3c3a7472e794b44e8cb420e5c91e43f, type: 3}
+  killParticle: {fileID: 0}
   pitchRange: 0.1
+  particles: []
   _knightPrefabGreen: {fileID: 8715733552807905504}
   _knightPrefabPurple: {fileID: 4951067258321175554}
   _magePrefabGreen: {fileID: 4731824089412798852}

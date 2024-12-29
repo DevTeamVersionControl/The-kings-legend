@@ -243,10 +243,12 @@ public class Piece : MonoBehaviour
         if (freeze)
         {
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            GetComponent<Rigidbody>().detectCollisions = true;
         }
         else
         {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            GetComponent<Rigidbody>().detectCollisions = false;
         }
     }
     
