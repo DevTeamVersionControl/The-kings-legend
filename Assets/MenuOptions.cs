@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class MenuOptions : MonoBehaviour
 {
 
-    [SerializeField] private GameObject options;
+    [SerializeField] private GameObject optionsController;
+    [SerializeField]  GameObject optionsLeft;
+    [SerializeField]  GameObject optionsRight;
     [SerializeField] private AudioMixer mixer;
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider SFXSlider;
@@ -33,6 +35,9 @@ public class MenuOptions : MonoBehaviour
 
     private void Start()
     {
+        optionsLeft.SetActive(true);
+        optionsRight.SetActive(true);
+
         musicSlider.value = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
         masterSlider.value = PlayerPrefs.GetFloat(AudioManager.MASTER_KEY, 1f);
         SFXSlider.value = PlayerPrefs.GetFloat(AudioManager.SFX_KEY, 1f);
@@ -69,7 +74,9 @@ public class MenuOptions : MonoBehaviour
 
     public void GoBack()
     {
-        options.SetActive(false);
+        optionsLeft.SetActive(false);
+        optionsRight.SetActive(false);
+        optionsController.SetActive(false);
     }
 
 }
