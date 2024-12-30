@@ -15,6 +15,7 @@ public class MouseInteraction : MonoBehaviour
 
     private Vector3 mouseDownPosition;
     private Vector3 lastFramePosition;
+    private Vector3 initialForwardDirection;
 
     private float dragThreshold = 10f;
 
@@ -109,6 +110,7 @@ public class MouseInteraction : MonoBehaviour
         if (!isDragging && Vector3.Distance(mouseDownPosition, Input.mousePosition) > dragThreshold)
         {
             isDragging = true;
+            initialForwardDirection = transform.forward;
         }
 
         if(isDragging) { 
@@ -157,7 +159,7 @@ public class MouseInteraction : MonoBehaviour
 
                     float rotationAngle = Mathf.Clamp(speed * rotationMultiplier, 0, clamp); // Clamp to a max value
 
-                    Quaternion targetRotation = Quaternion.AngleAxis(rotationAngle, rotationAxis) * transform.rotation;
+                    Quaternion targetRotation = Quaternion.AngleAxis(rotationAngle, rotationAxis) * Quaternion.LookRotation(initialForwardDirection, Vector3.up);
 
 
                     // Apply rotation
@@ -168,7 +170,7 @@ public class MouseInteraction : MonoBehaviour
 
             else
             {
-                Quaternion uprightRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+                Quaternion uprightRotation = Quaternion.LookRotation(initialForwardDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, uprightRotation, Time.deltaTime * rotationSmoothingSpeed);
                 rotationTimer = 0f;
             }
