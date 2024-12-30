@@ -48,16 +48,24 @@ public class MouseInteraction : MonoBehaviour
     public float pitchRange = 0.1f;
     
     private MeshRenderer[] _meshRenderers;
+    private SkinnedMeshRenderer[] _skinnedMeshRenderers;
 
     public void Start()
     {
         StartMovePiece = new PieceUnityEvent();
         StopMovePiece = new TileUnityEvent();
         OnClick ??= new UnityEvent();
-        _meshRenderers = GetComponentsInChildren<MeshRenderer>().Append(GetComponent<MeshRenderer>()).ToArray();
+        _meshRenderers = GetComponentsInChildren<MeshRenderer>()
+                     .Append(GetComponent<MeshRenderer>())
+                     .Where(renderer => renderer != null)
+                     .ToArray();
+        _skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>()
+                            .Append(GetComponent<SkinnedMeshRenderer>())
+                            .Where(renderer => renderer != null)
+                            .ToArray();
     }
 
-    private void OnMouseDown()
+        private void OnMouseDown()
     {
         if (!canDrag)
         {
@@ -220,13 +228,27 @@ public class MouseInteraction : MonoBehaviour
         isHovering = true;
         if (highlightMaterial)
         {
-            foreach (var meshRenderer in _meshRenderers)
-            {
-                if (!meshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+            if(_meshRenderers != null) { 
+                foreach (var meshRenderer in _meshRenderers)
                 {
-                    meshRenderer.SetMaterials(meshRenderer.materials.Append(highlightMaterial).ToList());
+                    if (!meshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                    {
+                        meshRenderer.SetMaterials(meshRenderer.materials.Append(highlightMaterial).ToList());
+                    }
                 }
             }
+            if (_skinnedMeshRenderers != null)
+            {
+                foreach (var skinnedMeshRenderer in _skinnedMeshRenderers)
+                {
+                    if (!skinnedMeshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                    {
+                        skinnedMeshRenderer.SetMaterials(skinnedMeshRenderer.materials.Append(highlightMaterial).ToList());
+                    }
+                }
+            }
+            Debug.Log("Highlighted");
+
         }
 
         if (soundHover.Length > 0)
@@ -241,15 +263,32 @@ public class MouseInteraction : MonoBehaviour
         isHovering = false;
         if (highlightMaterial)
         {
-            foreach (var meshRenderer in _meshRenderers)
+            if (_meshRenderers != null)
             {
-                if (meshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                foreach (var meshRenderer in _meshRenderers)
                 {
-                    var materials = meshRenderer.materials.ToList();
-                    materials.Remove(materials.Last());
-                    meshRenderer.SetMaterials(materials);
+                    if (meshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                    {
+                        var materials = meshRenderer.materials.ToList();
+                        materials.Remove(materials.Last());
+                        meshRenderer.SetMaterials(materials);
+                    }
                 }
             }
+
+            if (_skinnedMeshRenderers != null)
+            {
+                foreach (var skinnedMeshRenderer in _skinnedMeshRenderers)
+                {
+                    if (skinnedMeshRenderer.materials.Last().name.Contains(highlightMaterial.name))
+                    {
+                        var materials = skinnedMeshRenderer.materials.ToList();
+                        materials.Remove(materials.Last());
+                        skinnedMeshRenderer.SetMaterials(materials);
+                    }
+                }
+            }
+            Debug.Log("Unhighlighted");
         }
     }
 
