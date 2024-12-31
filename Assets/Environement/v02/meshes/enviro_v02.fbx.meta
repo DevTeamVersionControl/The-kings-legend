@@ -1,9 +1,49 @@
 fileFormatVersion: 2
-guid: 2e1dc2af2f0605e458dd37734d7cd057
+guid: 521f83f6286cbe348bff8b876afe2949
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: candle
+    second: {fileID: 2100000, guid: b03501627fa20ce4898b5123e556556a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crownGreen
+    second: {fileID: 2100000, guid: 926c44394fb72e74995bed78d1a20068, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crownPurple
+    second: {fileID: 2100000, guid: 3e1b9c09669a9b54cb1d061c1d02e171, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: enviro
+    second: {fileID: 2100000, guid: ca23ac1201163064992033274cfa7906, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trayBig_green
+    second: {fileID: 2100000, guid: 682c9ee6ec16ec64ca1c4212a0b9ba37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trayBig_purple
+    second: {fileID: 2100000, guid: 121b1cf6c647fd44ba3b6547473300a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: traySmall_green
+    second: {fileID: 2100000, guid: 0603433fbd450ec4aa0bbac941c9d177, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: traySmall_purple
+    second: {fileID: 2100000, guid: 4489593007eafe14c8af1fd936e8af2e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -78,7 +118,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
