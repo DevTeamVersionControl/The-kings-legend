@@ -247,7 +247,7 @@ public class MouseInteraction : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("Highlighted");
+            
 
         }
 
@@ -288,7 +288,7 @@ public class MouseInteraction : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("Unhighlighted");
+            
         }
     }
 

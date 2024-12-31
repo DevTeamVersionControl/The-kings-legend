@@ -12,7 +12,6 @@ public class CameraManager : MonoBehaviour
         GameManager.changeTurn += changeCamera;
         GameManager.loadGame += initialPosition;
         GameManager.mainMenu += InMenu;
-        GameManager.pause += InMenu;
     }
 
     private void OnDestroy()
@@ -31,15 +30,13 @@ public class CameraManager : MonoBehaviour
     }
     void changeCamera()
     {
-        if (Camera1.activeInHierarchy)
+        if (GameManager.Instance._playerColorTurn == PlayerColor.GREEN)
         {
-            Camera1.SetActive(false);
-            Camera2.SetActive(true);
+            GreenPosition();
         }
         else
         {
-            Camera1.SetActive(true);
-            Camera2.SetActive(false);
+            PurplePosition();
         }
     }
 
@@ -49,7 +46,15 @@ public class CameraManager : MonoBehaviour
         Camera2.SetActive(false);
     }
 
+    void PurplePosition() {
+        Camera1.SetActive(true);
+        Camera2.SetActive(false);
+    }
 
-
+    void GreenPosition()
+    {
+        Camera1.SetActive(false);
+        Camera2.SetActive(true);
+    }
 
 }

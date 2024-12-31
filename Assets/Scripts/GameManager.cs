@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private PlayerColor _playerColorTurn;
+    public PlayerColor _playerColorTurn;
 
-    public enum GameLevel { MAINMENU, GAME, PAUSE };
+    public enum GameLevel { MAINMENU, GAME };
 
     public GameLevel _currentLevel;
 
@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
 
     public static event Action mainMenu;
 
-    public static event Action pause;
-
     public static GameManager Instance;
 
 
@@ -43,6 +41,8 @@ public class GameManager : MonoBehaviour
     private int currentTrackIndex;
 
     private bool hasWon;
+
+    private bool isPaused;
 
     private bool firstGame; 
     public void Awake()
@@ -80,10 +80,6 @@ public class GameManager : MonoBehaviour
                 loadGame?.Invoke();
                 GameInit();
                 hasWon = false;
-                break;
-            case GameLevel.PAUSE:
-                UI.SetActive(true);
-                pause?.Invoke();
                 break;
         }
     }
@@ -258,6 +254,22 @@ public class GameManager : MonoBehaviour
         PlayRandomTrack();  // Play the next random track
     }
 
+    public void OnPause()
+    {
+        if (!isPaused)
+        {
+            Debug.Log("paused");
+            isPaused = true;
+            mainMenu?.Invoke();
 
+
+        }
+        else if (isPaused)
+        {
+            Debug.Log("Unpaused");
+            isPaused = false;
+            changeTurn?.Invoke();
+        }
+    }
 
 }
