@@ -8627,6 +8627,7 @@ GameObject:
   - component: {fileID: 448092469}
   - component: {fileID: 448092468}
   - component: {fileID: 448092467}
+  - component: {fileID: 448092470}
   m_Layer: 0
   m_Name: RightPageCanvas
   m_TagString: Untagged
@@ -8719,6 +8720,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!225 &448092470
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448092465}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &467473601
 GameObject:
   m_ObjectHideFlags: 0
@@ -11516,6 +11529,7 @@ GameObject:
   - component: {fileID: 939555854}
   - component: {fileID: 939555853}
   - component: {fileID: 939555852}
+  - component: {fileID: 939555855}
   m_Layer: 0
   m_Name: LeftPageCanvas
   m_TagString: Untagged
@@ -11607,6 +11621,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!225 &939555855
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939555850}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &942295217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13421,7 +13447,7 @@ PrefabInstance:
     - target: {fileID: 7192225876755236768, guid: 110fe20203f75214d8abbfb09194f176,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.19
+      value: 22.46
       objectReference: {fileID: 0}
     - target: {fileID: 7192225876755236768, guid: 110fe20203f75214d8abbfb09194f176,
         type: 3}
@@ -13634,6 +13660,11 @@ PrefabInstance:
       propertyPath: highlightMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 4c83b708aa1af4c4186a8f75e6eefea8, type: 2}
+    - target: {fileID: 8068953160397833020, guid: 110fe20203f75214d8abbfb09194f176,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.07
+      objectReference: {fileID: 0}
     - target: {fileID: 8068953160397833020, guid: 110fe20203f75214d8abbfb09194f176,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -21822,6 +21853,8 @@ MonoBehaviour:
   tutoController: {fileID: 1479058143}
   mainPage: {fileID: 297433001}
   boxColliderRibbon: {fileID: 1078228973}
+  rightPage: {fileID: 448092470}
+  leftPage: {fileID: 939555855}
 --- !u!1 &1255697474
 GameObject:
   m_ObjectHideFlags: 0
@@ -23960,6 +23993,8 @@ MonoBehaviour:
   tutoController: {fileID: 0}
   mainPage: {fileID: 0}
   boxColliderRibbon: {fileID: 0}
+  rightPage: {fileID: 0}
+  leftPage: {fileID: 0}
 --- !u!114 &1510618908
 MonoBehaviour:
   m_ObjectHideFlags: 0

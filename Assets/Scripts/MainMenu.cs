@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -7,6 +8,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject tutoController;
     [SerializeField] GameObject mainPage;
     [SerializeField] BoxCollider boxColliderRibbon;
+    [SerializeField] CanvasGroup rightPage;
+    [SerializeField] CanvasGroup leftPage;
     Animator animator;
     private void Awake()
     {
@@ -20,8 +23,13 @@ public class MainMenu : MonoBehaviour
 
     public void OnOpenBook()
     {
+        rightPage.alpha = 0;
+        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         boxColliderRibbon.enabled = false;
         mainPage.SetActive(true);
+        Debug.Log("in OnOpenBook");
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        
         animator.SetTrigger("mainMenu");
     }
 
@@ -32,19 +40,28 @@ public class MainMenu : MonoBehaviour
 
     public void OnOpenOptions()
     {
+        rightPage.alpha = 0;
+        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("menuOptions");
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(leftPage, 0.5f, 0.5f));
         mainPage.SetActive(false);
         menuOptionsController.SetActive(true);
     }
 
     public void OnOpenTuto()
     {
+        rightPage.alpha = 0;
+        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("menuTuto");
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(leftPage, 0.5f, 0.5f));
         mainPage.SetActive(false);
         tutoController.SetActive(true);
     }
     public void OnCredit()
     {
+        rightPage.alpha = 0;
         boxColliderRibbon.enabled = true;
         animator.SetTrigger("credit");
     }
@@ -53,5 +70,47 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-        
+
+    public IEnumerator FadeIn(CanvasGroup canvasGroup, float duration, float delay)
+    {
+        // Wait for the specified delay before starting the fade
+        yield return new WaitForSeconds(delay);
+
+        float startAlpha = canvasGroup.alpha;
+        float endAlpha = 1f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+
+            yield return null;
+        }
+
+        // Ensure alpha is set to exactly 1 at the end
+        canvasGroup.alpha = endAlpha;
+    }
+
+    public IEnumerator FadeOut(CanvasGroup canvasGroup, float duration, float delay)
+    {
+        // Wait for the specified delay before starting the fade
+        yield return new WaitForSeconds(delay);
+
+        float startAlpha = canvasGroup.alpha;
+        float endAlpha = 0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+
+            yield return null;
+        }
+
+        // Ensure alpha is set to exactly 0 at the end
+        canvasGroup.alpha = endAlpha;
+    }
+
 }
