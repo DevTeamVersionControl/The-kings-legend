@@ -35,16 +35,20 @@ public class MenuOptions : MonoBehaviour
 
     private void Start()
     {
-        optionsLeft.SetActive(true);
-        optionsRight.SetActive(true);
-
         musicSlider.value = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
         masterSlider.value = PlayerPrefs.GetFloat(AudioManager.MASTER_KEY, 1f);
         SFXSlider.value = PlayerPrefs.GetFloat(AudioManager.SFX_KEY, 1f);
         ambianceSlider.value = PlayerPrefs.GetFloat(AudioManager.AMBIANCE_KEY, 1f);
     }
 
-    void SetMusicVolume(float volume)
+
+    private void OnEnable()
+    {
+        optionsLeft.SetActive(true);
+        optionsRight.SetActive(true);
+    }
+
+        void SetMusicVolume(float volume)
     {
         mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(volume) * 20);
     }

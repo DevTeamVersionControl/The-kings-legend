@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 
 
     [SerializeField] GameObject book;
+
     void Start()
     {
 

@@ -3,9 +3,10 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
 
-    [SerializeField] GameObject _tuto;
-    [SerializeField] GameObject menuOptions;
+    [SerializeField] GameObject menuOptionsController;
+    [SerializeField] GameObject tutoController;
     [SerializeField] GameObject mainPage;
+    [SerializeField] BoxCollider boxColliderRibbon;
     Animator animator;
     private void Awake()
     {
@@ -13,30 +14,44 @@ public class MainMenu : MonoBehaviour
     }
     public void OnStartGame()
     {
-        animator.SetBool("startGame", true);
+        animator.SetTrigger("startGame");
         GameManager.Instance.ChangeLevel(GameManager.GameLevel.GAME);
     }
 
     public void OnOpenBook()
     {
-        animator.SetBool("open", true);
+        boxColliderRibbon.enabled = false;
+        mainPage.SetActive(true);
+        animator.SetTrigger("mainMenu");
     }
 
     public void OnCloseBook()
     {
-        animator.SetBool("open", false);
+        animator.SetTrigger("mainMenu");
     }
 
     public void OnOpenOptions()
     {
-        animator.SetBool("menuOptions", true);
+        animator.SetTrigger("menuOptions");
         mainPage.SetActive(false);
-        menuOptions.SetActive(true);
+        menuOptionsController.SetActive(true);
     }
 
-
+    public void OnOpenTuto()
+    {
+        animator.SetTrigger("menuTuto");
+        mainPage.SetActive(false);
+        tutoController.SetActive(true);
+    }
     public void OnCredit()
     {
-        animator.SetBool("credit", true);
+        boxColliderRibbon.enabled = true;
+        animator.SetTrigger("credit");
     }
+
+    public void OnQuit()
+    {
+        Application.Quit();
+    }
+        
 }
