@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Timer : MonoBehaviour
+public class Candle : MonoBehaviour
 {
     [SerializeField] private float waitTime = 20;
     
@@ -11,27 +11,44 @@ public class Timer : MonoBehaviour
     private bool active = false;
     public bool Active { get => active; set => active = value; }
     
-    public Animation animation = null;
-
     public UnityEvent timeout = new();
     
+    private SkinnedMeshRenderer meshRenderer;
+
+    void Start()
+    {
+        meshRenderer = gameObject.GetComponent<SkinnedMeshRenderer>();
+        remainingTime = waitTime;
+    }
     void Update()
     {
         if (!active)
+        {
+            remainingTime += Time.deltaTime * 2;
+            
+            if (meshRenderer != null)
+            {
+                meshRenderer.SetBlendShapeWeight(0, 100 * (1-remainingTime / waitTime));
+            }
+
+            if (remainingTime > waitTime)
+            {
+                remainingTime = waitTime;
+            }
             return;
+        }
         
         remainingTime -= Time.deltaTime;
 
         if (remainingTime > 0)
         {
-            if (animation)
+            if (meshRenderer != null)
             {
-                animation["burn"].time = animation["burn"].length * (1 - remainingTime / waitTime);
+                meshRenderer.SetBlendShapeWeight(0, 100 * (1 - remainingTime / waitTime));
             }
             return;
         }
         
-        remainingTime = waitTime;
         timeout?.Invoke();
     }
 
@@ -39,20 +56,11 @@ public class Timer : MonoBehaviour
     {
         active = true;
         remainingTime = waitTime;
-        if (animation)
-        {
-            animation["burn"].time = 0;
-        }
     }
 
     public void StopTimer()
     {
         active = false;
-        remainingTime = 0;
-        if (animation)
-        {
-            animation.Play("fill");
-        }
     }
 
 }

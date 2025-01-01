@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -35,8 +36,8 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource; 
     public AudioClip[] musicTracks;
 
-    [SerializeField] private Timer greenTimer;
-    [SerializeField] private Timer purpleTimer;
+    [FormerlySerializedAs("greenTimer")] [SerializeField] private Candle greenCandle;
+    [FormerlySerializedAs("purpleTimer")] [SerializeField] private Candle purpleCandle;
 
     private int currentTrackIndex;
 
@@ -94,13 +95,13 @@ public class GameManager : MonoBehaviour
 
         if (color == PlayerColor.GREEN)
         {
-            greenTimer.StartTimer();
-            purpleTimer.StopTimer();
+            greenCandle.StartTimer();
+            purpleCandle.StopTimer();
         }
         else
         {
-            purpleTimer.StartTimer();
-            greenTimer.StopTimer();
+            purpleCandle.StartTimer();
+            greenCandle.StopTimer();
         }
         
         _playerColorTurn = color;
@@ -178,8 +179,8 @@ public class GameManager : MonoBehaviour
 
     public void GameInit()
     {
-        greenTimer.timeout.AddListener(()=>OnNextTurn(PlayerColor.PURPLE));
-        purpleTimer.timeout.AddListener(()=>OnNextTurn(PlayerColor.GREEN));
+        greenCandle.timeout.AddListener(()=>OnNextTurn(PlayerColor.PURPLE));
+        purpleCandle.timeout.AddListener(()=>OnNextTurn(PlayerColor.GREEN));
         
         foreach (Tile tile in _board.AllTiles){
             var piece = tile.GetPiece();       
