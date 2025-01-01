@@ -22,6 +22,10 @@ public class Candle : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.Instance.isPaused)
+        {
+            return;
+        }
         if (!active)
         {
             remainingTime += Time.deltaTime * 2;

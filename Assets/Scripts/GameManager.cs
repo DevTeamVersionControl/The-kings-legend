@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     private bool hasWon;
 
-    private bool isPaused;
+    public bool isPaused;
 
     private bool firstGame; 
     public void Awake()
@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayAgain()
     {
+        _board.ResetBoard();
         _winScreen.SetActive(false);
         foreach (Tile tile in _board.BoardTiles)
         {
