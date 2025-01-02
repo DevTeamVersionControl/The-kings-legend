@@ -12,7 +12,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] BoxCollider boxColliderRibbon;
     [SerializeField] CanvasGroup rightPage;
     [SerializeField] CanvasGroup leftPage;
+    [SerializeField] GameObject CameraMenu;
     Animator animator;
+
+    private bool _firstTime = true;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -28,6 +31,11 @@ public class MainMenu : MonoBehaviour
 
     public void OnOpenBook()
     {
+
+        if (_firstTime) {
+            _firstTime = false;
+            CameraMenu.GetComponent<Animation>().Play("OpenBook");
+        }
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         boxColliderRibbon.enabled = false;

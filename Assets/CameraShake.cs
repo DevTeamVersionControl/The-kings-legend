@@ -19,7 +19,6 @@ public class CameraShake : MonoBehaviour
         _virtualCamera = GetComponent<CinemachineVirtualCamera>(); 
     }
 
-
     public void CinematicBeginning()
     {
         ShakeCamera(5f, 0.1f);
