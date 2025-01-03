@@ -43,13 +43,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.5
   scatter:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 0.5
   tint:
     m_OverrideState: 1
     m_Value: {r: 0.73333335, g: 0.8811248, b: 0.9529412, a: 1}
@@ -58,7 +58,7 @@ MonoBehaviour:
     m_Value: {fileID: 2800000, guid: bf6147645dfc9cb4cb356e42f9caf86f, type: 3}
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 5
   anamorphic:
     m_OverrideState: 0
     m_Value: 1
@@ -325,6 +325,115 @@ MonoBehaviour:
   dirtIntensity:
     m_OverrideState: 1
     m_Value: 0.62
+--- !u!114 &-3697182337957707500
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1bfcd0f0fa7b8468f281d6bbbaf320, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.2
+  xMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 1
+    m_Value: 1.02
+--- !u!114 &-3599424352313998069
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9008a067f4d626c4d8bc4bc48f04bb89, type: 3}
+  m_Name: ScreenSpaceAmbientOcclusion
+  m_EditorClassIdentifier: 
+  active: 1
+  quality:
+    m_OverrideState: 0
+    m_Value: 1
+  rayTracing:
+    m_OverrideState: 0
+    m_Value: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 2
+  directLightingStrength:
+    m_OverrideState: 1
+    m_Value: 0.5
+  radius:
+    m_OverrideState: 1
+    m_Value: 2
+  spatialBilateralAggressiveness:
+    m_OverrideState: 0
+    m_Value: 0.15
+  temporalAccumulation:
+    m_OverrideState: 1
+    m_Value: 1
+  ghostingReduction:
+    m_OverrideState: 0
+    m_Value: 0.5
+  blurSharpness:
+    m_OverrideState: 0
+    m_Value: 0.1
+  layerMask:
+    m_OverrideState: 0
+    m_Value:
+      serializedVersion: 2
+      m_Bits: 4294967295
+  specularOcclusion:
+    m_OverrideState: 0
+    m_Value: 0.5
+  occluderMotionRejection:
+    m_OverrideState: 0
+    m_Value: 1
+  receiverMotionRejection:
+    m_OverrideState: 0
+    m_Value: 1
+  m_StepCount:
+    m_OverrideState: 0
+    m_Value: 6
+  m_FullResolution:
+    m_OverrideState: 0
+    m_Value: 0
+  m_MaximumRadiusInPixels:
+    m_OverrideState: 0
+    m_Value: 40
+  m_BilateralUpsample:
+    m_OverrideState: 0
+    m_Value: 1
+  m_DirectionCount:
+    m_OverrideState: 0
+    m_Value: 2
+  m_RayLength:
+    m_OverrideState: 0
+    m_Value: 3
+  m_SampleCount:
+    m_OverrideState: 0
+    m_Value: 2
+  m_Denoise:
+    m_OverrideState: 0
+    m_Value: 1
+  m_DenoiserRadius:
+    m_OverrideState: 0
+    m_Value: 0.5
 --- !u!114 &-2782181032709712554
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -355,13 +464,13 @@ MonoBehaviour:
     m_Value: 0
   nearFocusEnd:
     m_OverrideState: 1
-    m_Value: 7.5
+    m_Value: 5
   farFocusStart:
     m_OverrideState: 1
-    m_Value: 20
+    m_Value: 15
   farFocusEnd:
     m_OverrideState: 1
-    m_Value: 35
+    m_Value: 50
   m_NearSampleCount:
     m_OverrideState: 1
     m_Value: 3
@@ -507,6 +616,8 @@ MonoBehaviour:
   - {fileID: 258635050551941317}
   - {fileID: 6177996077463869254}
   - {fileID: 3924427143802172627}
+  - {fileID: -3599424352313998069}
+  - {fileID: -3697182337957707500}
 --- !u!114 &258635050551941317
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -522,7 +633,7 @@ MonoBehaviour:
   active: 1
   distance:
     m_OverrideState: 1
-    m_Value: 0.02
+    m_Value: 0.05
   cropToFit:
     m_OverrideState: 1
     m_Value: 1
@@ -584,7 +695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bff652df78c97c4f963064ad1f34619, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   master:
     m_OverrideState: 1
     m_Value:
@@ -598,26 +709,26 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0.35734236
-          outSlope: 0.35734236
+          inSlope: 0
+          outSlope: 0.6907007
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.3522505
-          value: 0.4335662
-          inSlope: 1.5457139
-          outSlope: 1.5457139
+          time: 0.3709428
+          value: 0.29891288
+          inSlope: 1.1427988
+          outSlope: 1.1427988
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.5583822
-          value: 0.71888083
-          inSlope: 1
-          outSlope: 1
+          time: 0.6553323
+          value: 0.7163041
+          inSlope: 1.453407
+          outSlope: 1.453407
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -625,8 +736,8 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0.19075237
-          outSlope: 0.19075237
+          inSlope: 0.68345153
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -973,10 +1084,10 @@ MonoBehaviour:
     m_Value: 8
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.5
   response:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.5
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
