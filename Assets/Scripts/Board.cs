@@ -187,17 +187,14 @@ public class Board : MonoBehaviour
     
     IEnumerator PieceDeath(Tile startTile, Tile endTile)
     {
-        Material dissolve;
+        Color hdrColor = new Color(5.99215698f, 0.439215481f, 0.700219214f, 0); 
         Piece piece = endTile.RemovePiece();
         
         Vector3 animationPosition = piece.transform.position;
         piece.StartingTile.AddPiece(piece);
         Vector3 finalPosition = piece.transform.position;
         piece.transform.position = animationPosition;
-
-        dissolve = piece.materialKilled;
-
-        piece.ActivateVFX(dissolve);
+        piece.ActivateVFX(hdrColor);
         foreach (var vfx in piece.particles)
         {
             Destroy(vfx);
@@ -207,14 +204,14 @@ public class Board : MonoBehaviour
         yield return new WaitForSeconds(1);
         //change the dissolve for the corresponding team
         if (piece.Color == PlayerColor.PURPLE)
-        {
-            dissolve = piece.materialVFXPurple;
+        {            
+            hdrColor = new Color(0.881629169f, 0.36744374f, 5.99215698f, 0);
         }
         else
         {
-            dissolve = piece.materialVFXGreen;
+            hdrColor = new Color(2.77356529f, 12.9207554f, 0f, 1f);
         }
-        piece.AddVFX(dissolve);
+        piece.AddVFX(hdrColor);
         piece.transform.position = finalPosition;
         yield return new WaitForSeconds(1);
 
@@ -222,10 +219,13 @@ public class Board : MonoBehaviour
     
     public IEnumerator OnPieceUpgrade(Tile startTile, Tile endTile)
     {
+
+        
         Piece upgrade = startTile.RemovePiece();
         
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
         {
+            Color hdrColor;
             Piece soldier = endTile.RemovePiece();
             bool locked = endTile.GetLocked();
             
@@ -240,20 +240,19 @@ public class Board : MonoBehaviour
             endTile.SetLocked(locked);
             SetLock(UpgradeTiles, upgrade.Color, true);
             SetLock(LegendTiles, upgrade.Color, true);
-            Material dissolve;
-            
+          
+
             if (soldier.Color == PlayerColor.PURPLE)
-            {
-                dissolve = soldier.materialVFXPurple;
+            {               
+                hdrColor = new Color(0.881629169f, 0.36744374f, 5.99215698f, 0);
             }
             else
             {
-                dissolve = soldier.materialVFXGreen;
+                hdrColor = new Color(2.77356529f, 12.9207554f, 0f, 1f);
             }
-            
-            soldier.ActivateVFX(dissolve);
+            soldier.ActivateVFX(hdrColor);
             upgrade.gameObject.SetActive(false);
-            upgrade.ActivateVFX(dissolve);
+            upgrade.ActivateVFX(hdrColor);
             foreach (var vfx in soldier.particles)
             {
                 Destroy(vfx);
@@ -264,8 +263,8 @@ public class Board : MonoBehaviour
 
             upgrade.gameObject.SetActive(true);
             soldier.transform.position = finalPosition;
-            soldier.AddVFX(dissolve);
-            upgrade.AddVFX(dissolve);
+            soldier.AddVFX(hdrColor);
+            upgrade.AddVFX(hdrColor);
             for (int i = 0; i < enemiesKilled; i++)
             {
                 upgrade.OnKill();

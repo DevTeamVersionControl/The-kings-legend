@@ -253,9 +253,9 @@ public class Piece : MonoBehaviour
     }
     
 
-    public void ActivateVFX(Material shaderMat)
+    public void ActivateVFX(Color hdrColor)
     {
-        
+        Debug.Log("in activate VFX");
         foreach (Transform child in transform)
         {
             if (child.gameObject.activeSelf) 
@@ -267,7 +267,7 @@ public class Piece : MonoBehaviour
                     var bodyPartScript = bodyPart.GetComponent<ShaderAssigner>();
                     if (bodyPartScript != null)
                     {
-                        bodyPartScript.assignShaderMaterial(shaderMat); 
+                        StartCoroutine(bodyPartScript.DissolveDownVFX(hdrColor));
                     }
                 }
 
@@ -277,7 +277,7 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public void AddVFX(Material shaderMat)
+    public void AddVFX(Color hdrColor)
     {
 
         foreach (Transform child in transform)
@@ -291,7 +291,7 @@ public class Piece : MonoBehaviour
                     var bodyPartScript = bodyPart.GetComponent<ShaderAssigner>();
                     if (bodyPartScript != null)
                     {
-                        StartCoroutine(bodyPartScript.AddVFXCoroutine(shaderMat));
+                        StartCoroutine(bodyPartScript.DissolveUpVFX(hdrColor));
                     }
                 }
 

@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DissolveGren
-  m_Shader: {fileID: -6465566751694194690, guid: 71bc2b8cd06d89147aff0e3687c6de9a,
+  m_Shader: {fileID: -6465566751694194690, guid: 7ab1719a9b86b344d8d32e52c0da0ff8,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -64,6 +64,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _colorMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _maskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -136,12 +148,21 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 0
+    - _alphaClip: 0.5
+    - _cutoffHeight: 10
+    - _edgeWidth: 0.15
+    - _metalicStrength: 1
+    - _noiseScale: 50
+    - _noiseStrength: 1
     - _normalStrength: 0
+    - _occlusionStrength: 1
+    - _smoothnessStrength: 1
     m_Colors:
     - _Albedo: {r: 0, g: 5.992157, b: 2.3162193, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EdgeColor: {r: 1.0088992, g: 5.992157, b: 0.37647063, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _dissolveColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1982541778335402446
 MonoBehaviour:
