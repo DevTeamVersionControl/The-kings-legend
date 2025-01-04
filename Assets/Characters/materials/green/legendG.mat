@@ -311,5 +311,5 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
-    - _dissolveColor: {r: 2.7735653, g: 12.920755, b: 0, a: 0}
+    - _dissolveColor: {r: 2.7735653, g: 12.920755, b: 0, a: 1}
   m_BuildTextureStacks: []

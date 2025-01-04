@@ -284,7 +284,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     - _alphaClip: 0.1
-    - _cutoffHeight: 10
+    - _cutoffHeight: 4.86
     - _edgeWidth: 0.15
     - _emissionStrength: 0
     - _emissionfactor: 0
@@ -311,5 +311,5 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
-    - _dissolveColor: {r: 2.7735653, g: 12.920755, b: 0, a: 0}
+    - _dissolveColor: {r: 2.7735653, g: 12.920755, b: 0, a: 1}
   m_BuildTextureStacks: []
