@@ -12,6 +12,8 @@ public class MouseInteraction : MonoBehaviour
 
     private bool isDragging;
     private bool isHovering;
+    private bool selectable = true;
+    public bool Selectable { set { selectable = value; } get { return selectable; } }
 
     private Vector3 mouseDownPosition;
     private Vector3 lastFramePosition;
@@ -67,6 +69,8 @@ public class MouseInteraction : MonoBehaviour
 
         private void OnMouseDown()
     {
+        if (!selectable)
+            return;
         if (!canDrag)
         {
             OnClick.Invoke();
@@ -108,6 +112,8 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (!selectable)
+            return;
         if (!canDrag)
         {
             return;
@@ -193,6 +199,8 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!selectable)
+            return;
         if (!canDrag)
         {
             return;
@@ -223,7 +231,7 @@ public class MouseInteraction : MonoBehaviour
     
     void OnMouseOver()
     {
-        if (isHovering)
+        if (isHovering || !selectable)
             return;
         isHovering = true;
         if (highlightMaterial)

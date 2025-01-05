@@ -122,13 +122,10 @@ public class Tile : MonoBehaviour
 
     public void SetLocked(bool locked)
     {
-        if (locked)
+        _locked = locked;
+        if (_piece != null)
         {
-            _locked = true;
-        }
-        else
-        {
-            _locked = false;
+            _piece.SetSelectable(!_locked);
         }
     }
 

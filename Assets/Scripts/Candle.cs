@@ -13,6 +13,8 @@ public class Candle : MonoBehaviour
     
     private float remainingTime;
     private Object particleInstance;
+    private MouseInteraction mouseInteraction;
+    
     public float RemainingTime { get=>remainingTime; }
 
     private bool active = false;
@@ -26,6 +28,7 @@ public class Candle : MonoBehaviour
     {
         meshRenderer = gameObject.GetComponent<SkinnedMeshRenderer>();
         remainingTime = waitTime;
+        mouseInteraction = gameObject.GetComponent<MouseInteraction>();
     }
     void Update()
     {
@@ -80,6 +83,7 @@ public class Candle : MonoBehaviour
         particleInstance = Instantiate(flamePrefab, topPosition.transform.position, topPosition.transform.rotation);
         light.transform.position = topPosition.transform.position;
         light.enabled = true;
+        mouseInteraction.Selectable = true;
     }
 
     public void StopTimer()
@@ -92,6 +96,7 @@ public class Candle : MonoBehaviour
         particleInstance = Instantiate(smokePrefab, position, topPosition.transform.rotation);
         light.transform.position = position;
         light.enabled = false;
+        mouseInteraction.Selectable = false;
     }
 
 }

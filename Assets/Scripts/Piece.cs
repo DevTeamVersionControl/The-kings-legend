@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class Piece : MonoBehaviour
 {
     private UnityEvent OnCanBecomeLegend;
+    private MouseInteraction mouseInteraction;
     public enum PieceType
     {
         SOLDIER,
@@ -167,6 +168,7 @@ public class Piece : MonoBehaviour
     public void Awake()
     {
         GameManager.loadGame += PieceStart;
+        mouseInteraction = GetComponent<MouseInteraction>();
     }
 
     public void OnDestroy()
@@ -325,6 +327,11 @@ public class Piece : MonoBehaviour
 
         }
         
+    }
+
+    public void SetSelectable(bool selectable)
+    {
+        mouseInteraction.Selectable = selectable;
     }
 
 }
