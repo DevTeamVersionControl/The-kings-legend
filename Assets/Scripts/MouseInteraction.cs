@@ -13,7 +13,15 @@ public class MouseInteraction : MonoBehaviour
     private bool isDragging;
     private bool isHovering;
     private bool selectable = true;
-    public bool Selectable { set { selectable = value; } get { return selectable; } }
+
+    public bool Selectable
+    {
+        set
+        {
+            selectable = value;
+            OnMouseExit();
+        } get { return selectable; }
+    }
 
     private Vector3 mouseDownPosition;
     private Vector3 lastFramePosition;

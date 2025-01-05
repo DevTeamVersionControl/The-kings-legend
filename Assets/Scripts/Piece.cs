@@ -257,7 +257,6 @@ public class Piece : MonoBehaviour
 
     public void ActivateVFX(Color hdrColor)
     {
-        Debug.Log("in activate VFX");
         foreach (Transform child in transform)
         {
             if (child.gameObject.activeSelf) 

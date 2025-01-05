@@ -176,8 +176,6 @@ public class Board : MonoBehaviour
             case Tile.HighlightType.ATTACK:
                 AudioClip randomClip = SoundKill[UnityEngine.Random.Range(0, SoundKill.Length)];
                 AudioKill.PlayOneShot(randomClip);
-                startTile.GetPiece().OnKill();
-                endTile.GetPiece().EnemiesKilled = 0;
                 startTile.AddPieceAndMoveBack(startTile.RemovePiece());
                 StartCoroutine(PieceDeath(startTile, endTile));
                 break;
@@ -189,6 +187,16 @@ public class Board : MonoBehaviour
     {
         Color hdrColor = new Color(5.99215698f, 0.439215481f, 0.700219214f, 0); 
         Piece piece = endTile.RemovePiece();
+        
+        for (int i = 0; i < piece.EnemiesKilled + 1; i++)
+        {
+            if (i != 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            startTile.GetPiece().OnKill();
+        }
+        piece.EnemiesKilled = 0;
         
         Vector3 animationPosition = piece.transform.position;
         piece.StartingTile.AddPiece(piece);
@@ -219,11 +227,9 @@ public class Board : MonoBehaviour
     
     public IEnumerator OnPieceUpgrade(Tile startTile, Tile endTile)
     {
-
-        
         Piece upgrade = startTile.RemovePiece();
         
-        if (endTile.GetHighlight() == Tile.HighlightType.MOVE)
+        if (endTile.GetHighlight() == Tile.HighlightType.MOVE && upgrade.Color == endTile.GetPiece().Color)
         {
             Color hdrColor;
             Piece soldier = endTile.RemovePiece();
