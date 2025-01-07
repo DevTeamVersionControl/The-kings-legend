@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -22,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject UI;
 
+    [SerializeField] CapsuleCollider _capsuleColliderGreenCandle;
+
+    [SerializeField] CapsuleCollider _capsuleColliderPurpleCandle;
+
     public Tile _current;
     
     public static event Action changeTurn;
@@ -31,6 +36,8 @@ public class GameManager : MonoBehaviour
     public static event Action mainMenu;
 
     public static GameManager Instance;
+
+    public UnityEvent OnEnd;
 
 
     public AudioSource audioSource; 
@@ -63,6 +70,19 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         PlayRandomTrack();
+        OnEnd ??= new UnityEvent();
+
+        loadGame?.Invoke();
+          foreach (Tile tile in _board.AllTiles){
+            var piece = tile.GetPiece();       
+            if (piece != null)
+            {
+                piece.StartingTile = tile;
+            }
+        }
+
+        //initialize starting tiles
+        _board.AddStartingPieces();
     }
 
     public void ChangeLevel(GameLevel level)
@@ -76,6 +96,8 @@ public class GameManager : MonoBehaviour
                 break;
             case GameLevel.GAME:
                 UI.SetActive(false);
+                _capsuleColliderGreenCandle.enabled = true;
+                _capsuleColliderPurpleCandle.enabled = true;
                 _playerColorTurn = PlayerColor.GREEN;
                 _current = null;
                 loadGame?.Invoke();
@@ -91,26 +113,28 @@ public class GameManager : MonoBehaviour
         {
             hasWon = true;
             OnWin(_playerColorTurn);
+            
         }
-
-        if (color == PlayerColor.GREEN)
-        {
-            greenCandle.StartTimer();
-            purpleCandle.StopTimer();
-        }
-        else
-        {
-            purpleCandle.StartTimer();
-            greenCandle.StopTimer();
-        }
+        else 
+        { 
+            if (color == PlayerColor.GREEN)
+            {
+                greenCandle.StartTimer();
+                purpleCandle.StopTimer();
+            }
+            else
+            {
+                purpleCandle.StartTimer();
+                greenCandle.StopTimer();
+            }
         
-        _playerColorTurn = color;
+            _playerColorTurn = color;
         
-        changeTurn?.Invoke();
-        if (_board.OnNextTurn(color) < 3){
-            _board.SetLock(_board.SoldierTiles, color, false);
+            changeTurn?.Invoke();
+            if (_board.OnNextTurn(color) < 3){
+                _board.SetLock(_board.SoldierTiles, color, false);
+            }
         }
-        
     }
 
     public void OnDragStart(Piece piece)
@@ -182,28 +206,46 @@ public class GameManager : MonoBehaviour
         greenCandle.timeout.AddListener(()=>OnNextTurn(PlayerColor.PURPLE));
         purpleCandle.timeout.AddListener(()=>OnNextTurn(PlayerColor.GREEN));
         
-        foreach (Tile tile in _board.AllTiles){
-            var piece = tile.GetPiece();       
-            if (piece != null)
+            foreach (Tile tile in _board.AllTiles)
             {
-                MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
-                interaction.StopMovePiece.AddListener(OnDragEnd);
-                interaction.StartMovePiece.AddListener(OnDragStart);
-                piece.StartingTile = tile;
+                var piece = tile.GetPiece();
+                if (piece != null)
+                {
+                    MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
+                    interaction.StopMovePiece.AddListener(OnDragEnd);
+                    interaction.StartMovePiece.AddListener(OnDragStart);
+                    
+                }
             }
-        }
 
         //initialize starting tiles
         _board.AddStartingPieces();
+
         _playerColorTurn = PlayerColor.GREEN;
         OnNextTurn(_playerColorTurn);
     }
 
     private void OnWin(PlayerColor playerColor)
     {
-        _winScreen.GetComponentInChildren<TMP_Text>().text = $"{_playerColorTurn} has won";
-        _winScreen.SetActive(true);
+        Debug.Log("the game has ended");
+        OnEnd?.Invoke();
+        mainMenu?.Invoke();
         _board.ResetBoard();
+        foreach (Tile tile in _board.BoardTiles)
+        {
+            tile.RemovePiece();
+        }
+
+        foreach (Tile tile in _board.AllTiles)
+        {
+            var piece = tile.GetPiece();
+            if (piece != null)
+            {
+                MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
+                interaction.StopMovePiece.RemoveListener(OnDragEnd);
+                interaction.StartMovePiece.RemoveListener(OnDragStart);
+            }
+        }
     }
 
     public void OnSkip()

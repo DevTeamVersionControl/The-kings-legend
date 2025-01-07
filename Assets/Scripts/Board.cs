@@ -257,7 +257,7 @@ public class Board : MonoBehaviour
                 hdrColor = new Color(2.77356529f, 12.9207554f, 0f, 1f);
             }
             soldier.ActivateVFX(hdrColor);
-            upgrade.gameObject.SetActive(false);
+            //upgrade.gameObject.SetActive(false);
             upgrade.ActivateVFX(hdrColor);
             foreach (var vfx in soldier.particles)
             {

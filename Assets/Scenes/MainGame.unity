@@ -5775,7 +5775,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1
   m_Height: 4
@@ -14992,6 +14992,7 @@ MonoBehaviour:
   tutoController: {fileID: 1479058143}
   mainPage: {fileID: 297433001}
   pausePage: {fileID: 128823677}
+  currentPage: {fileID: 0}
   boxColliderBook: {fileID: 1232150321}
   rightPage: {fileID: 448092470}
   leftPage: {fileID: 939555855}
@@ -17282,6 +17283,7 @@ MonoBehaviour:
   tutoController: {fileID: 0}
   mainPage: {fileID: 0}
   pausePage: {fileID: 0}
+  currentPage: {fileID: 0}
   boxColliderBook: {fileID: 0}
   rightPage: {fileID: 0}
   leftPage: {fileID: 0}
@@ -18851,7 +18853,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1
   m_Height: 4
@@ -19096,6 +19098,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[0]
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2403460586668577041, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2403460586668577041, guid: 521f83f6286cbe348bff8b876afe2949,
         type: 3}
@@ -21771,7 +21778,24 @@ MonoBehaviour:
   _board: {fileID: 298244475}
   game: {fileID: 3391784819403258823, guid: 110fe20203f75214d8abbfb09194f176, type: 3}
   UI: {fileID: 1510618906}
+  _capsuleColliderGreenCandle: {fileID: 695671088}
+  _capsuleColliderPurpleCandle: {fileID: 1663573777}
   _current: {fileID: 0}
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1232150319}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnEndGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   audioSource: {fileID: 2065783558}
   musicTracks:
   - {fileID: 8300000, guid: 4574bcffe5e78c24483aeacaa6984b4e, type: 3}

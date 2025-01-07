@@ -10,14 +10,12 @@ public class CameraManager : MonoBehaviour
     public void Awake()
     {
         GameManager.changeTurn += changeCamera;
-        GameManager.loadGame += initialPosition;
         GameManager.mainMenu += InMenu;
     }
 
     private void OnDestroy()
     {
         GameManager.changeTurn -= changeCamera;
-        GameManager.loadGame -= initialPosition;
         GameManager.mainMenu -= InMenu;
     }
 

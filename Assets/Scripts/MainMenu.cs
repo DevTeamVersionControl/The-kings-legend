@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject tutoController;
     [SerializeField] GameObject mainPage;
     [SerializeField] GameObject pausePage;
+    [SerializeField] GameObject currentPage;
     [SerializeField] BoxCollider boxColliderBook;
     [SerializeField] CanvasGroup rightPage;
     [SerializeField] CanvasGroup leftPage;
@@ -18,6 +19,7 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        currentPage = mainPage;
     }
     public void OnStartGame()
     {
@@ -25,7 +27,7 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("startGame");
         GameManager.Instance.ChangeLevel(GameManager.GameLevel.GAME);
-        mainPage.SetActive(false);
+        currentPage.SetActive(false);
     }
 
     public void OnOpenBook()
@@ -38,7 +40,7 @@ public class MainMenu : MonoBehaviour
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         boxColliderBook.enabled = false;
-        mainPage.SetActive(true);
+        currentPage.SetActive(true);
         Debug.Log("in OnOpenBook");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
         
@@ -47,11 +49,11 @@ public class MainMenu : MonoBehaviour
     
     public void OnPause()
     {
-        mainPage = pausePage;
+        currentPage = pausePage;
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         boxColliderBook.enabled = false;
-        mainPage.SetActive(true);
+        currentPage.SetActive(true);
         Debug.Log("in OnPause");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
         animator.SetTrigger("onPause");
@@ -64,7 +66,7 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("startGame");
         GameManager.Instance.OnPause();
-        mainPage.SetActive(false);
+        currentPage.SetActive(false);
     }
     public void OnCloseBook()
     {
@@ -78,7 +80,7 @@ public class MainMenu : MonoBehaviour
         animator.SetTrigger("startGame");
         GameManager.Instance.PlayAgain();
         GameManager.Instance.OnPause();
-        mainPage.SetActive(false);
+        currentPage.SetActive(false);
     }
 
     public void OnOpenOptions()
@@ -88,12 +90,12 @@ public class MainMenu : MonoBehaviour
         animator.SetTrigger("menuOptions");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
         StartCoroutine(FadeIn(leftPage, 0.5f, 0.5f));
-        mainPage.SetActive(false);
+        currentPage.SetActive(false);
         menuOptionsController.SetActive(true);
     }
     public void OnOpenMainMenu()
     {
-        mainPage.SetActive(true);
+        currentPage.SetActive(true);
     }
     public void OnOpenTuto()
     {
@@ -102,7 +104,7 @@ public class MainMenu : MonoBehaviour
         animator.SetTrigger("menuTuto");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
         StartCoroutine(FadeIn(leftPage, 0.5f, 0.5f));
-        mainPage.SetActive(false);
+        currentPage.SetActive(false);
         tutoController.SetActive(true);
     }
     public void OnCredit()
@@ -111,6 +113,18 @@ public class MainMenu : MonoBehaviour
         rightPage.interactable = false;
         animator.SetTrigger("credit");
         StartCoroutine(DelayOpenCredit());
+    }
+
+    public void OnEndGame()
+    {
+        currentPage = mainPage;
+        rightPage.alpha = 0;
+        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        boxColliderBook.enabled = false;
+        currentPage.SetActive(true);
+        Debug.Log("in OnEndGame");
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        animator.SetTrigger("onPause");
     }
     IEnumerator DelayOpenCredit()
     {
