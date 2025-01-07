@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject tutoController;
     [SerializeField] GameObject mainPage;
     [SerializeField] GameObject pausePage;
-    [SerializeField] BoxCollider boxColliderRibbon;
+    [SerializeField] BoxCollider boxColliderBook;
     [SerializeField] CanvasGroup rightPage;
     [SerializeField] CanvasGroup leftPage;
     [SerializeField] GameObject CameraMenu;
@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
         }
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
-        boxColliderRibbon.enabled = false;
+        boxColliderBook.enabled = false;
         mainPage.SetActive(true);
         Debug.Log("in OnOpenBook");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
@@ -50,7 +50,7 @@ public class MainMenu : MonoBehaviour
         mainPage = pausePage;
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
-        boxColliderRibbon.enabled = false;
+        boxColliderBook.enabled = false;
         mainPage.SetActive(true);
         Debug.Log("in OnPause");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
@@ -108,10 +108,15 @@ public class MainMenu : MonoBehaviour
     public void OnCredit()
     {
         rightPage.alpha = 0;
-        boxColliderRibbon.enabled = true;
+        rightPage.interactable = false;
         animator.SetTrigger("credit");
+        StartCoroutine(DelayOpenCredit());
     }
-
+    IEnumerator DelayOpenCredit()
+    {
+        yield return new WaitForSeconds(2);
+        boxColliderBook.enabled = true;
+    }
     public void OnQuit()
     {
         Application.Quit();
@@ -119,9 +124,10 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator FadeIn(CanvasGroup canvasGroup, float duration, float delay)
     {
+        canvasGroup.interactable = false;
         // Wait for the specified delay before starting the fade
         yield return new WaitForSeconds(delay);
-
+        
         float startAlpha = canvasGroup.alpha;
         float endAlpha = 1f;
         float elapsedTime = 0f;
@@ -134,12 +140,14 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
 
+        canvasGroup.interactable = true;
         // Ensure alpha is set to exactly 1 at the end
         canvasGroup.alpha = endAlpha;
     }
 
     public IEnumerator FadeOut(CanvasGroup canvasGroup, float duration, float delay)
     {
+        canvasGroup.interactable = false;
         // Wait for the specified delay before starting the fade
         yield return new WaitForSeconds(delay);
 
@@ -156,6 +164,7 @@ public class MainMenu : MonoBehaviour
         }
 
         // Ensure alpha is set to exactly 0 at the end
+        canvasGroup.interactable = true;
         canvasGroup.alpha = endAlpha;
     }
 

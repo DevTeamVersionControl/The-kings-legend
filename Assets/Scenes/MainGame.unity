@@ -5662,6 +5662,7 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: e3532dca05141d64e9b0143da44875c7, type: 2}
+    - {fileID: 11400000, guid: ccfa693675d33894184c5501281becc0, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -5676,6 +5677,20 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1232150321}
+          m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
           m_CallState: 2
 --- !u!111 &694799099
 Animation:
@@ -11731,77 +11746,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052315667}
   m_CullTransparentMesh: 1
---- !u!1 &1078228969 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8349319222983693523, guid: fb3987dedcab23d46991677b3b43d3f8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1232150315}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1078228972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078228969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683cf381e9d5c784194cf50b636c9381, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDrag: 0
-  _dragHeightOffset: 0
-  audioSource: {fileID: 0}
-  soundPickUp: []
-  soundDrop: []
-  soundClick: []
-  soundHover: []
-  highlightMaterial: {fileID: 2100000, guid: 4c83b708aa1af4c4186a8f75e6eefea8, type: 2}
-  rotationMultiplier: 5
-  clamp: 10
-  rotationSmoothingSpeed: 5
-  maxSpeed: 1
-  dragOffset: {x: 0.1, y: 0, z: 0}
-  lastDragPosition: {x: 0, y: 0, z: 0}
-  rotationDelay: 0.1
-  rotationTimer: 0
-  OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1232150319}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnOpenBook
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  pitchRange: 0.1
---- !u!65 &1078228973
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078228969}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.8717644, y: 0.3556035, z: 7.405539}
-  m_Center: {x: -0.039253525, y: -0.5643922, z: 0.048090324}
 --- !u!1 &1079291887
 GameObject:
   m_ObjectHideFlags: 0
@@ -14918,6 +14862,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.000002561316
       objectReference: {fileID: 0}
+    - target: {fileID: 8349319222983693523, guid: fb3987dedcab23d46991677b3b43d3f8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9166700318643308996, guid: fb3987dedcab23d46991677b3b43d3f8,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -14985,14 +14934,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1232150320}
-    - targetCorrespondingSourceObject: {fileID: 8349319222983693523, guid: fb3987dedcab23d46991677b3b43d3f8,
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb3987dedcab23d46991677b3b43d3f8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1078228972}
-    - targetCorrespondingSourceObject: {fileID: 8349319222983693523, guid: fb3987dedcab23d46991677b3b43d3f8,
+      addedObject: {fileID: 1232150322}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb3987dedcab23d46991677b3b43d3f8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1078228973}
+      addedObject: {fileID: 1232150321}
   m_SourcePrefab: {fileID: 100100000, guid: fb3987dedcab23d46991677b3b43d3f8, type: 3}
 --- !u!1 &1232150316 stripped
 GameObject:
@@ -15043,7 +14992,7 @@ MonoBehaviour:
   tutoController: {fileID: 1479058143}
   mainPage: {fileID: 297433001}
   pausePage: {fileID: 128823677}
-  boxColliderRibbon: {fileID: 1078228973}
+  boxColliderBook: {fileID: 1232150321}
   rightPage: {fileID: 448092470}
   leftPage: {fileID: 939555855}
   CameraMenu: {fileID: 694799094}
@@ -15062,6 +15011,71 @@ MonoBehaviour:
   m_Events:
     m_Signals: []
     m_Events: []
+--- !u!65 &1232150321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232150316}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 3.3671873, y: 1, z: 2.6958623}
+  m_Center: {x: 0.020730257, y: 0, z: 0.12596823}
+--- !u!114 &1232150322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232150316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683cf381e9d5c784194cf50b636c9381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDrag: 0
+  _dragHeightOffset: 0
+  audioSource: {fileID: 0}
+  soundPickUp: []
+  soundDrop: []
+  soundClick: []
+  soundHover: []
+  highlightMaterial: {fileID: 2100000, guid: 4c83b708aa1af4c4186a8f75e6eefea8, type: 2}
+  rotationMultiplier: 5
+  clamp: 10
+  rotationSmoothingSpeed: 5
+  maxSpeed: 1
+  dragOffset: {x: 0.1, y: 0, z: 0}
+  lastDragPosition: {x: 0, y: 0, z: 0}
+  rotationDelay: 0.1
+  rotationTimer: 0
+  OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1232150319}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnOpenBook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  pitchRange: 0.1
 --- !u!1 &1255697474
 GameObject:
   m_ObjectHideFlags: 0
@@ -17268,7 +17282,7 @@ MonoBehaviour:
   tutoController: {fileID: 0}
   mainPage: {fileID: 0}
   pausePage: {fileID: 0}
-  boxColliderRibbon: {fileID: 0}
+  boxColliderBook: {fileID: 0}
   rightPage: {fileID: 0}
   leftPage: {fileID: 0}
   CameraMenu: {fileID: 0}
