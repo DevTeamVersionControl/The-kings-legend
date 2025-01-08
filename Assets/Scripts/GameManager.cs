@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //initialize starting tiles
+       
         _board.AddStartingPieces();
     }
 
@@ -233,7 +233,7 @@ public class GameManager : MonoBehaviour
         _board.ResetBoard();
         foreach (Tile tile in _board.BoardTiles)
         {
-            tile.RemovePiece();
+           tile.RemovePiece();
         }
 
         foreach (Tile tile in _board.AllTiles)

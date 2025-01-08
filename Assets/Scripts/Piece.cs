@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -177,11 +178,7 @@ public class Piece : MonoBehaviour
     }
     public void PieceStart()
     {
-        foreach (var par in particles)
-        {
-            Destroy(par);
-        }
-        particles.Clear();
+        ClearParticules();
         EnemiesKilled = 0;      
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
@@ -229,11 +226,17 @@ public class Piece : MonoBehaviour
             OnCanBecomeLegend.Invoke();
         }
 
+       StartCoroutine(OnKillParticule());
+    }
+
+    IEnumerator OnKillParticule()
+    {
+        yield return new WaitForSeconds(0.1f);
         particles.Add(Instantiate(killParticle, transform));
         var main = particles.Last().GetComponent<ParticleSystem>().main;
         main.simulationSpeed = Random.Range(0.8f, 1.2f);
+        
     }
-
     public bool CanBecomeLegend()
     {
         return EnemiesKilled >= ENEMIES_FOR_LEGEND;
@@ -331,6 +334,15 @@ public class Piece : MonoBehaviour
     public void SetSelectable(bool selectable)
     {
         mouseInteraction.Selectable = selectable;
+    }
+
+    public void ClearParticules()
+    {
+        foreach (var par in particles)
+        {
+            Destroy(par);
+        }
+        particles.Clear();
     }
 
 }

@@ -132,6 +132,7 @@ public class Board : MonoBehaviour
             }
         }
     }
+
     public int OnNextTurn(PlayerColor playerColor)
     {
         int piecesNb = 0;
@@ -432,6 +433,7 @@ public class Board : MonoBehaviour
             if (tile.GetPiece() != null)
             {
                 Piece piece = tile.RemovePiece();
+                piece.ClearParticules();
                 piece.StartingTile.AddPiece(piece);
                 piece.StartingTile.SetLocked(false);
             }
