@@ -31,6 +31,14 @@ public class Board : MonoBehaviour
     public HashSet<Tile> SoldierTiles;
     public HashSet<Tile> LegendTiles;
     public List<Tile> AllTiles;
+    
+    public Tray GreenUpgradeTray;
+    public Tray GreenSoldierTray;
+    public Tray GreenLegendTray;
+    public Tray PurpleUpgradeTray;
+    public Tray PurpleSoldierTray;
+    public Tray PurpleLegendTray;
+    
     private Dictionary<Tile, Vector2Int> _positions;
 
     public AudioSource AudioKill;
@@ -137,23 +145,49 @@ public class Board : MonoBehaviour
     {
         int piecesNb = 0;
         bool soldier = false;
+        bool can_become_legend = false;
         SetLock(BoardTiles, playerColor, false);
         SetLock(BoardTiles, PlayerColorExtensions.GetOpposite(playerColor), true);
         foreach (var tile in BoardTiles)
         {
-            if (tile.GetPiece()?.Color == playerColor)
+            Piece piece = tile.GetPiece();
+            if (piece == null)
+                continue;
+            if (piece.Color == playerColor)
             {
-                if (tile.GetPiece()?.Type == Piece.PieceType.SOLDIER)
+                if (piece.Type == Piece.PieceType.SOLDIER)
                 {
                     soldier = true;
+                    if (piece.CanBecomeLegend())
+                    {
+                        can_become_legend = true;
+                    }
                 }
                 piecesNb++;
             }
         }
         if (soldier)
         {
-            SetLock(UpgradeTiles, playerColor, false);
-            SetLock(LegendTiles, playerColor, false);
+            if (playerColor == PlayerColor.GREEN)
+            {
+                GreenUpgradeTray.SetLocked(false);
+            }
+            else
+            {
+                PurpleUpgradeTray.SetLocked(false);
+            }
+
+            if (can_become_legend)
+            {
+                if (playerColor == PlayerColor.GREEN)
+                {
+                    GreenLegendTray.SetLocked(false);
+                }
+                else
+                {
+                    PurpleLegendTray.SetLocked(false);
+                }
+            }
         }
 
         return piecesNb;
@@ -167,7 +201,14 @@ public class Board : MonoBehaviour
                 startTile.AddPieceAndMoveBack(startTile.RemovePiece());
                 startTile.SetLocked(false);
                 if (SoldierTiles.Contains(startTile)){
-                    SetLock(SoldierTiles, startTile.GetPiece().Color, false);
+                    if (startTile.GetPiece().Color == PlayerColor.GREEN)
+                    {
+                        GreenSoldierTray.SetLocked(false);
+                    }
+                    else
+                    {
+                        PurpleSoldierTray.SetLocked(false);
+                    }
                 }
                 break;
             case Tile.HighlightType.MOVE:
@@ -245,16 +286,17 @@ public class Board : MonoBehaviour
             int enemiesKilled = soldier.EnemiesKilled;
             soldier.EnemiesKilled = 0;
             endTile.SetLocked(locked);
-            SetLock(UpgradeTiles, upgrade.Color, true);
-            SetLock(LegendTiles, upgrade.Color, true);
-          
 
             if (soldier.Color == PlayerColor.PURPLE)
-            {               
+            {
+                PurpleUpgradeTray.SetLocked(true);
+                PurpleLegendTray.SetLocked(true);
                 hdrColor = new Color(0.881629169f, 0.36744374f, 5.99215698f, 0);
             }
             else
             {
+                GreenUpgradeTray.SetLocked(true);
+                GreenLegendTray.SetLocked(true);
                 hdrColor = new Color(2.77356529f, 12.9207554f, 0f, 1f);
             }
             soldier.ActivateVFX(hdrColor);

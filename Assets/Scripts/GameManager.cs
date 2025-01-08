@@ -109,30 +109,44 @@ public class GameManager : MonoBehaviour
 
     public void OnNextTurn(PlayerColor color)
     {
+        Debug.Log("------------- Next Turn ---------------");
         if (!_board.HasPiece(color) && !hasWon)
         {
             hasWon = true;
             OnWin(_playerColorTurn);
-            
         }
-        else 
-        { 
+        else
+        {
             if (color == PlayerColor.GREEN)
             {
                 greenCandle.StartTimer();
                 purpleCandle.StopTimer();
+                _board.PurpleLegendTray.SetLocked(true);
+                _board.PurpleSoldierTray.SetLocked(true);
+                _board.PurpleUpgradeTray.SetLocked(true);
             }
             else
             {
                 purpleCandle.StartTimer();
                 greenCandle.StopTimer();
+                _board.GreenLegendTray.SetLocked(true);
+                _board.GreenSoldierTray.SetLocked(true);
+                _board.GreenUpgradeTray.SetLocked(true);
             }
-        
+
             _playerColorTurn = color;
-        
+
             changeTurn?.Invoke();
-            if (_board.OnNextTurn(color) < 3){
-                _board.SetLock(_board.SoldierTiles, color, false);
+            if (_board.OnNextTurn(color) < 3)
+            {
+                if (color == PlayerColor.GREEN)
+                {
+                    _board.GreenSoldierTray.SetLocked(false);
+                }
+                else
+                {
+                    _board.PurpleSoldierTray.SetLocked(false);
+                }
             }
         }
     }
@@ -184,7 +198,14 @@ public class GameManager : MonoBehaviour
             if (_board.SoldierTiles.Contains(_current))
             {
                 _board.OnPieceMoved(_current, tile);
-                _board.SetLock(_board.SoldierTiles, _playerColorTurn, true);
+                if (_playerColorTurn == PlayerColor.GREEN)
+                {
+                    _board.GreenSoldierTray.SetLocked(true);
+                }
+                else
+                {
+                    _board.PurpleSoldierTray.SetLocked(true);
+                }
             }
             if (_board.BoardTiles.Contains(_current))
             {
@@ -214,7 +235,23 @@ public class GameManager : MonoBehaviour
                     MouseInteraction interaction = piece.GetComponent<MouseInteraction>();
                     interaction.StopMovePiece.AddListener(OnDragEnd);
                     interaction.StartMovePiece.AddListener(OnDragStart);
-                    
+                    piece.OnCanBecomeLegend.AddListener(() =>
+                    {
+                        if (piece.Color == PlayerColor.GREEN)
+                        {
+                            if (!_board.GreenUpgradeTray.GetLocked())
+                            {
+                                _board.GreenLegendTray.SetLocked(false);
+                            }
+                        }
+                        else
+                        {
+                            if (!_board.PurpleUpgradeTray.GetLocked())
+                            {
+                                _board.PurpleLegendTray.SetLocked(false);
+                            }
+                        }
+                    });
                 }
             }
 
@@ -223,6 +260,8 @@ public class GameManager : MonoBehaviour
 
         _playerColorTurn = PlayerColor.GREEN;
         OnNextTurn(_playerColorTurn);
+        OnSkip();
+        OnSkip();
     }
 
     private void OnWin(PlayerColor playerColor)

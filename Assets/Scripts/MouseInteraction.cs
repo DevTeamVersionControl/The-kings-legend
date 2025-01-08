@@ -19,7 +19,6 @@ public class MouseInteraction : MonoBehaviour
         set
         {
             selectable = value;
-            OnMouseExit();
         } get { return selectable; }
     }
 
@@ -73,6 +72,18 @@ public class MouseInteraction : MonoBehaviour
                             .Append(GetComponent<SkinnedMeshRenderer>())
                             .Where(renderer => renderer != null)
                             .ToArray();
+        GameManager.changeTurn += () =>
+        {
+            if (isDragging)
+            {
+                OnMouseUp();
+            }
+
+            if (isHovering)
+            {
+                OnMouseExit();
+            }
+        };
     }
 
         private void OnMouseDown()
@@ -207,12 +218,8 @@ public class MouseInteraction : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (!selectable)
+        if (!selectable || !canDrag)
             return;
-        if (!canDrag)
-        {
-            return;
-        }
         Tile TileDrop = null;
         AudioClip randomClip = soundDrop[0];
         audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
@@ -235,6 +242,7 @@ public class MouseInteraction : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10000, Color.white);
         }
         StopMovePiece.Invoke(TileDrop);
+        isDragging = false;
     }
     
     void OnMouseOver()

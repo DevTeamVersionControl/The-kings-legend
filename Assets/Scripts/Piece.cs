@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 public class Piece : MonoBehaviour
 {
-    private UnityEvent OnCanBecomeLegend;
+    public UnityEvent OnCanBecomeLegend;
     private MouseInteraction mouseInteraction;
     public enum PieceType
     {
