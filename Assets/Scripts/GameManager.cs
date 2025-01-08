@@ -109,7 +109,6 @@ public class GameManager : MonoBehaviour
 
     public void OnNextTurn(PlayerColor color)
     {
-        Debug.Log("------------- Next Turn ---------------");
         if (!_board.HasPiece(color) && !hasWon)
         {
             hasWon = true;

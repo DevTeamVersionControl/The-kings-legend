@@ -18,7 +18,6 @@ public class Tray : MonoBehaviour
     public void SetLocked(bool locked)
     {
         _locked = locked;
-        Debug.Log((locked ? "Locked ": "Unlocked ")+material.name);
         foreach (var tile in tiles)
         {
             tile.SetLocked(locked);

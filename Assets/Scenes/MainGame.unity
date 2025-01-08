@@ -696,6 +696,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 1000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -798,14 +806,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!64 &77147891
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -916,6 +916,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 629.5}
   m_SizeDelta: {x: 1089.6819, y: 649.3153}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &135120000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4930333560285404238, guid: 521f83f6286cbe348bff8b876afe2949,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670689617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &135120004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135120000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec2fd087ad346ef8c246b92b1595b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1011633197}
+  - {fileID: 1011633196}
+  - {fileID: 1011633195}
+  light: {fileID: 1495683797}
 --- !u!114 &139125847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1647,6 +1670,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c1ce4fb46143f46bc5cb5224c934f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 9
+  m_ObsoleteRenderingPath: 0
+  m_ObsoleteFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
   clearColorMode: 0
   backgroundColorHDR: {r: 0, g: 0, b: 0, a: 0}
   clearDepth: 1
@@ -1717,53 +1787,6 @@ MonoBehaviour:
       data1: 0
       data2: 0
   defaultFrameSettings: 0
-  m_Version: 9
-  m_ObsoleteRenderingPath: 0
-  m_ObsoleteFrameSettings:
-    overrides: 0
-    enableShadow: 0
-    enableContactShadows: 0
-    enableShadowMask: 0
-    enableSSR: 0
-    enableSSAO: 0
-    enableSubsurfaceScattering: 0
-    enableTransmission: 0
-    enableAtmosphericScattering: 0
-    enableVolumetrics: 0
-    enableReprojectionForVolumetrics: 0
-    enableLightLayers: 0
-    enableExposureControl: 1
-    diffuseGlobalDimmer: 0
-    specularGlobalDimmer: 0
-    shaderLitMode: 0
-    enableDepthPrepassWithDeferredRendering: 0
-    enableTransparentPrepass: 0
-    enableMotionVectors: 0
-    enableObjectMotionVectors: 0
-    enableDecals: 0
-    enableRoughRefraction: 0
-    enableTransparentPostpass: 0
-    enableDistortion: 0
-    enablePostprocess: 0
-    enableOpaqueObjects: 0
-    enableTransparentObjects: 0
-    enableRealtimePlanarReflection: 0
-    enableMSAA: 0
-    enableAsyncCompute: 0
-    runLightListAsync: 0
-    runSSRAsync: 0
-    runSSAOAsync: 0
-    runContactShadowsAsync: 0
-    runVolumeVoxelizationAsync: 0
-    lightLoopSettings:
-      overrides: 0
-      enableDeferredTileAndCluster: 0
-      enableComputeLightEvaluation: 0
-      enableComputeLightVariants: 0
-      enableComputeMaterialVariants: 0
-      enableFptlForForwardOpaque: 0
-      enableBigTilePrepass: 0
-      isFptlEnabled: 0
 --- !u!1 &235561923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,6 +2348,12 @@ MonoBehaviour:
   - {fileID: 493746168}
   - {fileID: 1221898850}
   AllTiles: []
+  GreenUpgradeTray: {fileID: 1438232611}
+  GreenSoldierTray: {fileID: 1386994841}
+  GreenLegendTray: {fileID: 874556973}
+  PurpleUpgradeTray: {fileID: 1140846020}
+  PurpleSoldierTray: {fileID: 763889655}
+  PurpleLegendTray: {fileID: 135120004}
   AudioKill: {fileID: 1780572671}
   SoundKill:
   - {fileID: 8300000, guid: 1eaf3f616b92a3c4a9d62ff15e352abb, type: 3}
@@ -2675,6 +2704,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 10000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -2777,14 +2814,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!114 &332115293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4332,6 +4361,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 1
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 40000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -4434,14 +4471,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 1
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!114 &559108514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6458,6 +6487,29 @@ MonoBehaviour:
   m_AmplitudeGain: 0
   m_FrequencyGain: 5
   mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!1 &763889651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4447456745450577829, guid: 521f83f6286cbe348bff8b876afe2949,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670689617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &763889655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763889651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec2fd087ad346ef8c246b92b1595b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1011633179}
+  - {fileID: 1011633178}
+  - {fileID: 1011633177}
+  light: {fileID: 0}
 --- !u!1 &763919794
 GameObject:
   m_ObjectHideFlags: 0
@@ -7221,6 +7273,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874455523}
   m_CullTransparentMesh: 1
+--- !u!1 &874556969 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8721161624585002050, guid: 521f83f6286cbe348bff8b876afe2949,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670689617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &874556973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874556969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec2fd087ad346ef8c246b92b1595b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1011633200}
+  - {fileID: 1011633199}
+  - {fileID: 1011633198}
+  light: {fileID: 1592889455}
 --- !u!1 &876512004
 GameObject:
   m_ObjectHideFlags: 0
@@ -12050,6 +12125,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115268793}
   m_CullTransparentMesh: 1
+--- !u!1 &1140846016 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5405034668121396934, guid: 521f83f6286cbe348bff8b876afe2949,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670689617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1140846020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140846016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec2fd087ad346ef8c246b92b1595b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1011633191}
+  - {fileID: 1011633190}
+  - {fileID: 1011633189}
+  - {fileID: 1011633187}
+  - {fileID: 1011633185}
+  - {fileID: 1011633183}
+  light: {fileID: 0}
 --- !u!64 &1151629353
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16400,6 +16501,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386761163}
   m_CullTransparentMesh: 1
+--- !u!1 &1386994837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3114450432066010794, guid: 521f83f6286cbe348bff8b876afe2949,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670689617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386994841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386994837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec2fd087ad346ef8c246b92b1595b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1011633182}
+  - {fileID: 1011633181}
+  - {fileID: 1011633180}
+  light: {fileID: 0}
 --- !u!1 &1387711066
 GameObject:
   m_ObjectHideFlags: 0
@@ -16622,6 +16746,32 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5962571782365007844, guid: e870ad305ed36a54f84ddfde47443a25, type: 3}
+--- !u!1 &1438232607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 49832703312197884, guid: 521f83f6286cbe348bff8b876afe2949,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670689617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1438232611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438232607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec2fd087ad346ef8c246b92b1595b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1011633194}
+  - {fileID: 1011633193}
+  - {fileID: 1011633192}
+  - {fileID: 1011633188}
+  - {fileID: 1011633186}
+  - {fileID: 1011633184}
+  light: {fileID: 0}
 --- !u!1 &1450463698
 GameObject:
   m_ObjectHideFlags: 0
@@ -17137,6 +17287,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 1350
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -17239,14 +17397,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!1 &1510618906
 GameObject:
   m_ObjectHideFlags: 0
@@ -17721,6 +17871,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 1000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -17823,14 +17981,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!1 &1563568709
 GameObject:
   m_ObjectHideFlags: 0
@@ -18319,6 +18469,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 1350
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -18421,14 +18579,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!1 &1593233912
 GameObject:
   m_ObjectHideFlags: 0
@@ -19177,6 +19327,30 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1663573777}
+    - targetCorrespondingSourceObject: {fileID: 4930333560285404238, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 135120004}
+    - targetCorrespondingSourceObject: {fileID: -8721161624585002050, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 874556973}
+    - targetCorrespondingSourceObject: {fileID: 49832703312197884, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1438232611}
+    - targetCorrespondingSourceObject: {fileID: 5405034668121396934, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1140846020}
+    - targetCorrespondingSourceObject: {fileID: -3114450432066010794, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1386994841}
+    - targetCorrespondingSourceObject: {fileID: -4447456745450577829, guid: 521f83f6286cbe348bff8b876afe2949,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 763889655}
   m_SourcePrefab: {fileID: 100100000, guid: 521f83f6286cbe348bff8b876afe2949, type: 3}
 --- !u!1 &1690555787
 GameObject:
