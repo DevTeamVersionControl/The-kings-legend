@@ -121,7 +121,7 @@ MonoBehaviour:
   soundHover: []
   highlightMaterial: {fileID: 0}
   rotationMultiplier: 250
-  clamp: 20
+  clamp: 25
   rotationSmoothingSpeed: 5
   maxSpeed: 0.1
   dragOffset: {x: 0.1, y: 0, z: 0}
