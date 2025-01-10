@@ -259,8 +259,8 @@ public class GameManager : MonoBehaviour
 
         _playerColorTurn = PlayerColor.GREEN;
         OnNextTurn(_playerColorTurn);
-        OnSkip();
-        OnSkip();
+        //OnSkip();
+        //OnSkip();
     }
 
     private void OnWin(PlayerColor playerColor)

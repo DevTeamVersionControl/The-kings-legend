@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] GameObject Camera1;
-    [SerializeField] GameObject Camera2;
+    [SerializeField] GameObject CameraPurple;
+    [SerializeField] GameObject CameraGreen;
     [SerializeField] GameObject CameraMenu;
+    [SerializeField] GameObject CameraTransition;
+    bool _onMenu = true;
     public void Awake()
     {
         GameManager.changeTurn += changeCamera;
@@ -21,38 +23,73 @@ public class CameraManager : MonoBehaviour
 
     void InMenu()
     {
+        _onMenu = true;
+        CameraPurple.SetActive(false);
+        CameraGreen.SetActive(false);
         CameraMenu.SetActive(true);
-        Camera1.SetActive(false);
-        Camera2.SetActive(false);
-
     }
+
     void changeCamera()
     {
         if (GameManager.Instance._playerColorTurn == PlayerColor.GREEN)
         {
-            GreenPosition();
+            
+            if (_onMenu)
+            {
+                _onMenu = false;
+                StartCoroutine(BookToGreenPosition());
+                
+            }
+            else
+            {
+               GreenPosition();
+            }
         }
         else
         {
-            PurplePosition();
+            
+            if (_onMenu)
+            {
+                _onMenu = false;
+                StartCoroutine(BookToPurplePosition());
+                
+            }
+            else 
+            {
+                PurplePosition();
+                
+            }
         }
     }
 
-    void initialPosition()
-    {
-        Camera1.SetActive(true);
-        Camera2.SetActive(false);
-    }
-
     void PurplePosition() {
-        Camera1.SetActive(true);
-        Camera2.SetActive(false);
+        CameraPurple.SetActive(true);
+        CameraGreen.SetActive(false);
     }
 
     void GreenPosition()
     {
-        Camera1.SetActive(false);
-        Camera2.SetActive(true);
+        CameraGreen.SetActive(true);
+        CameraPurple.SetActive(false);
+    }
+
+    IEnumerator BookToGreenPosition()
+    {
+        CameraMenu.SetActive(false);
+        CameraTransition.SetActive(true);
+        CameraPurple.SetActive(false);
+        yield return new WaitForSeconds(2);
+        CameraTransition.SetActive(false);
+        CameraGreen.SetActive(true);
+    }
+    IEnumerator BookToPurplePosition()
+    {
+        CameraMenu.SetActive(false);
+        CameraTransition.SetActive(true);
+        CameraGreen.SetActive(false);
+        yield return new WaitForSeconds(2);
+        CameraTransition.SetActive(false);
+        CameraPurple.SetActive(true);
     }
 
 }
