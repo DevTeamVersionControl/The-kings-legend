@@ -150,7 +150,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 3.9301586, g: 0, b: 23.968628, a: 1}
+    - _Color: {r: 7.860317, g: 0, b: 47.937256, a: 1}
     - _Distortion_Speed: {r: 1, g: 0.5, b: 0, a: 0}
     - _Distortion_Tiling: {r: 1.5, g: 0.2, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}

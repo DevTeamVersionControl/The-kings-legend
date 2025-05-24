@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class Candle : MonoBehaviour
 {
@@ -14,21 +15,23 @@ public class Candle : MonoBehaviour
     private float remainingTime;
     private Object particleInstance;
     private MouseInteraction mouseInteraction;
+    private SkinnedMeshRenderer meshRenderer;
     
     public float RemainingTime { get=>remainingTime; }
 
     private bool active = false;
+    private Vector3 lightOffset;
     public bool Active { get => active; set => active = value; }
     
     public UnityEvent timeout = new();
     
-    private SkinnedMeshRenderer meshRenderer;
 
     void Start()
     {
         meshRenderer = gameObject.GetComponent<SkinnedMeshRenderer>();
         remainingTime = waitTime;
         mouseInteraction = gameObject.GetComponent<MouseInteraction>();
+        lightOffset = light.transform.position - topPosition.transform.position;
     }
     void Update()
     {
@@ -42,7 +45,7 @@ public class Candle : MonoBehaviour
             Vector3 distance = topPosition.transform.position - bottomPosition.transform.position;
             Vector3 position = distance * remainingTime / waitTime + bottomPosition.transform.position;
             particleInstance.GetComponent<Transform>().position = position;
-            light.transform.position = position;
+            light.transform.position = position + lightOffset;
         }
         if (!active)
         {
@@ -81,7 +84,7 @@ public class Candle : MonoBehaviour
         if (particleInstance != null)
             Destroy(particleInstance);
         particleInstance = Instantiate(flamePrefab, topPosition.transform.position, topPosition.transform.rotation);
-        light.transform.position = topPosition.transform.position;
+        light.transform.position = topPosition.transform.position + lightOffset;
         light.enabled = true;
         mouseInteraction.Selectable = true;
     }
@@ -94,7 +97,7 @@ public class Candle : MonoBehaviour
         Vector3 distance = topPosition.transform.position - bottomPosition.transform.position;
         Vector3 position = distance * remainingTime / waitTime + bottomPosition.transform.position;
         particleInstance = Instantiate(smokePrefab, position, topPosition.transform.rotation);
-        light.transform.position = position;
+        light.transform.position = position + lightOffset;
         light.enabled = false;
         mouseInteraction.Selectable = false;
     }
