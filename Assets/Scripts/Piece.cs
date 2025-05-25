@@ -1,7 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -43,9 +43,15 @@ public class Piece : MonoBehaviour
     [SerializeField] AudioClip soldierPickUpSound;
     [SerializeField] AudioClip magePickUpSound;
     [SerializeField] AudioClip legendPickUpSound;
-    
+
+    private float _stretchAmount = 1.5f;
+    private float _squashAmount = 0.6f;
+    private float _duration = 1f;
+
     [SerializeField] Object killParticleOne;
     [SerializeField] Object killParticleTwo;
+
+    private Vector3 _originalScale;
 
     public float pitchRange = 0.1f;
     public Object particleInstance = new();
@@ -180,6 +186,7 @@ public class Piece : MonoBehaviour
     public void PieceStart()
     {
         Destroy(particleInstance);
+        _originalScale = transform.localScale;
         EnemiesKilled = 0;      
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
@@ -344,6 +351,22 @@ public class Piece : MonoBehaviour
         mouseInteraction.Selectable = selectable;
     }
 
+    public async Task PlaySquashAndStetch()
+    {
+        Sequence seq = DOTween.Sequence();
+
+        Vector3 squashScale = _originalScale * _squashAmount;
+        seq.Append(transform.DOScale(squashScale, _duration / 3f).SetEase(Ease.OutQuad));
+
+        Vector3 stretchScale = _originalScale * _stretchAmount;
+        seq.Append(transform.DOScale(stretchScale, _duration / 3f).SetEase(Ease.OutBack));
+
+        seq.Append(transform.DOScale(_originalScale, _duration / 3f).SetEase(Ease.InOutQuad));
+
+        seq.SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+
+        await seq.AsyncWaitForCompletion();
+    }
 }
 
 
