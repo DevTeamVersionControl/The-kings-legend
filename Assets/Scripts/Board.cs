@@ -246,9 +246,10 @@ public class Board : MonoBehaviour
         Vector3 finalPosition = piece.transform.position;
         piece.transform.position = animationPosition;
         piece.ActivateVFX(hdrColor);
+        piece.PlayDisappearVFX();
         Destroy(piece.particleInstance);
         
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         //change the dissolve for the corresponding team
         if (piece.Color == PlayerColor.PURPLE)
         {            
@@ -258,9 +259,10 @@ public class Board : MonoBehaviour
         {
             hdrColor = new Color(2.77356529f, 12.9207554f, 0f, 1f);
         }
+        piece.PlayAppearVFX();
         piece.AddVFX(hdrColor);
         piece.transform.position = finalPosition;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
     }
     
@@ -280,6 +282,7 @@ public class Board : MonoBehaviour
             soldier.transform.position = animationPosition;
             
             endTile.AddPiece(upgrade);
+            upgrade.PlayDisappearVFX();
             int enemiesKilled = soldier.EnemiesKilled;
             soldier.EnemiesKilled = 0;
             endTile.SetLocked(locked);
@@ -304,8 +307,10 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(2);
 
             upgrade.gameObject.SetActive(true);
+            upgrade.PlayAppearVFX();
             soldier.transform.position = finalPosition;
             soldier.AddVFX(hdrColor);
+            soldier.PlayAppearVFX();
             upgrade.AddVFX(hdrColor);
             for (int i = 0; i < enemiesKilled; i++)
             {

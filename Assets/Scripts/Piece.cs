@@ -33,9 +33,6 @@ public class Piece : MonoBehaviour
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
 
-    public Material materialKilled;
-    public Material materialVFXGreen;
-    public Material materialVFXPurple;
 
     [SerializeField] AudioSource audioPickUp;
 
@@ -48,6 +45,11 @@ public class Piece : MonoBehaviour
     private float _squashAmount = 0.6f;
     private float _duration = 1f;
 
+    [SerializeField] ParticleSystem disappearParticlePurple;
+    [SerializeField] ParticleSystem disappearParticleGreen;
+    [SerializeField] ParticleSystem appearParticlePurple;
+    [SerializeField] ParticleSystem appearParticleGreen;
+    
     [SerializeField] Object killParticleOne;
     [SerializeField] Object killParticleTwo;
 
@@ -320,7 +322,7 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public void PLayPickUpSound()
+    public void PlayPickUpSound()
     {
 
         audioPickUp.pitch = 1f + Random.Range(-pitchRange, pitchRange);
@@ -367,6 +369,30 @@ public class Piece : MonoBehaviour
 
         await seq.AsyncWaitForCompletion();
     }
+    public void PlayAppearVFX()
+    {
+        if (Color == PlayerColor.PURPLE)
+        {
+            appearParticlePurple.Play();
+        }
+        else
+        {
+            appearParticleGreen.Play();
+        }
+    }
+
+    public void PlayDisappearVFX()
+    {
+        if (Color == PlayerColor.PURPLE)
+        {
+            disappearParticlePurple.Play();
+        }
+        else
+        {
+            disappearParticleGreen.Play();
+        }
+    }
+
 }
 
 

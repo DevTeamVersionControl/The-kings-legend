@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -115,7 +114,7 @@ public class MouseInteraction : MonoBehaviour
         AudioClip randomClip = soundPickUp[0];
         audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
         audioSource.PlayOneShot(randomClip);
-        piece.PLayPickUpSound();
+        piece.PlayPickUpSound();
         StartMovePiece.Invoke(piece);
         gameObject.GetComponent<Rigidbody>().useGravity = false;
     }
