@@ -64,10 +64,11 @@ public class MainMenu : MonoBehaviour
     {
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
-        animator.SetTrigger("startGame");
+        StartCoroutine(BackToGameDelay());
         GameManager.Instance.OnPause();
         currentPage.SetActive(false);
     }
+    
     public void OnCloseBook()
     {
         animator.SetTrigger("mainMenu");
@@ -77,7 +78,7 @@ public class MainMenu : MonoBehaviour
     {
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
-        animator.SetTrigger("startGame");
+        StartCoroutine(BackToGameDelay());
         GameManager.Instance.PlayAgain();
         GameManager.Instance.OnPause();
         currentPage.SetActive(false);
@@ -130,6 +131,12 @@ public class MainMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         boxColliderBook.enabled = true;
+    }
+
+    IEnumerator BackToGameDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        animator.SetTrigger("startGame");
     }
     public void OnQuit()
     {

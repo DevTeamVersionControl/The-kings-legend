@@ -23,7 +23,7 @@ public class CameraManager : MonoBehaviour
 
     void InMenu()
     {
-        _onMenu = true;
+        
         CameraPurple.SetActive(false);
         CameraGreen.SetActive(false);
         CameraMenu.SetActive(true);
