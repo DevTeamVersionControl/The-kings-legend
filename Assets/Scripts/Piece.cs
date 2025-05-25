@@ -44,10 +44,11 @@ public class Piece : MonoBehaviour
     [SerializeField] AudioClip magePickUpSound;
     [SerializeField] AudioClip legendPickUpSound;
     
-    [SerializeField] Object killParticle;
+    [SerializeField] Object killParticleOne;
+    [SerializeField] Object killParticleTwo;
 
     public float pitchRange = 0.1f;
-    public List<Object> particles = new();
+    public Object particleInstance = new();
 
     static readonly bool[][] SoldierMovement = 
     {   new []{false}, 
@@ -178,7 +179,7 @@ public class Piece : MonoBehaviour
     }
     public void PieceStart()
     {
-        ClearParticules();
+        Destroy(particleInstance);
         EnemiesKilled = 0;      
         Movement = MovementMap[Type];
         Attack = AttackMap[Type];
@@ -220,9 +221,12 @@ public class Piece : MonoBehaviour
         {
             return;
         }
+
+        EnemiesKilled++;
         
-        if (++EnemiesKilled == ENEMIES_FOR_LEGEND)
+        if (CanBecomeLegend())
         {
+            Debug.Log($"{name} sends signal to become legend");
             OnCanBecomeLegend.Invoke();
         }
 
@@ -232,10 +236,14 @@ public class Piece : MonoBehaviour
     IEnumerator OnKillParticule()
     {
         yield return new WaitForSeconds(0.1f);
-        particles.Add(Instantiate(killParticle, transform));
-        var main = particles.Last().GetComponent<ParticleSystem>().main;
-        main.simulationSpeed = Random.Range(0.8f, 1.2f);
-        
+        if (EnemiesKilled == 1)
+        {
+            particleInstance = Instantiate(killParticleOne, transform);
+        } else if (EnemiesKilled == 2)
+        {
+            Destroy(particleInstance);
+            particleInstance = Instantiate(killParticleTwo, transform);
+        }
     }
     public bool CanBecomeLegend()
     {
@@ -334,15 +342,6 @@ public class Piece : MonoBehaviour
     public void SetSelectable(bool selectable)
     {
         mouseInteraction.Selectable = selectable;
-    }
-
-    public void ClearParticules()
-    {
-        foreach (var par in particles)
-        {
-            Destroy(par);
-        }
-        particles.Clear();
     }
 
 }

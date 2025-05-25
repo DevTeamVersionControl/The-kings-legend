@@ -237,6 +237,7 @@ public class GameManager : MonoBehaviour
                     interaction.StartMovePiece.AddListener(OnDragStart);
                     piece.OnCanBecomeLegend.AddListener(() =>
                     {
+                        Debug.Log($"Game manager receives signal to become legend from {piece.name}");
                         if (piece.Color == PlayerColor.GREEN)
                         {
                             if (!_board.GreenUpgradeTray.GetLocked())

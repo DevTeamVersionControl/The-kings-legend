@@ -145,7 +145,7 @@ public class Board : MonoBehaviour
     {
         int piecesNb = 0;
         bool soldier = false;
-        bool can_become_legend = false;
+        bool canBecomeLegend = false;
         SetLock(BoardTiles, playerColor, false);
         SetLock(BoardTiles, PlayerColorExtensions.GetOpposite(playerColor), true);
         foreach (var tile in BoardTiles)
@@ -158,10 +158,11 @@ public class Board : MonoBehaviour
                 if (piece.Type == Piece.PieceType.SOLDIER)
                 {
                     soldier = true;
-                    if (piece.CanBecomeLegend())
-                    {
-                        can_become_legend = true;
-                    }
+                }
+                if (piece.CanBecomeLegend())
+                {
+                    Debug.Log($"Board detects that {piece.name} can become legend");
+                    canBecomeLegend = true;
                 }
                 piecesNb++;
             }
@@ -176,17 +177,17 @@ public class Board : MonoBehaviour
             {
                 PurpleUpgradeTray.SetLocked(false);
             }
-
-            if (can_become_legend)
+        }
+        if (canBecomeLegend)
+        {
+            Debug.Log($"Board unlocks tray because a piece can become legend");
+            if (playerColor == PlayerColor.GREEN)
             {
-                if (playerColor == PlayerColor.GREEN)
-                {
-                    GreenLegendTray.SetLocked(false);
-                }
-                else
-                {
-                    PurpleLegendTray.SetLocked(false);
-                }
+                GreenLegendTray.SetLocked(false);
+            }
+            else
+            {
+                PurpleLegendTray.SetLocked(false);
             }
         }
 
@@ -245,11 +246,7 @@ public class Board : MonoBehaviour
         Vector3 finalPosition = piece.transform.position;
         piece.transform.position = animationPosition;
         piece.ActivateVFX(hdrColor);
-        foreach (var vfx in piece.particles)
-        {
-            Destroy(vfx);
-        }
-        piece.particles.Clear();
+        Destroy(piece.particleInstance);
         
         yield return new WaitForSeconds(1);
         //change the dissolve for the corresponding team
@@ -302,11 +299,7 @@ public class Board : MonoBehaviour
             soldier.ActivateVFX(hdrColor);
             //upgrade.gameObject.SetActive(false);
             upgrade.ActivateVFX(hdrColor);
-            foreach (var vfx in soldier.particles)
-            {
-                Destroy(vfx);
-            }
-            soldier.particles.Clear();
+            Destroy(soldier.particleInstance);
 
             yield return new WaitForSeconds(2);
 
@@ -475,7 +468,7 @@ public class Board : MonoBehaviour
             if (tile.GetPiece() != null)
             {
                 Piece piece = tile.RemovePiece();
-                piece.ClearParticules();
+                Destroy(piece.particleInstance);
                 piece.StartingTile.AddPiece(piece);
                 piece.StartingTile.SetLocked(false);
             }
