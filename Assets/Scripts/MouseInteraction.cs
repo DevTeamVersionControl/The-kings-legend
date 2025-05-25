@@ -85,7 +85,7 @@ public class MouseInteraction : MonoBehaviour
         };
     }
 
-        private void OnMouseDown()
+        private async void OnMouseDown()
     {
         if (!selectable)
             return;
@@ -110,13 +110,14 @@ public class MouseInteraction : MonoBehaviour
         lastFramePosition = transform.position; // Initialize last frame position
 
         Piece piece = gameObject.GetComponent<Piece>();
-
+        
         AudioClip randomClip = soundPickUp[0];
         audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
         audioSource.PlayOneShot(randomClip);
         piece.PlayPickUpSound();
         StartMovePiece.Invoke(piece);
         gameObject.GetComponent<Rigidbody>().useGravity = false;
+        await piece.PlaySquashAndStetch();
     }
     
     private Vector3 GetMouseWorldPos()
@@ -215,7 +216,7 @@ public class MouseInteraction : MonoBehaviour
         }
     }
 
-    private void OnMouseUp()
+    private async void OnMouseUp()
     {
         if (!selectable || !canDrag)
             return;
@@ -242,6 +243,7 @@ public class MouseInteraction : MonoBehaviour
         }
         StopMovePiece.Invoke(TileDrop);
         isDragging = false;
+        await GetComponent<Piece>().PlaySquashAndStetch();
     }
     
     void OnMouseOver()

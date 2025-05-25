@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
 public class Piece : MonoBehaviour
 {
@@ -41,9 +42,7 @@ public class Piece : MonoBehaviour
     [SerializeField] AudioClip magePickUpSound;
     [SerializeField] AudioClip legendPickUpSound;
 
-    private float _stretchAmount = 1.5f;
-    private float _squashAmount = 0.6f;
-    private float _duration = 1f;
+    private float _duration = 0.25f;
 
     [SerializeField] ParticleSystem disappearParticlePurple;
     [SerializeField] ParticleSystem disappearParticleGreen;
@@ -357,18 +356,20 @@ public class Piece : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
 
-        Vector3 squashScale = _originalScale * _squashAmount;
-        seq.Append(transform.DOScale(squashScale, _duration / 3f).SetEase(Ease.OutQuad));
+        float _squashAmount = 0.95f;
+        float _stretchAmount = 1.05f;
 
-        Vector3 stretchScale = _originalScale * _stretchAmount;
-        seq.Append(transform.DOScale(stretchScale, _duration / 3f).SetEase(Ease.OutBack));
+        float _duration1 = 0.2f;
+        float _duration2 = 0.1f;
 
-        seq.Append(transform.DOScale(_originalScale, _duration / 3f).SetEase(Ease.InOutQuad));
-
+        seq.Append(transform.DOScale(new Vector3(_originalScale.x * _squashAmount, _originalScale.y * _stretchAmount, _originalScale.z), _duration1 / 2));
+        seq.Append(transform.DOScale(new Vector3(_originalScale.x * _stretchAmount, _originalScale.y * _squashAmount, _originalScale.z), _duration2 / 2));
+        seq.Append(transform.DOScale(_originalScale, _duration / 2));
         seq.SetLink(gameObject, LinkBehaviour.KillOnDestroy);
 
         await seq.AsyncWaitForCompletion();
     }
+
     public void PlayAppearVFX()
     {
         if (Color == PlayerColor.PURPLE)
