@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -33,9 +31,6 @@ public class Piece : MonoBehaviour
     [SerializeField] GameObject _soldierPrefabGreen;
     [SerializeField] GameObject _soldierPrefabPurple;
 
-    public Material materialKilled;
-    public Material materialVFXGreen;
-    public Material materialVFXPurple;
 
     [SerializeField] AudioSource audioPickUp;
 
@@ -43,6 +38,11 @@ public class Piece : MonoBehaviour
     [SerializeField] AudioClip soldierPickUpSound;
     [SerializeField] AudioClip magePickUpSound;
     [SerializeField] AudioClip legendPickUpSound;
+
+    [SerializeField] ParticleSystem disappearParticlePurple;
+    [SerializeField] ParticleSystem disappearParticleGreen;
+    [SerializeField] ParticleSystem appearParticlePurple;
+    [SerializeField] ParticleSystem appearParticleGreen;
     
     [SerializeField] Object killParticleOne;
     [SerializeField] Object killParticleTwo;
@@ -313,7 +313,7 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public void PLayPickUpSound()
+    public void PlayPickUpSound()
     {
 
         audioPickUp.pitch = 1f + Random.Range(-pitchRange, pitchRange);
@@ -342,6 +342,30 @@ public class Piece : MonoBehaviour
     public void SetSelectable(bool selectable)
     {
         mouseInteraction.Selectable = selectable;
+    }
+
+    public void PlayAppearVFX()
+    {
+        if (Color == PlayerColor.PURPLE)
+        {
+            appearParticlePurple.Play();
+        }
+        else
+        {
+            appearParticleGreen.Play();
+        }
+    }
+
+    public void PlayDisappearVFX()
+    {
+        if (Color == PlayerColor.PURPLE)
+        {
+            disappearParticlePurple.Play();
+        }
+        else
+        {
+            disappearParticleGreen.Play();
+        }
     }
 
 }
