@@ -16,10 +16,23 @@ public class MainMenu : MonoBehaviour
     Animator animator;
 
     private bool _firstTime = true;
+    
     private void Awake()
     {
         animator = GetComponent<Animator>();
         currentPage = mainPage;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && currentPage.gameObject.activeInHierarchy && GameManager.Instance._currentLevel == GameManager.GameLevel.MAINMENU)
+        {
+            rightPage.alpha = 0;
+            StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+            animator.SetTrigger("onCover");
+            currentPage.SetActive(false);
+            boxColliderBook.enabled = true;
+        } 
     }
     public void OnStartGame()
     {
@@ -111,6 +124,7 @@ public class MainMenu : MonoBehaviour
     public void OnCredit()
     {
         rightPage.alpha = 0;
+        currentPage.SetActive(false);
         rightPage.interactable = false;
         animator.SetTrigger("credit");
         StartCoroutine(DelayOpenCredit());
@@ -136,7 +150,7 @@ public class MainMenu : MonoBehaviour
     IEnumerator BackToGameDelay()
     {
         yield return new WaitForSeconds(0.5f);
-        animator.SetTrigger("startGame");
+        animator.SetTrigger("onCover");
     }
     public void OnQuit()
     {
