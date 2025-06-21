@@ -39,6 +39,22 @@ public class Candle : MonoBehaviour
         {
             return;
         }
+        
+        if(GameManager.Instance._currentLevel == GameManager.GameLevel.MAINMENU)
+        {
+            remainingTime += Time.deltaTime * 5;
+
+            if (meshRenderer != null)
+            {
+                meshRenderer.SetBlendShapeWeight(0, 100 * (1 - remainingTime / waitTime));
+            }
+
+            if (remainingTime > waitTime)
+            {
+                remainingTime = waitTime;
+                return;
+            }
+        }
 
         if (particleInstance != null)
         {
@@ -47,6 +63,7 @@ public class Candle : MonoBehaviour
             particleInstance.GetComponent<Transform>().position = position;
             light.transform.position = position + lightOffset;
         }
+
         if (!active)
         {
             remainingTime += Time.deltaTime * 5;

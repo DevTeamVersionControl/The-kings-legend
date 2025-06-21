@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject game;
 
-    [SerializeField] GameObject UI;
-
     [SerializeField] CapsuleCollider _capsuleColliderGreenCandle;
 
     [SerializeField] CapsuleCollider _capsuleColliderPurpleCandle;
@@ -93,10 +91,8 @@ public class GameManager : MonoBehaviour
         {
             case GameLevel.MAINMENU:
                 mainMenu?.Invoke();
-                UI.SetActive(true);
                 break;
             case GameLevel.GAME:
-                UI.SetActive(false);
                 _capsuleColliderGreenCandle.enabled = true;
                 _capsuleColliderPurpleCandle.enabled = true;
                 _playerColorTurn = PlayerColor.GREEN;
@@ -286,6 +282,7 @@ public class GameManager : MonoBehaviour
                 interaction.StartMovePiece.RemoveListener(OnDragStart);
             }
         }
+        ChangeLevel(GameLevel.MAINMENU);
     }
 
     public void OnSkip()
