@@ -233,10 +233,6 @@ public class Board : MonoBehaviour
         
         for (int i = 0; i < piece.EnemiesKilled + 1; i++)
         {
-            if (i != 0)
-            {
-                yield return new WaitForSeconds(0.5f);
-            }
             startTile.GetPiece().OnKill();
         }
         piece.EnemiesKilled = 0;
@@ -304,7 +300,7 @@ public class Board : MonoBehaviour
             upgrade.ActivateVFX(hdrColor);
             Destroy(soldier.particleInstance);
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.5f);
 
             upgrade.gameObject.SetActive(true);
             upgrade.PlayAppearVFX();

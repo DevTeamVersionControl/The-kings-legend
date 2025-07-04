@@ -55,11 +55,21 @@ public class MainMenu : MonoBehaviour
         boxColliderBook.enabled = false;
         currentPage.SetActive(true);
         Debug.Log("in OnOpenBook");
-        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
         
         animator.SetTrigger("mainMenu");
     }
     
+    public void OnGoBackToMainPage()
+    {
+        rightPage.alpha = 0;
+        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        currentPage.SetActive(true);
+        Debug.Log("in OnOpenBook");
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.75f));
+
+        animator.SetTrigger("mainMenu");
+    }
     public void OnPause()
     {
         currentPage = pausePage;
@@ -68,7 +78,7 @@ public class MainMenu : MonoBehaviour
         boxColliderBook.enabled = false;
         currentPage.SetActive(true);
         Debug.Log("in OnPause");
-        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
         animator.SetTrigger("onPause");
 
     }
@@ -102,8 +112,8 @@ public class MainMenu : MonoBehaviour
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("menuOptions");
-        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
-        StartCoroutine(FadeIn(leftPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.75f));
+        StartCoroutine(FadeIn(leftPage, 0.5f, 0.75f));
         currentPage.SetActive(false);
         menuOptionsController.SetActive(true);
     }
@@ -116,8 +126,8 @@ public class MainMenu : MonoBehaviour
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("menuTuto");
-        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
-        StartCoroutine(FadeIn(leftPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(rightPage, 0.5f, 0.75f));
+        StartCoroutine(FadeIn(leftPage, 0.5f, 0.75f));
         currentPage.SetActive(false);
         tutoController.SetActive(true);
     }
@@ -138,7 +148,7 @@ public class MainMenu : MonoBehaviour
         boxColliderBook.enabled = false;
         currentPage.SetActive(true);
         Debug.Log("in OnEndGame");
-        StartCoroutine(FadeIn(rightPage, 0.5f, 0.5f));
+        StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
         animator.SetTrigger("onPause");
     }
     IEnumerator DelayOpenCredit()
@@ -160,7 +170,6 @@ public class MainMenu : MonoBehaviour
     public IEnumerator FadeIn(CanvasGroup canvasGroup, float duration, float delay)
     {
         canvasGroup.interactable = false;
-        // Wait for the specified delay before starting the fade
         yield return new WaitForSeconds(delay);
         
         float startAlpha = canvasGroup.alpha;
@@ -176,14 +185,12 @@ public class MainMenu : MonoBehaviour
         }
 
         canvasGroup.interactable = true;
-        // Ensure alpha is set to exactly 1 at the end
         canvasGroup.alpha = endAlpha;
     }
 
     public IEnumerator FadeOut(CanvasGroup canvasGroup, float duration, float delay)
     {
         canvasGroup.interactable = false;
-        // Wait for the specified delay before starting the fade
         yield return new WaitForSeconds(delay);
 
         float startAlpha = canvasGroup.alpha;
@@ -198,7 +205,6 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
 
-        // Ensure alpha is set to exactly 0 at the end
         canvasGroup.interactable = true;
         canvasGroup.alpha = endAlpha;
     }

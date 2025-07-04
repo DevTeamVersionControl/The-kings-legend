@@ -1186,7 +1186,6 @@ MonoBehaviour:
   CameraPurple: {fileID: 1552459388}
   CameraGreen: {fileID: 345740426}
   CameraMenu: {fileID: 694799094}
-  CameraTransition: {fileID: 374636338}
 --- !u!114 &233513275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10970,7 +10969,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1232150319}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnOpenBook
+        m_MethodName: OnGoBackToMainPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12452,12 +12451,12 @@ PrefabInstance:
     - target: {fileID: 2064599386033342672, guid: fb3987dedcab23d46991677b3b43d3f8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -89.98021
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 2064599386033342672, guid: fb3987dedcab23d46991677b3b43d3f8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 8.59299e-31
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2114772379012872060, guid: fb3987dedcab23d46991677b3b43d3f8,
         type: 3}
@@ -18803,7 +18802,6 @@ MonoBehaviour:
   _winScreen: {fileID: 1751771004}
   _board: {fileID: 298244475}
   game: {fileID: 3391784819403258823, guid: 110fe20203f75214d8abbfb09194f176, type: 3}
-  UI: {fileID: 0}
   _capsuleColliderGreenCandle: {fileID: 695671088}
   _capsuleColliderPurpleCandle: {fileID: 1663573777}
   _current: {fileID: 0}
@@ -19165,7 +19163,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1232150319}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnOpenBook
+        m_MethodName: OnGoBackToMainPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
