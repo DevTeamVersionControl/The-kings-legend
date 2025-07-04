@@ -16736,8 +16736,7 @@ PrefabInstance:
       value: enviro_v02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: -2642231524362038873, guid: 521f83f6286cbe348bff8b876afe2949, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2499393056064513880, guid: 521f83f6286cbe348bff8b876afe2949,
