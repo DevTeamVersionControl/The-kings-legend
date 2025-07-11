@@ -267,7 +267,8 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator StartWinCinematic(PlayerColor playerColor)
     {
-        if(playerColor == PlayerColor.GREEN)
+        ChangeLevel(GameLevel.MAINMENU);
+        if (playerColor == PlayerColor.GREEN)
         {
             _greenWinCinematic.Play();
             yield return new WaitForSeconds((float)_greenWinCinematic.duration);
@@ -277,6 +278,7 @@ public class GameManager : MonoBehaviour
             _purpleWinCinematic.Play();
             yield return new WaitForSeconds((float)_purpleWinCinematic.duration);
         }
+        yield return new WaitForSeconds(1f);
         OnWin(playerColor);
     }
 

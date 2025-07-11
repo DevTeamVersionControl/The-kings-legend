@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -32,5 +33,10 @@ public class Tray : MonoBehaviour
     public bool GetLocked()
     {
         return _locked;
+    }
+
+    public void SetLight(bool isOn)
+    {
+        material.SetFloat(EmissionStrength, isOn ? 1f : 0f);
     }
 }

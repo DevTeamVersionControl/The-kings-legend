@@ -32,6 +32,11 @@ public class CameraShake : MonoBehaviour
         shakeTimer = time;
     }
 
+    public void ShakeCinematic()
+    {
+        ShakeCamera(10f, 0.1f);
+    }
+
     private void Update()
     {
         if (shakeTimer > 0)
