@@ -131,6 +131,16 @@ public class MainMenu : MonoBehaviour
         currentPage.SetActive(false);
         tutoController.SetActive(true);
     }
+
+    public void ChangePageTutoLeft()
+    {
+        animator.SetTrigger("PreviousTuto");
+    }
+    public void ChangePageTutoRight()
+    {
+        animator.SetTrigger("NextTuto");
+    }
+
     public void OnCredit()
     {
         rightPage.alpha = 0;
@@ -190,7 +200,6 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator FadeOut(CanvasGroup canvasGroup, float duration, float delay)
     {
-        canvasGroup.interactable = false;
         yield return new WaitForSeconds(delay);
 
         float startAlpha = canvasGroup.alpha;
@@ -205,7 +214,6 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
 
-        canvasGroup.interactable = true;
         canvasGroup.alpha = endAlpha;
     }
 
