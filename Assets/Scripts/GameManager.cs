@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -24,6 +25,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] CapsuleCollider _capsuleColliderGreenCandle;
 
     [SerializeField] CapsuleCollider _capsuleColliderPurpleCandle;
+
+    [SerializeField] PlayableDirector _greenWinCinematic;
+    [SerializeField] PlayableDirector _purpleWinCinematic;
 
     public Tile _current;
     
@@ -109,7 +113,7 @@ public class GameManager : MonoBehaviour
         if (!_board.HasPiece(color) && !hasWon)
         {
             hasWon = true;
-            OnWin(_playerColorTurn);
+            StartCoroutine(StartWinCinematic(_playerColorTurn));
         }
         else
         {
@@ -260,6 +264,21 @@ public class GameManager : MonoBehaviour
         //OnSkip();
         //OnSkip();
     }
+    
+    private IEnumerator StartWinCinematic(PlayerColor playerColor)
+    {
+        if(playerColor == PlayerColor.GREEN)
+        {
+            _greenWinCinematic.Play();
+            yield return new WaitForSeconds((float)_greenWinCinematic.duration);
+        }
+        else
+        {
+            _purpleWinCinematic.Play();
+            yield return new WaitForSeconds((float)_purpleWinCinematic.duration);
+        }
+        OnWin(playerColor);
+    }
 
     private void OnWin(PlayerColor playerColor)
     {
@@ -284,6 +303,8 @@ public class GameManager : MonoBehaviour
         }
         ChangeLevel(GameLevel.MAINMENU);
     }
+
+
 
     public void OnSkip()
     {
