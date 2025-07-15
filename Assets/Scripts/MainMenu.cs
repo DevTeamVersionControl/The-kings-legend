@@ -13,7 +13,19 @@ public class MainMenu : MonoBehaviour
     [SerializeField] CanvasGroup rightPage;
     [SerializeField] CanvasGroup leftPage;
     [SerializeField] GameObject CameraMenu;
-    Animator animator;
+    [SerializeField] private AudioSource _UIClick;
+    [SerializeField] private AudioSource _UIHover;
+
+    [SerializeField] private AudioSource _ChairSlidingGreen;
+    [SerializeField] private AudioSource _ChairSlidingPurple;
+    [SerializeField] private AudioSource _CloseBook;
+    [SerializeField] private AudioSource _OpenBook;
+    [SerializeField] private AudioSource _TurnPage;
+
+    private float minPitch = 0.8f;
+    private float maxPitch = 1.2f;
+
+    private Animator animator;
 
     private bool _firstTime = true;
     
@@ -41,6 +53,7 @@ public class MainMenu : MonoBehaviour
         animator.SetTrigger("startGame");
         GameManager.Instance.ChangeLevel(GameManager.GameLevel.GAME);
         currentPage.SetActive(false);
+        StartCoroutine(ChairMovingSound());
     }
 
     public void OnOpenBook()
@@ -105,6 +118,7 @@ public class MainMenu : MonoBehaviour
         GameManager.Instance.PlayAgain();
         GameManager.Instance.OnPause();
         currentPage.SetActive(false);
+        StartCoroutine(ChairMovingSound());
     }
 
     public void OnOpenOptions()
@@ -217,4 +231,42 @@ public class MainMenu : MonoBehaviour
         canvasGroup.alpha = endAlpha;
     }
 
+    public void OnClickSound()
+    {
+        _UIClick.pitch = Random.Range(minPitch, maxPitch);
+        _UIClick.Play();
+    }
+
+    public void OnHoverSound()
+    {
+        _UIHover.pitch = Random.Range(minPitch, maxPitch);
+        _UIHover.Play();
+    }
+
+    public void PlayCloseBookSound()
+    {
+        _CloseBook.pitch = Random.Range(minPitch, maxPitch);
+        _CloseBook.Play();
+    }
+
+    public void PlayOpenBookSound()
+    {
+        _OpenBook.pitch = Random.Range(minPitch, maxPitch);
+        _OpenBook.Play();
+    }
+
+    public void PlayTurnPageSound()
+    {
+        _TurnPage.pitch = Random.Range(minPitch, maxPitch);
+        _TurnPage.Play();
+    }
+    private IEnumerator ChairMovingSound()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _ChairSlidingGreen.pitch = Random.Range(minPitch, maxPitch);
+        _ChairSlidingGreen.Play();
+        yield return new WaitForSeconds(1.5f);
+        _ChairSlidingPurple.pitch = Random.Range(minPitch, maxPitch);
+        _ChairSlidingPurple.Play();
+    }
 }

@@ -11,7 +11,11 @@ public class Candle : MonoBehaviour
     [SerializeField] private GameObject topPosition;
     [SerializeField] private GameObject bottomPosition;
     [SerializeField] private Light light;
-    
+    [SerializeField] private AudioSource _candleOn;
+    [SerializeField] private AudioSource _candleOff;
+
+    private float minPitch = 0.8f;
+    private float maxPitch = 1.2f;
     private float remainingTime;
     private Object particleInstance;
     private MouseInteraction mouseInteraction;
@@ -103,6 +107,8 @@ public class Candle : MonoBehaviour
         particleInstance = Instantiate(flamePrefab, topPosition.transform.position, topPosition.transform.rotation);
         light.transform.position = topPosition.transform.position + lightOffset;
         light.enabled = true;
+        _candleOn.pitch = Random.Range(minPitch, maxPitch);
+        _candleOn.Play();
         mouseInteraction.Selectable = true;
     }
 
@@ -116,6 +122,8 @@ public class Candle : MonoBehaviour
         particleInstance = Instantiate(smokePrefab, position, topPosition.transform.rotation);
         light.transform.position = position + lightOffset;
         light.enabled = false;
+        _candleOff.pitch = Random.Range(minPitch, maxPitch);
+        _candleOff.Play();
         mouseInteraction.Selectable = false;
     }
 

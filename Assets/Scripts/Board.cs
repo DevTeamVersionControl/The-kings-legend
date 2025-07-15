@@ -298,6 +298,7 @@ public class Board : MonoBehaviour
             soldier.ActivateVFX(hdrColor);
             //upgrade.gameObject.SetActive(false);
             upgrade.ActivateVFX(hdrColor);
+            upgrade.PlayUpgradeSound();
             Destroy(soldier.particleInstance);
 
             yield return new WaitForSeconds(0.5f);

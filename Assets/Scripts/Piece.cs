@@ -36,6 +36,7 @@ public class Piece : MonoBehaviour
 
 
     [SerializeField] AudioSource audioPickUp;
+    [SerializeField] AudioSource upgradeSFX;
 
     [SerializeField] AudioClip horsePickUpSound;
     [SerializeField] AudioClip soldierPickUpSound;
@@ -392,6 +393,11 @@ public class Piece : MonoBehaviour
         {
             disappearParticleGreen.Play();
         }
+    }
+
+    public void PlayUpgradeSound()
+    {
+        upgradeSFX.Play();
     }
 
 }
