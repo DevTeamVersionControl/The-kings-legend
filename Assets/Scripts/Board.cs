@@ -45,6 +45,11 @@ public class Board : MonoBehaviour
     public AudioClip[] SoundKill;
 
 
+    [SerializeField] private AudioSource _killVoiceReaction;
+    [SerializeField] private AudioSource _moveVoiceReaction;
+    [SerializeField] private AudioClip[] _killVoiceList;
+    [SerializeField] private AudioClip[] _moveVoiceList;
+
     public void Awake()
     {
         GameManager.loadGame += BoardStart;
@@ -215,12 +220,20 @@ public class Board : MonoBehaviour
             case Tile.HighlightType.MOVE:
                 endTile.AddPiece(startTile.RemovePiece());
                 startTile.RemovePiece();
+                if (UnityEngine.Random.Range(0, 4) == 0)
+                {
+                    OnMoveVoiceReaction();
+                }
                 break;
             case Tile.HighlightType.ATTACK:
                 AudioClip randomClip = SoundKill[UnityEngine.Random.Range(0, SoundKill.Length)];
                 AudioKill.PlayOneShot(randomClip);
                 startTile.AddPieceAndMoveBack(startTile.RemovePiece());
                 StartCoroutine(PieceDeath(startTile, endTile));
+                if (UnityEngine.Random.Range(0, 2) == 0)
+                {
+                    OnKillVoiceReaction();
+                }
                 break;
         }
         UnhighlightAll();
@@ -498,5 +511,26 @@ public class Board : MonoBehaviour
                 BoardMap[position.x][position.y].AddPiece(tile.RemovePiece());
             }
         }
+    }
+
+    public void OnKillVoiceReaction()
+    {
+        int _clipId = UnityEngine.Random.Range(0, _killVoiceList.Count());
+        _killVoiceReaction.clip = _killVoiceList[_clipId];
+        if (_killVoiceReaction.isPlaying)
+        {
+            return;
+        }
+        _killVoiceReaction.Play();
+    }
+    public void OnMoveVoiceReaction()
+    {
+        int _clipId = UnityEngine.Random.Range(0, _moveVoiceList.Count());
+        _moveVoiceReaction.clip = _moveVoiceList[_clipId];
+        if (_moveVoiceReaction.isPlaying)
+        {
+            return;
+        }
+        _moveVoiceReaction.Play();
     }
 }
