@@ -292,9 +292,11 @@ public class Board : MonoBehaviour
             
             endTile.AddPiece(upgrade);
             upgrade.PlayDisappearVFX();
+            soldier.gameObject.GetComponent<MouseInteraction>().Selectable = false;
             int enemiesKilled = soldier.EnemiesKilled;
             soldier.EnemiesKilled = 0;
             endTile.SetLocked(locked);
+            upgrade.gameObject.GetComponent<MouseInteraction>().Selectable = false;
 
             if (soldier.Color == PlayerColor.PURPLE)
             {
@@ -325,8 +327,9 @@ public class Board : MonoBehaviour
             for (int i = 0; i < enemiesKilled; i++)
             {
                 upgrade.OnKill();
-                yield return new WaitForSeconds(0.5f);
             }
+            yield return new WaitForSeconds(0.5f);
+            upgrade.gameObject.GetComponent<MouseInteraction>().Selectable = true;
         }
         else
         {

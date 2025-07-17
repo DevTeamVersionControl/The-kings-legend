@@ -17,6 +17,7 @@ public class MouseInteraction : MonoBehaviour
     {
         set
         {
+            Debug.Log($"{name} is now selectable: {value}");
             selectable = value;
         } get { return selectable; }
     }
