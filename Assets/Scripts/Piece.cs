@@ -55,7 +55,7 @@ public class Piece : MonoBehaviour
 
     private Vector3 _originalScale;
 
-    public float pitchRange = 0.1f;
+    public float pitchRange = 0.2f;
     public Object particleInstance = new();
 
     static readonly bool[][] SoldierMovement = 
@@ -341,6 +341,7 @@ public class Piece : MonoBehaviour
                 audioPickUp.PlayOneShot(horsePickUpSound);
                 break;
             case PieceType.LEGEND:
+                audioPickUp.pitch = 1f;
                 audioPickUp.PlayOneShot(legendPickUpSound);
                 break;
 

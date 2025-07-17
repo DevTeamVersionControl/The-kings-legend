@@ -77,6 +77,7 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
         
         animator.SetTrigger("mainMenu");
+        PlayOpenBookSound();
     }
     
     public void OnGoBackToMainPage()
@@ -113,7 +114,7 @@ public class MainMenu : MonoBehaviour
     
     public void OnCloseBook()
     {
-        animator.SetTrigger("mainMenu");
+        animator.SetTrigger("mainMenu");     
     }
 
     public void OnNewGame()
@@ -245,10 +246,10 @@ public class MainMenu : MonoBehaviour
         _UIClick.Play();
     }
 
-    public void OnHoverSound()
+    public void OnHoverSound(AudioSource audioSource)
     {
-        _UIHover.pitch = Random.Range(minPitch, maxPitch);
-        _UIHover.Play();
+        audioSource.pitch = Random.Range(minPitch, maxPitch);
+        audioSource.Play();
     }
 
     public void PlayCloseBookSound()

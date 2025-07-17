@@ -184,10 +184,10 @@ MonoBehaviour:
   _soldierPrefabPurple: {fileID: 9108872110140002034}
   audioPickUp: {fileID: 3197164907504375772}
   upgradeSFX: {fileID: 3440295079038938405}
-  horsePickUpSound: {fileID: 8300000, guid: 1de5a3aabd0c38e458cff2fa97c8671a, type: 3}
+  horsePickUpSound: {fileID: 8300000, guid: 4a467e0319fb1474d992ae25edd2944e, type: 3}
   soldierPickUpSound: {fileID: 8300000, guid: 4e6938ad36d485e48acb73ead8d8e8b4, type: 3}
   magePickUpSound: {fileID: 8300000, guid: 4b4411f400fff4c4091f98c5033b88a1, type: 3}
-  legendPickUpSound: {fileID: 8300000, guid: b3c3a7472e794b44e8cb420e5c91e43f, type: 3}
+  legendPickUpSound: {fileID: 8300000, guid: 7a9c5747d02801f43bdb185b0bc67b5d, type: 3}
   disappearParticlePurple: {fileID: 3471056614678517812}
   disappearParticleGreen: {fileID: 2109922952901338368}
   appearParticlePurple: {fileID: 3730364716101490988}

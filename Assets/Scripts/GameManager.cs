@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
 
     public AudioSource audioSource; 
-    public AudioClip[] musicTracks;
+    public AudioClip musicTracks;
 
     [FormerlySerializedAs("greenTimer")] [SerializeField] private Candle greenCandle;
     [FormerlySerializedAs("purpleTimer")] [SerializeField] private Candle purpleCandle;
@@ -337,14 +337,7 @@ public class GameManager : MonoBehaviour
 
     void PlayRandomTrack()
     {
-        int newTrackIndex;
-        do
-        {
-            newTrackIndex = UnityEngine.Random.Range(0, musicTracks.Length);
-        } while (newTrackIndex == currentTrackIndex);
-
-        currentTrackIndex = newTrackIndex;
-        audioSource.clip = musicTracks[currentTrackIndex];
+        audioSource.clip = musicTracks;
         audioSource.Play();
 
         
@@ -355,7 +348,7 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitForTrackEnd(float duration)
     {
         yield return new WaitForSeconds(duration);
-        PlayRandomTrack();  // Play the next random track
+        PlayRandomTrack();
     }
 
     public void OnPause()
