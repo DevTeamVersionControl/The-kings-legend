@@ -258,6 +258,8 @@ public class GameManager : MonoBehaviour
 
         //initialize starting tiles
         _board.AddStartingPieces();
+        _board.GreenLegendTray.SetLocked(true);
+        _board.GreenSoldierTray.SetLocked(true);
 
         _playerColorTurn = PlayerColor.GREEN;
         OnNextTurn(_playerColorTurn);
