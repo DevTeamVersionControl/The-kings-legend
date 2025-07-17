@@ -142,10 +142,12 @@ public class GameManager : MonoBehaviour
                 if (color == PlayerColor.GREEN)
                 {
                     _board.GreenSoldierTray.SetLocked(false);
+                    _board.GreenUpgradeTray.SetLocked(false);
                 }
                 else
                 {
                     _board.PurpleSoldierTray.SetLocked(false);
+                    _board.PurpleUpgradeTray.SetLocked(false);
                 }
             }
         }
