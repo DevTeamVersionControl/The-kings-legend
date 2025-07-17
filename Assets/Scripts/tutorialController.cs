@@ -21,8 +21,11 @@ public class tutorialController : MonoBehaviour
 
     public void GoBack()
     {
-        leftPages[0].SetActive(false);
-        rightPages[0].SetActive(false);
+        for (int i = 0; i < leftPages.Length; i++) {
+            leftPages[i].SetActive(false);
+            rightPages[i].SetActive(false);
+        }
+        
         currentPage = 0;
         this.gameObject.SetActive(false);
     }
