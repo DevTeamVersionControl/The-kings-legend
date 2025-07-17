@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] CanvasGroup rightPage;
     [SerializeField] CanvasGroup leftPage;
     [SerializeField] GameObject CameraMenu;
+    [SerializeField] GameObject _cameraTuto;
     [SerializeField] private AudioSource _UIClick;
     [SerializeField] private AudioSource _UIHover;
 
@@ -56,6 +57,11 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(ChairMovingSound());
     }
 
+    public void LeaveTutoSwitchCamera()
+    {
+        _cameraTuto.SetActive(false);
+        CameraMenu.SetActive(true);
+    }
     public void OnOpenBook()
     {
 
@@ -137,6 +143,8 @@ public class MainMenu : MonoBehaviour
     }
     public void OnOpenTuto()
     {
+        _cameraTuto.SetActive(true);
+        CameraMenu.SetActive(false);
         rightPage.alpha = 0;
         StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
         animator.SetTrigger("menuTuto");
