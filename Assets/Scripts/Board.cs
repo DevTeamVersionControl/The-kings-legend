@@ -282,47 +282,75 @@ public class Board : MonoBehaviour
         if (endTile.GetHighlight() == Tile.HighlightType.MOVE && upgrade.Color == endTile.GetPiece().Color)
         {
             Color hdrColor;
-            Piece soldier = endTile.RemovePiece();
+            Piece initial = endTile.RemovePiece();
             bool locked = endTile.GetLocked();
             
-            Vector3 animationPosition = soldier.transform.position;
-            soldier.StartingTile.AddPiece(soldier);
-            Vector3 finalPosition = soldier.transform.position;
-            soldier.transform.position = animationPosition;
+            Vector3 animationPosition = initial.transform.position;
+            initial.StartingTile.AddPiece(initial);
+            Vector3 finalPosition = initial.transform.position;
+            initial.transform.position = animationPosition;
             
             endTile.AddPiece(upgrade);
             upgrade.PlayDisappearVFX();
-            soldier.gameObject.GetComponent<MouseInteraction>().Selectable = false;
-            int enemiesKilled = soldier.EnemiesKilled;
-            soldier.EnemiesKilled = 0;
+            int enemiesKilled = initial.EnemiesKilled;
+            initial.EnemiesKilled = 0;
             endTile.SetLocked(locked);
             upgrade.gameObject.GetComponent<MouseInteraction>().Selectable = false;
 
-            if (soldier.Color == PlayerColor.PURPLE)
+            if (initial.Color == PlayerColor.PURPLE)
             {
-                PurpleUpgradeTray.SetLocked(true);
-                PurpleLegendTray.SetLocked(true);
+                if (initial.Type == Piece.PieceType.SOLDIER)
+                {
+                    initial.StartingTile.SetLocked(PurpleSoldierTray.GetLocked());
+                }
+                else
+                {
+                    initial.StartingTile.SetLocked(PurpleUpgradeTray.GetLocked());
+                }
+                if (UpgradeTiles.Contains(startTile))
+                {
+                    PurpleUpgradeTray.SetLocked(true);
+                }
+                else
+                {
+                    PurpleLegendTray.SetLocked(true);
+                }
                 hdrColor = new Color(0.881629169f, 0.36744374f, 5.99215698f, 0);
             }
             else
             {
-                GreenUpgradeTray.SetLocked(true);
-                GreenLegendTray.SetLocked(true);
+                if (initial.Type == Piece.PieceType.SOLDIER)
+                {
+                    initial.StartingTile.SetLocked(GreenSoldierTray.GetLocked());
+                }
+                else
+                {
+                    initial.StartingTile.SetLocked(GreenUpgradeTray.GetLocked());
+                }
+                if (UpgradeTiles.Contains(startTile))
+                {
+                    GreenUpgradeTray.SetLocked(true);
+                    initial.StartingTile.SetLocked(GreenSoldierTray.GetLocked());
+                }
+                else
+                {
+                    GreenLegendTray.SetLocked(true);
+                }
                 hdrColor = new Color(2.77356529f, 12.9207554f, 0f, 1f);
             }
-            soldier.ActivateVFX(hdrColor);
+            initial.ActivateVFX(hdrColor);
             //upgrade.gameObject.SetActive(false);
             upgrade.ActivateVFX(hdrColor);
             upgrade.PlayUpgradeSound();
-            Destroy(soldier.particleInstance);
+            Destroy(initial.particleInstance);
 
             yield return new WaitForSeconds(0.5f);
 
             upgrade.gameObject.SetActive(true);
             upgrade.PlayAppearVFX();
-            soldier.transform.position = finalPosition;
-            soldier.AddVFX(hdrColor);
-            soldier.PlayAppearVFX();
+            initial.transform.position = finalPosition;
+            initial.AddVFX(hdrColor);
+            initial.PlayAppearVFX();
             upgrade.AddVFX(hdrColor);
             for (int i = 0; i < enemiesKilled; i++)
             {
