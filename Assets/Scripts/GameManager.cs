@@ -196,6 +196,19 @@ public class GameManager : MonoBehaviour
             if (_board.UpgradeTiles.Contains(_current) || _board.LegendTiles.Contains(_current))
             {
                 StartCoroutine(_board.OnPieceUpgrade(_current, tile));
+                if (!_board.LegendTiles.Contains(_current))
+                {
+                    if (_playerColorTurn == PlayerColor.GREEN)
+                    {
+                        _board.GreenSoldierTray.SetLocked(true);
+                        _board.GreenUpgradeTray.SetLocked(true);
+                    }
+                    else
+                    {
+                        _board.PurpleSoldierTray.SetLocked(true);
+                        _board.PurpleUpgradeTray.SetLocked(true);
+                    }
+                }
             }
             if (_board.SoldierTiles.Contains(_current))
             {
@@ -203,10 +216,12 @@ public class GameManager : MonoBehaviour
                 if (_playerColorTurn == PlayerColor.GREEN)
                 {
                     _board.GreenSoldierTray.SetLocked(true);
+                    _board.GreenUpgradeTray.SetLocked(true);
                 }
                 else
                 {
                     _board.PurpleSoldierTray.SetLocked(true);
+                    _board.PurpleUpgradeTray.SetLocked(true);
                 }
             }
             if (_board.BoardTiles.Contains(_current))
