@@ -366,19 +366,17 @@ MonoBehaviour:
     Movement Range: 1
 
 
-
     Mages are your primary ranged
     attackers. Positioned correctly, they can control wide areas of the board and
     apply serious pressure on your opponent.
-
 
 
     However, with their limited mobility
     and inability to attack at close range, they are vulnerable if approached. Choose
     their position wisely.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -510,15 +508,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "When you eliminate an enemy piece, your Game Piece gains a Stolen Soul,
-    which will visibly float around it.\r\n\r\nA piece with two Stolen Souls can
-    be upgraded into a Legend.\r\nIf you eliminate a piece that already has Stolen
-    Souls, your piece will gain one Stolen Soul and absorb any the enemy piece was
-    carrying.\r\nA Game Piece can carry a maximum of two Stolen Souls.\r\n\r\nTrack
-    your Souls carefully\u2014they're key to unlocking your most powerful unit."
+  m_text: "When you eliminate an enemy piece, your Game Piece gains a Stolen Soul.\n\r\nA
+    piece with two Stolen Souls can be upgraded into a Legend.\r\nIf you eliminate
+    a piece that already has Stolen Souls, your piece will gain one Stolen Soul and
+    absorb any the enemy piece was carrying.\r\nA Game Piece can carry a maximum
+    of two Stolen Souls.\r"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -615,111 +612,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6667120891654238156, guid: e870ad305ed36a54f84ddfde47443a25, type: 3}
---- !u!1 &40484348
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 40484352}
-  - component: {fileID: 40484351}
-  - component: {fileID: 40484350}
-  - component: {fileID: 40484349}
-  m_Layer: 0
-  m_Name: TESTDELETE
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!65 &40484349
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40484348}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &40484350
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40484348}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 257
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &40484351
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40484348}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &40484352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40484348}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7547, y: 3.212, z: 15.7513}
-  m_LocalScale: {x: 8.487587, y: 1, z: 9.077386}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &46651074
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,13 +3364,25 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You have a limited pool of  Game Pieces, but only three can be active
-    on the Game Board at once. Click and drag Game Pieces to see what they can interact
-    with.\r\n\nDuring your turn, you may:\r\n\n1.  Add one Soldier Piece\n2.  Upgrade
-    one Soldier Piece\n3.  Move or attack with each Game Piece currently on the board\n\r"
+  m_text: 'Three pieces can be active on the Game Board at once. Click and drag Game
+    Pieces to see what they can interact with.
+
+
+    During your turn, you may:
+
+
+    1.
+    Add one Soldier Piece
+
+
+    2. Upgrade one Soldier Piece
+
+
+    3. Move or attack
+    with each Game Piece currently on the board.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -9858,12 +9762,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Attack Range: 1\nMovement Range: 1\n\r\nThe Soldier is the simplest and
     most essential unit. It\u2019s the only piece that can be added to the board
-    directly. Soldiers form the backbone of your defense and strategy.\r\n\r\nThey
-    can be upgraded into a Mage, Knight, or if they carry two Stolen Souls, a Legend.\r\n\r\nBecause
-    of this, Soldiers can be used to bluff your opponent and keep your strategy unpredictable."
+    directly.\n\r\nThey can be upgraded into a Mage, Knight, or if they carry two
+    Stolen Souls, a Legend.\r"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -15995,14 +15898,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Click and drag to move, attack, or upgrade your units.\r\n\r\nThe melting
-    Candle Timer shows how much time is left in your turn. Once it runs out, your
-    turn ends.\r\n\r\nPay attention to the glowing Action Gems near the Game Pieces:
-    they indicate what pieces can be added or upgraded. Some gems might require specific
-    conditions to activate.\r\n\r\nThe game is won when you eliminate all three of
-    your opponent\u2019s Game Pieces."
+    Candle Timer shows how much time is left in your turn.\n\nThe game is won when
+    you eliminate all three of your opponent\u2019s Game Pieces."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -20854,8 +20754,8 @@ MonoBehaviour:
     or force them to reposition.\r\n\r\nUse it to break through defenses and disrupt
     enemy lines."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -20919,7 +20819,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 50.178467}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1232504777
@@ -25005,11 +24905,10 @@ MonoBehaviour:
   m_text: "Attack Range: 2\r\nMovement Range: 2\r\n\r\nThe Legend is the most powerful
     piece on the board, boasting both reach and mobility. A well-played Legend can
     quickly turn the tide of the game.\r\n\r\nHowever, it\u2019s difficult to obtain.
-    Only a piece with two Stolen Souls can be upgraded into a Legend. Because of
-    its strength and rarity, a Legend must be used strategically to secure victory."
+    Only a piece with two Stolen Souls can be upgraded into a Legend."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 571feca8f18d1c140a6aec8dc50f84de, type: 2}
-  m_sharedMaterial: {fileID: 7647321619334134368, guid: 571feca8f18d1c140a6aec8dc50f84de,
+  m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
+  m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -31414,4 +31313,3 @@ SceneRoots:
   - {fileID: 348603762}
   - {fileID: 1100288093}
   - {fileID: 802846080}
-  - {fileID: 40484352}
