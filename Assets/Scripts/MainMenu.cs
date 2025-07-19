@@ -100,6 +100,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log("in OnPause");
         StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
         animator.SetTrigger("onPause");
+        PlayOpenBookSound();
 
     }
 
@@ -183,6 +184,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log("in OnEndGame");
         StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
         animator.SetTrigger("onPause");
+        PlayOpenBookSound();
     }
     IEnumerator DelayOpenCredit()
     {
