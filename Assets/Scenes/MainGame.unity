@@ -3364,22 +3364,22 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Three pieces can be active on the Game Board at once. Click and drag Game
-    Pieces to see what they can interact with.
+  m_text: 'Three pieces can be active on the Game Board at once.
 
 
-    During your turn, you may:
+    During your
+    turn, you may:
 
 
-    1.
-    Add one Soldier Piece
+    1. Add or upgrade one Soldier Piece
 
 
-    2. Upgrade one Soldier Piece
+    2. Transform a
+    piece into a legend if it has 2 stolen souls
 
 
-    3. Move or attack
-    with each Game Piece currently on the board.'
+    3. Move or attack with each
+    Game Piece currently on the board.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d7f2f1899a9fda245b376e71f9312f12, type: 2}
   m_sharedMaterial: {fileID: 7164677935367066879, guid: d7f2f1899a9fda245b376e71f9312f12,
