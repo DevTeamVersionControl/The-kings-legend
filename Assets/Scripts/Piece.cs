@@ -253,6 +253,11 @@ public class Piece : MonoBehaviour
             Destroy(particleInstance);
             particleInstance = Instantiate(killParticleTwo, transform);
         }
+        else if (EnemiesKilled > 2)
+        {
+            Destroy(particleInstance);
+            particleInstance = Instantiate(killParticleTwo, transform);
+        }
     }
     public bool CanBecomeLegend()
     {
