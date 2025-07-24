@@ -199,7 +199,7 @@ public class Board : MonoBehaviour
         return piecesNb;
     }
 
-    public void OnPieceMoved(Tile startTile, Tile endTile)
+    public bool OnPieceMoved(Tile startTile, Tile endTile)
     {
         switch (endTile.GetHighlight())
         {
@@ -215,8 +215,9 @@ public class Board : MonoBehaviour
                     {
                         PurpleSoldierTray.SetLocked(false);
                     }
+                    UnhighlightAll();
                 }
-                break;
+                return false;
             case Tile.HighlightType.MOVE:
                 endTile.AddPiece(startTile.RemovePiece());
                 startTile.RemovePiece();
@@ -237,6 +238,7 @@ public class Board : MonoBehaviour
                 break;
         }
         UnhighlightAll();
+        return true;
     }
     
     IEnumerator PieceDeath(Tile startTile, Tile endTile)

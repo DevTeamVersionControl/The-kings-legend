@@ -212,16 +212,18 @@ public class GameManager : MonoBehaviour
             }
             if (_board.SoldierTiles.Contains(_current))
             {
-                _board.OnPieceMoved(_current, tile);
-                if (_playerColorTurn == PlayerColor.GREEN)
+                if (_board.OnPieceMoved(_current, tile))
                 {
-                    _board.GreenSoldierTray.SetLocked(true);
-                    _board.GreenUpgradeTray.SetLocked(true);
-                }
-                else
-                {
-                    _board.PurpleSoldierTray.SetLocked(true);
-                    _board.PurpleUpgradeTray.SetLocked(true);
+                    if (_playerColorTurn == PlayerColor.GREEN)
+                    {
+                        _board.GreenSoldierTray.SetLocked(true);
+                        _board.GreenUpgradeTray.SetLocked(true);
+                    }
+                    else
+                    {
+                        _board.PurpleSoldierTray.SetLocked(true);
+                        _board.PurpleUpgradeTray.SetLocked(true);
+                    }
                 }
             }
             if (_board.BoardTiles.Contains(_current))
