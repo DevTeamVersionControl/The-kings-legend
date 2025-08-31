@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject mainPage;
     [SerializeField] GameObject pausePage;
     [SerializeField] GameObject currentPage;
+    [SerializeField] GameObject SteamRemoteMessage;
     [SerializeField] BoxCollider boxColliderBook;
     [SerializeField] CanvasGroup rightPage;
     [SerializeField] CanvasGroup leftPage;
@@ -41,19 +42,20 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && currentPage.gameObject.activeInHierarchy && GameManager.Instance._currentLevel == GameManager.GameLevel.MAINMENU)
         {
             rightPage.alpha = 0;
-            StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
             animator.SetTrigger("onCover");
             currentPage.SetActive(false);
+            SteamRemoteMessage.SetActive(true);
             boxColliderBook.enabled = true;
         } 
     }
     public void OnStartGame()
     {
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         animator.SetTrigger("startGame");
         GameManager.Instance.ChangeLevel(GameManager.GameLevel.GAME);
         currentPage.SetActive(false);
+        SteamRemoteMessage.SetActive(false);
         StartCoroutine(ChairMovingSound());
     }
 
@@ -70,12 +72,13 @@ public class MainMenu : MonoBehaviour
             CameraMenu.GetComponent<Animation>().Play("OpenBook");
         }
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         boxColliderBook.enabled = false;
         currentPage.SetActive(true);
+        SteamRemoteMessage.SetActive(true);
         Debug.Log("in OnOpenBook");
         StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
-        
+        StartCoroutine(FadeIn(leftPage, 0.5f, 1.25f));
         animator.SetTrigger("mainMenu");
         PlayOpenBookSound();
     }
@@ -83,22 +86,25 @@ public class MainMenu : MonoBehaviour
     public void OnGoBackToMainPage()
     {
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         currentPage.SetActive(true);
+        SteamRemoteMessage.SetActive(true);
         Debug.Log("in OnOpenBook");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.75f));
-
+        StartCoroutine(FadeIn(leftPage, 0.5f, 0.75f));
         animator.SetTrigger("mainMenu");
     }
     public void OnPause()
     {
         currentPage = pausePage;
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         boxColliderBook.enabled = false;
         currentPage.SetActive(true);
+        SteamRemoteMessage.SetActive(true);
         Debug.Log("in OnPause");
         StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
+        StartCoroutine(FadeIn(leftPage, 0.5f, 1.25f));
         animator.SetTrigger("onPause");
         PlayOpenBookSound();
 
@@ -107,10 +113,11 @@ public class MainMenu : MonoBehaviour
     public void OnResume()
     {
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         StartCoroutine(BackToGameDelay());
         GameManager.Instance.OnPause();
         currentPage.SetActive(false);
+        SteamRemoteMessage.SetActive(false);
     }
     
     public void OnCloseBook()
@@ -121,38 +128,42 @@ public class MainMenu : MonoBehaviour
     public void OnNewGame()
     {
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         StartCoroutine(BackToGameDelay());
         GameManager.Instance.PlayAgain();
         GameManager.Instance.OnPause();
         currentPage.SetActive(false);
+        SteamRemoteMessage.SetActive(false);
         StartCoroutine(ChairMovingSound());
     }
 
     public void OnOpenOptions()
     {
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         animator.SetTrigger("menuOptions");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.75f));
         StartCoroutine(FadeIn(leftPage, 0.5f, 0.75f));
         currentPage.SetActive(false);
+        SteamRemoteMessage.SetActive(false);
         menuOptionsController.SetActive(true);
     }
     public void OnOpenMainMenu()
     {
         currentPage.SetActive(true);
+        SteamRemoteMessage.SetActive(true);
     }
     public void OnOpenTuto()
     {
         _cameraTuto.SetActive(true);
         CameraMenu.SetActive(false);
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         animator.SetTrigger("menuTuto");
         StartCoroutine(FadeIn(rightPage, 0.5f, 0.75f));
         StartCoroutine(FadeIn(leftPage, 0.5f, 0.75f));
         currentPage.SetActive(false);
+        SteamRemoteMessage.SetActive(false);
         tutoController.SetActive(true);
     }
 
@@ -168,7 +179,9 @@ public class MainMenu : MonoBehaviour
     public void OnCredit()
     {
         rightPage.alpha = 0;
+        leftPage.alpha = 0;
         currentPage.SetActive(false);
+        SteamRemoteMessage.SetActive(false);
         rightPage.interactable = false;
         animator.SetTrigger("credit");
         StartCoroutine(DelayOpenCredit());
@@ -178,11 +191,13 @@ public class MainMenu : MonoBehaviour
     {
         currentPage = mainPage;
         rightPage.alpha = 0;
-        StartCoroutine(FadeOut(leftPage, 0.5f, 0.5f));
+        leftPage.alpha = 0;
         boxColliderBook.enabled = false;
         currentPage.SetActive(true);
+        SteamRemoteMessage.SetActive(true);
         Debug.Log("in OnEndGame");
         StartCoroutine(FadeIn(rightPage, 0.5f, 1.25f));
+        StartCoroutine(FadeIn(leftPage, 0.5f, 1.25f));
         animator.SetTrigger("onPause");
         PlayOpenBookSound();
     }
